@@ -23,8 +23,6 @@ import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.draw.DrawTools;
 import com.titicolab.puppet.draw.Image;
 import com.titicolab.puppet.list.GameObjectCollection;
-import com.titicolab.puppet.objects.Camera2D;
-import com.titicolab.puppet.objects.CameraUi;
 import com.titicolab.puppet.objects.factory.Parameters;
 import com.titicolab.puppet.objects.factory.RequestCollection;
 import com.titicolab.puppet.objects.factory.RequestObject;
@@ -36,9 +34,7 @@ import com.titicolab.puppet.objects.map.MapObjects;
  *
  */
 
-public  class Layer extends BaseLayer<Layer.ParamsLayer> implements
-                                        ObjectFactory.GameObjectFactory,
-                                                GameObject.OnTouch{
+public  class Layer extends BaseLayer<Layer.ParamsLayer>{
 
 
     private MapObjects mMapObjects;
@@ -47,6 +43,8 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer> implements
     private FlexibleList<UiObject> uiRenderList;
     private FlexibleList<Animated> worldRenderList;
 
+    private Scene mScene;
+    private BaseGroupLayer mGroupLayers;
 
     public Layer(){
         setUpdatable(true);
@@ -56,12 +54,10 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer> implements
 
 
     @Override
-    public void onAttachParameters(RequestObject request) {
+    protected void onAttachParameters(RequestObject request) {
         super.onAttachParameters(request);
         mMapObjects = onDefineMapObjects();
     }
-
-
 
 
     protected MapObjects onDefineMapObjects(){
@@ -69,57 +65,52 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer> implements
     }
 
 
-    @Override
     void onAttachScene(Scene scene) {
-        super.onAttachScene(scene);
+       mScene = scene;
+    }
+
+    void onAttachGroupLayers(BaseGroupLayer group) {
+        mGroupLayers = group;
     }
 
     @Override
-    void onAttachLayerFactory(ObjectFactory.LayerFactory group) {
-        super.onAttachLayerFactory(group);
+    protected AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
+        return mScene.onDefineAnimations(builder);
     }
 
-    @Override
-    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
-        return getScene().onDefineAnimations(builder);
-    }
 
-    @Override
-    public RequestCollection onRequestObjects(RequestObjectBuilder builder) {
+    protected RequestCollection onRequestObjects(RequestObjectBuilder builder) {
         return builder.object(mMapObjects.getList()).build();
     }
 
-    @Override
-    public void onAttachObjects(GameObjectCollection collection) {
+    protected void onAttachObjects(GameObjectCollection collection) {
             mObjectCollection = collection;
             loadListObjects(collection);
-
     }
 
-    @Override
-    public void onGroupObjectsCreated() {
+    protected void onGroupObjectsCreated() {
 
     }
 
 
     @Override
-    public void updateLogic() {
+    protected void updateLogic() {
         if(isUpdatable()) {
-            updateLogicObjects(uiRenderList);
-            updateLogicObjects(worldRenderList);
+            HelperObjects.updateLogicObjects(uiRenderList);
+            HelperObjects.updateLogicObjects(worldRenderList);
         }
     }
 
     @Override
-    public void updateRender() {
+    protected void updateRender() {
         if(isDrawable()) {
-            updateRenderObjects(uiRenderList);
-            updateRenderObjects(worldRenderList);
+            HelperObjects.updateRenderObjects(uiRenderList);
+            HelperObjects.updateRenderObjects(worldRenderList);
         }
     }
 
     @Override
-    public void onDraw(DrawTools drawer) {
+    protected void onDraw(DrawTools drawer) {
         if (isDrawable()) {
             onDrawGameObjects(drawer.images);
             onDrawUiObjects(drawer.ui);
@@ -127,33 +118,33 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer> implements
         }
     }
 
-    protected void onDrawGameObjects(Drawer<Image> spriteDrawer) {
+    private void onDrawGameObjects(Drawer<Image> spriteDrawer) {
         if(worldRenderList.size()>0) {
             spriteDrawer.begin(getCamera2D().getProjection().getMatrix());
-            drawGameObjects(spriteDrawer,worldRenderList);
+            HelperObjects.drawGameObjects(spriteDrawer,worldRenderList);
             spriteDrawer.end();
         }
     }
 
-    protected void onDrawUiObjects(Drawer<Image> uiDrawer){
+    private void onDrawUiObjects(Drawer<Image> uiDrawer){
         if(uiRenderList.size()>0){
             uiDrawer.begin(getCameraUi().getProjection().getMatrix());
-            drawGameObjects(uiDrawer,uiRenderList);
+            HelperObjects.drawGameObjects(uiDrawer,uiRenderList);
             uiDrawer.end();
         }
     }
 
 
-    protected void onDrawText(Drawer drawerText) {
+    private void onDrawText(Drawer drawerText) {
 
        //TODO
     }
 
     @Override
-    public boolean onTouchEvent(ObservableInput.Event input) {
+    protected boolean onTouch(ObservableInput.Event input) {
         return isTouchable()
-                && notifyInputEvent(input, uiRenderList)
-                | notifyInputEvent(input, worldRenderList);
+                && HelperObjects.notifyInputEvent(input, uiRenderList)
+                | HelperObjects.notifyInputEvent(input, worldRenderList);
     }
 
 
@@ -166,9 +157,6 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer> implements
         for (int i = 0; i < sizeTypes; i++) {
             int sizeObject =objectCollection.get(i).size();
             for (int item = 0; item < sizeObject; item++) {
-                //objectCollection.get(i).get(item).setDrawable(true);
-                //objectCollection.get(i).get(item).setUpdatable(true);
-
                 if(UiObject.class.isAssignableFrom(objectCollection.get(i).get(item).getClass()))
                     uiRenderList.add((UiObject) objectCollection.get(i).get(item));
                 else {
@@ -179,53 +167,7 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer> implements
     }
 
 
-    static void drawGameObjects(Drawer<Image> drawer,FlexibleList<? extends Animated> gameObjectCollection) {
-            int sizeObject = gameObjectCollection.size();
-            for (int item = 0; item < sizeObject; item++) {
-                if(gameObjectCollection.get(item).isDrawable())
-                    drawer.add(gameObjectCollection.get(item).getImage());
-            }
-    }
 
-
-    private static void updateLogicObjects(FlexibleList<? extends BaseObject> objectCollection) {
-            int sizeObject =objectCollection.size();
-            for (int item = 0; item < sizeObject; item++) {
-                if(objectCollection.get(item).isUpdatable())
-                    objectCollection.get(item).updateLogic();
-            }
-    }
-
-    private static void updateRenderObjects(FlexibleList<? extends BaseObject> objectCollection){
-            int sizeObject = objectCollection.size();
-            for (int item = 0; item < sizeObject; item++) {
-                if(objectCollection.get(item).isUpdatable())
-                    objectCollection.get(item).updateRender();
-            }
-    }
-
-
-    static boolean notifyInputEvent(ObservableInput.Event input,
-                                    FlexibleList<? extends BaseObject> list) {
-        boolean r = false;
-
-            int sizeObject = list.size();
-            for (int item = 0; item < sizeObject; item++) {
-                if(list.get(item).isTouchable()) {
-                    if(GameObject.OnTouch.class
-                            .isAssignableFrom(list.get(item).getClass()))
-                        r=notifyToGuiObject((GameObject.OnTouch)
-                                list.get(item), input);
-                }
-
-        }
-        return r;
-    }
-
-    private static boolean notifyToGuiObject(GameObject.OnTouch listener,
-                                             ObservableInput.Event input) {
-        return listener.onTouchEvent(input);
-    }
 
 
 
@@ -238,10 +180,10 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer> implements
     }
 
     protected Camera2D getCamera2D(){
-        return getScene().getCamera2D();
+        return mScene.getCamera2D();
     }
     protected CameraUi getCameraUi(){
-        return getScene().getCameraUi();
+        return mScene.getCameraUi();
     }
 
 

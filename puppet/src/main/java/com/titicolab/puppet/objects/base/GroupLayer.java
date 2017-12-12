@@ -17,6 +17,7 @@
 package com.titicolab.puppet.objects.base;
 
 
+import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.draw.DrawTools;
 import com.titicolab.puppet.list.GameObjectList;
@@ -31,75 +32,104 @@ import com.titicolab.puppet.objects.map.MapGroupLayers;
  *
  */
 
-public  class GroupLayer extends BaseLayer<GroupLayer.ParamsGroupLayer>
-                        implements  ObjectFactory.LayerFactory {
+public  class GroupLayer extends BaseGroupLayer<GroupLayer.ParamsGroupLayer>{
 
 
     private MapGroupLayers mMapGroupLayers;
-    private GameObjectList mLayerObjects;
+    private GameObjectList mLayerList;
+
+    private Scene mScene;
+    private BaseGroupLayer mGroupLayers;
 
     @Override
-    public void onAttachParameters(RequestObject request) {
+    protected void onAttachParameters(RequestObject request) {
             super.onAttachParameters(request);
         mMapGroupLayers = onDefineMapGroupLayers();
     }
 
-
     protected MapGroupLayers onDefineMapGroupLayers(){
-       return getParameters().mapObjects;
+        return getParameters().mapObjects;
     }
 
 
-    @Override
+
     void onAttachScene(Scene scene) {
-        super.onAttachScene(scene);
+       mScene = scene;
+    }
+
+
+    void onAttachGroupLayers(BaseGroupLayer group) {
+      mGroupLayers = group;
+    }
+
+
+    @Override
+    protected AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
+        return mScene.onDefineAnimations(builder);
     }
 
     @Override
-    void onAttachLayerFactory(ObjectFactory.LayerFactory group) {
-        super.onAttachLayerFactory(group);
-    }
-
-    @Override
-    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
-        return null;
-    }
-
-    @Override
-    public RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
+    protected RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
         return builder.object(mMapGroupLayers.getList()).build();
     }
 
     @Override
-    public void onAttachLayers(GameObjectList layerList) {
-        mLayerObjects =layerList;
-    }
-
-    @Override
-    public void onGroupLayersCreated() {
-
+    protected void onAttachLayers(GameObjectList layerList) {
+        mLayerList =layerList;
     }
 
 
     @Override
-    public void updateLogic() {
+    protected void onGroupLayersCreated() {
 
+    }
+
+
+    @Override
+    protected void onStart() {
+        int layers = mLayerList.size();
+        for (int i = 0; i < layers; i++) {
+            mLayerList.get(i).onStart();
+        }
     }
 
     @Override
-    public void updateRender() {
-
+    protected void onStop() {
+        int layers = mLayerList.size();
+        for (int i = 0; i < layers; i++) {
+            mLayerList.get(i).onStop();
+        }
     }
+
+
+
+    @Override
+    protected void updateLogic() {
+        HelperObjects.updateLogicLayers(mLayerList);
+    }
+
+    @Override
+    protected void updateRender() {
+        HelperObjects.updateRenderLayers(mLayerList);
+    }
+
+
+    @Override
+    protected void onDraw(DrawTools drawer) {
+        HelperObjects.onDrawLayers(mLayerList,drawer);
+    }
+
+
+    @Override
+    protected boolean onTouch(ObservableInput.Event event) {
+        return HelperObjects.notifyInputEvent(event,mLayerList);
+    }
+
+
 
     public GameObjectList getLayerObjects() {
-        return mLayerObjects;
+        return mLayerList;
     }
-
-    @Override
-    public void onDraw(DrawTools drawer) {
-
-    }
-
 
     public static class ParamsGroupLayer extends Parameters {
         final MapGroupLayers mapObjects;

@@ -16,17 +16,25 @@
 
 package com.titicolab.puppet.objects.base;
 
+import com.titicolab.puppet.list.GameObjectList;
+import com.titicolab.puppet.objects.factory.Parameters;
+import com.titicolab.puppet.objects.factory.RequestCollection;
+import com.titicolab.puppet.objects.factory.RequestLayersBuilder;
+import com.titicolab.puppet.objects.map.MapGroupLayers;
+
 /**
  * Created by campino on 12/12/2017.
  *
- * Implement this interface to instantiate Layers objects. It is
- * if the object is a group of layers needs implement this
  */
 
-/*public class LayerFactory  extends BaseLayer{
+public abstract class BaseGroupLayer<T extends Parameters> extends BaseLayer<T> {
 
-        RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder);
-        void onAttachLayers(GameObjectList layerList);
-        void onGroupLayersCreated();
-    }
-}*/
+    protected abstract MapGroupLayers onDefineMapGroupLayers();
+
+    protected abstract    RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder);
+
+    protected abstract void onAttachLayers(GameObjectList layerList);
+
+    protected abstract void onGroupLayersCreated();
+
+}

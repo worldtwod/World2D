@@ -93,6 +93,8 @@ public class FactoryListTest extends AnimationTestCase {
         numbers.getAnimator().setSpeed(1);
         addAnimated(numbers);
         waitTouchSeconds(60);
+
+
     }
 
 

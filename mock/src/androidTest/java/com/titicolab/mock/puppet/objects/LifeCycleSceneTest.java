@@ -43,6 +43,7 @@ public class LifeCycleSceneTest extends SceneTestCase{
         Assert.assertEquals(4,scene.onLayersRequest.getResults().intValue());
         Assert.assertEquals(5,scene.onAttachLayers.getResults().intValue());
         Assert.assertEquals(6,scene.onGroupLayersCreated.getResults().intValue());
+
     }
 
 

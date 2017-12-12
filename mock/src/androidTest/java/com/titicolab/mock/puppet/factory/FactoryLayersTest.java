@@ -48,8 +48,6 @@ public class FactoryLayersTest extends AnimationTestCase {
         ObjectFactory factory = new ObjectFactory(scene, getTextureManager());
 
 
-        scene.onAttachParameters(null);
-
         GameObjectList results = factory
                 .factoryGroupLayer(scene);
 
@@ -66,6 +64,10 @@ public class FactoryLayersTest extends AnimationTestCase {
 
     public static class MockScene extends Scene{
         MockLayer layer;
+
+        public MockScene() {
+            onAttachParameters(null);
+        }
 
         @Override
         public MapGroupLayers onDefineMapGroupLayers() {

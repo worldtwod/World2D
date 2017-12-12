@@ -22,8 +22,6 @@ import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.draw.DrawTools;
 import com.titicolab.puppet.list.GameObjectList;
-import com.titicolab.puppet.objects.Camera2D;
-import com.titicolab.puppet.objects.CameraUi;
 import com.titicolab.puppet.objects.factory.Parameters;
 import com.titicolab.puppet.objects.factory.RequestCollection;
 import com.titicolab.puppet.objects.factory.RequestLayersBuilder;
@@ -35,11 +33,7 @@ import com.titicolab.puppet.objects.map.MapGroupLayers;
  * Created by campino on 02/06/2016.
  *
  */
-public class Scene extends BaseObject<Scene.ParamsScene>
-                        implements ObjectFactory.LayerFactory,
-                                    GameObject.OnDraw,
-                                        ObservableInput.InputListener,
-                                            AnimationSheet.DefineAnimations {
+public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
 
 
 
@@ -64,12 +58,12 @@ public class Scene extends BaseObject<Scene.ParamsScene>
     /*** Instantiation ***************************************************************************/
 
     @Override
-    public void onAttachParameters(RequestObject request) {
+    protected void onAttachParameters(RequestObject request) {
         mMapGroupLayers = onDefineMapGroupLayers();
     }
 
 
-    public MapGroupLayers onDefineMapGroupLayers(){
+    protected MapGroupLayers onDefineMapGroupLayers(){
         return getParameters()!=null ?  getParameters().mapObjects : new MapGroupLayers.Builder().build();
     }
 
@@ -89,27 +83,31 @@ public class Scene extends BaseObject<Scene.ParamsScene>
     }
 
 
+    protected AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
+        return null;
+    }
+
 
     /*** Factory ********************************************************************************/
     @Override
-    public RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
+    protected RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
         return builder.object(mMapGroupLayers.getList()).build();
     }
 
     @Override
-    public void onAttachLayers(GameObjectList layerList) {
+    protected void onAttachLayers(GameObjectList layerList) {
             mLayerList=layerList;
     }
 
     @Override
-    public void onGroupLayersCreated() {
+    protected void onGroupLayersCreated(){
         mFlagOnCreated.assertFlag();
     }
 
 
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         int layers = mLayerList.size();
         for (int i = 0; i < layers; i++) {
             mLayerList.get(i).onStart();
@@ -117,7 +115,7 @@ public class Scene extends BaseObject<Scene.ParamsScene>
     }
 
     @Override
-    public void onStop() {
+    protected void onStop() {
         int layers = mLayerList.size();
         for (int i = 0; i < layers; i++) {
             mLayerList.get(i).onStop();
@@ -125,35 +123,24 @@ public class Scene extends BaseObject<Scene.ParamsScene>
     }
 
     @Override
-    public void updateLogic() {
+    protected void updateLogic() {
         mCameraUi.updateLogic();
         mCamera2D.updateLogic();
-
-        int layers = mLayerList.size();
-        for (int i = 0; i < layers; i++) {
-            mLayerList.get(i).updateLogic();
-        }
-
+        HelperObjects.updateLogicLayers(mLayerList);
 
     }
 
     @Override
-    public void updateRender() {
+    protected void updateRender() {
         mCameraUi.updateRender();
         mCamera2D.updateRender();
-        int layers = mLayerList.size();
-        for (int i = 0; i < layers; i++) {
-            mLayerList.get(i).updateRender();
-        }
+        HelperObjects.updateRenderLayers(mLayerList);
     }
 
 
     @Override
-    public void onDraw(DrawTools drawer) {
-        int layers = mLayerList.size();
-        for (int i = 0; i < layers; i++) {
-            ((GameObject.OnDraw) mLayerList.get(i)).onDraw(drawer);
-        }
+    protected void onDraw(DrawTools drawer) {
+        HelperObjects.onDrawLayers(mLayerList,drawer);
     }
 
 
@@ -176,19 +163,13 @@ public class Scene extends BaseObject<Scene.ParamsScene>
 
 
     @Override
-    public boolean onTouch(ObservableInput.Event event) {
-        return false;
+    protected boolean onTouch(ObservableInput.Event event) {
+        return HelperObjects.notifyInputEvent(event,mLayerList);
     }
 
-    @Override
+
     public boolean onKey(int keyEvent) {
         return false;
-    }
-
-
-    @Override
-    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
-        return null;
     }
 
 

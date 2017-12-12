@@ -29,7 +29,7 @@ import com.titicolab.puppet.objects.factory.RequestObject;
  *
  */
 
-public  class Animated   extends BaseObject implements ObjectFactory.AnimationFactory {
+public  class Animated   extends BaseObject {
 
     private Image               mImage;
     private Animator            mAnimator;
@@ -45,7 +45,7 @@ public  class Animated   extends BaseObject implements ObjectFactory.AnimationFa
      * @param request initialization data
      */
     @Override
-    public void onAttachParameters(RequestObject request) {
+    protected void onAttachParameters(RequestObject request) {
         super.onAttachParameters(request);
     }
 
@@ -55,8 +55,8 @@ public  class Animated   extends BaseObject implements ObjectFactory.AnimationFa
      * @param builder use for build the animation for this object
      * @return The animation with the clips
      */
-    @Override
-    public Animation onBuildClips(AnimationBuilder builder) {
+
+    protected Animation onBuildClips(AnimationBuilder builder) {
         return builder.build(getParameters().animation);
     }
 
@@ -64,7 +64,7 @@ public  class Animated   extends BaseObject implements ObjectFactory.AnimationFa
      * Use if it is necessaries build a new animation for every instance of this object.
      * @return build a new animation for every instance
      */
-    public boolean   hasCustomClips(){
+    protected boolean   hasCustomClips(){
         return false;
     }
 
@@ -72,26 +72,37 @@ public  class Animated   extends BaseObject implements ObjectFactory.AnimationFa
      * There are a animation ok for this object, the animator will be initialized here
      * @param animation Animation for this object
      */
-    public void  onAttachAnimation(Animation animation){
+    protected void  onAttachAnimation(Animation animation){
         mAnimator = new Animator(animation);
         mAnimator.playAndRepeat(getParameters().clipStart);
         mImage = new Image(mAnimator.getCurrentFrame());
     }
 
 
-    public void onCreated() {
+    protected void onCreated() {
+
+    }
+
+    protected void onStart() {
+
+    }
+
+    protected void onStop() {
+
+    }
+
+    protected void onDestroy() {
 
     }
 
 
-
     @Override
-    public void updateLogic() {
+    protected void updateLogic() {
 
     }
 
     @Override
-    public void updateRender() {
+    protected void updateRender() {
         mImage.setUvCoordinates(mAnimator.getCurrentFrame());
         mAnimator.updateFrame();
         mImage.updateRender();

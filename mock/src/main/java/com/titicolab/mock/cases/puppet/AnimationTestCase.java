@@ -27,6 +27,7 @@ import com.titicolab.nanux.list.FlexibleList;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.DrawerImage;
 import com.titicolab.puppet.objects.base.Animated;
+import com.titicolab.puppet.objects.base.HelperObjects;
 
 import org.junit.runner.RunWith;
 
@@ -58,18 +59,12 @@ public class AnimationTestCase extends ImageDrawerTestCase{
 
 
     private void updateForRender() {
-        int size = mAnimatedObjects.size();
-        for (int i = 0; i < size; i++) {
-            mAnimatedObjects.get(i).updateRender();
-        }
+        HelperObjects.updateRenderObjects(mAnimatedObjects);
     }
 
     synchronized private void drawImages(DrawerImage imageDrawer){
-        int size = mAnimatedObjects.size();
         imageDrawer.begin(projection.getMatrix());
-        for (int i = 0; i < size; i++) {
-            imageDrawer.add(mAnimatedObjects.get(i).getImage());
-        }
+        HelperObjects.drawGameObjects(imageDrawer,mAnimatedObjects);
         imageDrawer.end();
     }
 

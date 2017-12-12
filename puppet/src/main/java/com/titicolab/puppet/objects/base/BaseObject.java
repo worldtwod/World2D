@@ -17,6 +17,7 @@
 package com.titicolab.puppet.objects.base;
 
 
+import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.puppet.objects.factory.Parameters;
 import com.titicolab.puppet.objects.factory.RequestObject;
 
@@ -24,9 +25,7 @@ import com.titicolab.puppet.objects.factory.RequestObject;
  * Created by campino on 02/06/2016.
  *
  */
-public  abstract class BaseObject<T extends Parameters>
-                    implements ObjectFactory.AttachParameters,
-                                    GameObject.Updatable{
+public  abstract class BaseObject<T extends Parameters> {
 
     private  boolean mUpdatable;
     private  boolean mDrawable;
@@ -36,9 +35,7 @@ public  abstract class BaseObject<T extends Parameters>
     private RequestObject mRequest;
 
 
-
-    @Override
-    public void onAttachParameters(RequestObject request) {
+    protected void onAttachParameters(RequestObject request) {
         mRequest = request;
     }
 
@@ -54,19 +51,26 @@ public  abstract class BaseObject<T extends Parameters>
 
 
 
-    public void onStart() {
+    protected void onStart() {
+
+    }
+
+    protected void onStop() {
+
+    }
+
+    protected void onDestroy() {
 
     }
 
 
-    public void onStop() {
+    protected abstract void updateLogic();
+    protected abstract void updateRender();
 
+
+    protected boolean onTouch(ObservableInput.Event input) {
+        return false;
     }
-
-    public void onDestroy() {
-
-    }
-
 
 
     public boolean isUpdatable() {
@@ -89,8 +93,6 @@ public  abstract class BaseObject<T extends Parameters>
         mDrawable = drawable;
     }
 
-    public abstract void updateLogic();
-    public abstract void updateRender();
 
 
 

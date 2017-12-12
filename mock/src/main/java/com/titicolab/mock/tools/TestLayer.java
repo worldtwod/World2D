@@ -58,7 +58,7 @@ public class TestLayer extends Layer {
 
 
     @Override
-    public void onAttachParameters(RequestObject request) {
+    protected  void onAttachParameters(RequestObject request) {
         super.onAttachParameters(request);
         log.debug(counter + " onAttachParameters " + getId());
         onAttachObjects.setResult(counter++);
@@ -73,21 +73,21 @@ public class TestLayer extends Layer {
     }
 
     @Override
-    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
+    protected  AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
         log.debug(counter + " onDefineAnimations " + getId() );
         onDefineAnimations.setResult(counter++);
         return super.onDefineAnimations(builder);
     }
 
     @Override
-    public RequestCollection onRequestObjects(RequestObjectBuilder builder) {
+    protected  RequestCollection onRequestObjects(RequestObjectBuilder builder) {
         log.debug(counter + " onRequestObjects " + getId() );
         onRequestObjects.setResult(counter++);
         return super.onRequestObjects(builder);
     }
 
     @Override
-    public void onAttachObjects(GameObjectCollection collection) {
+    protected  void onAttachObjects(GameObjectCollection collection) {
         log.debug(counter + " onAttachObjects " + getId() );
         onAttachObjects.setResult(counter++);
         super.onAttachObjects(collection);
@@ -95,7 +95,7 @@ public class TestLayer extends Layer {
     }
 
     @Override
-    public void onGroupObjectsCreated() {
+    protected  void onGroupObjectsCreated() {
         log.debug(counter + " onGroupObjectsCreated " + getId() );
         onGroupObjectsCreated.setResult(counter++);
         super.onGroupObjectsCreated();
@@ -104,19 +104,19 @@ public class TestLayer extends Layer {
 
 
     @Override
-    public void onStart() {
+    protected  void onStart() {
         log.debug("onStart " + getId() );
         super.onStart();
     }
 
     @Override
-    public void onStop() {
+    protected  void onStop() {
         log.debug("onStop " + getId() );
         super.onStop();
     }
 
     @Override
-    public void onDestroy() {
+    protected  void onDestroy() {
         log.debug("onDestroy " + getId() );
         super.onDestroy();
     }
@@ -125,17 +125,17 @@ public class TestLayer extends Layer {
 
 
     @Override
-    public void updateLogic() {
+    protected  void updateLogic() {
         super.updateLogic();
     }
 
     @Override
-    public void updateRender() {
+    protected  void updateRender() {
         super.updateRender();
     }
 
     @Override
-    public void onDraw(DrawTools drawer) {
+    protected  void onDraw(DrawTools drawer) {
         super.onDraw(drawer);
     }
 }

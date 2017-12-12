@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.titicolab.puppet.objects;
+package com.titicolab.puppet.objects.base;
 
 
 import com.titicolab.nanux.graphics.math.Projection;
@@ -40,15 +40,7 @@ public class Camera  extends BaseObject{
 
     }
 
-    @Override
-    public void updateLogic() {
 
-    }
-
-    @Override
-    public void updateRender() {
-
-    }
 
 
     public Projection getProjection() {
@@ -98,4 +90,13 @@ public class Camera  extends BaseObject{
     }
 
 
+    @Override
+    protected void updateLogic() {
+
+    }
+
+    @Override
+    protected void updateRender() {
+
+    }
 }

@@ -61,7 +61,7 @@ public class TestScene  extends Scene {
     }
 
     @Override
-    public void onAttachParameters(RequestObject request) {
+    protected void onAttachParameters(RequestObject request) {
         log.debug("onAttachParameters " + counter);
         onAttachParams.setResult(counter++);
         super.onAttachParameters(request);
@@ -69,7 +69,7 @@ public class TestScene  extends Scene {
     }
 
     @Override
-    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
+    protected  AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
         log.debug("onDefineAnimations "+ counter);
         onDefineAnimations.setResult(counter++);
         AnimationSheet tem= super.onDefineAnimations(builder);
@@ -77,7 +77,7 @@ public class TestScene  extends Scene {
     }
 
     @Override
-    public MapGroupLayers onDefineMapGroupLayers() {
+    protected  MapGroupLayers onDefineMapGroupLayers() {
         log.debug("onDefineMapGroupLayers "+ counter);
         onDefineMapGroupLayers.setResult(counter++);
         MapGroupLayers tem = super.onDefineMapGroupLayers();
@@ -92,7 +92,7 @@ public class TestScene  extends Scene {
     }
 
     @Override
-    public RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
+    protected  RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
         log.debug("onLayersRequest "+ counter);
         onLayersRequest.setResult(counter++);
         RequestCollection.RequestList tem = super.onLayersRequest(builder);
@@ -100,14 +100,14 @@ public class TestScene  extends Scene {
     }
 
     @Override
-    public void onAttachLayers(GameObjectList layerList) {
+    protected  void onAttachLayers(GameObjectList layerList) {
         log.debug("onAttachLayers "+ counter);
         onAttachLayers.setResult(counter++);
         super.onAttachLayers(layerList);
     }
 
     @Override
-    public void onGroupLayersCreated() {
+    protected  void onGroupLayersCreated() {
         log.debug("onGroupLayersCreated "+ counter);
         onGroupLayersCreated.setResult(counter++);
         super.onGroupLayersCreated();
@@ -115,14 +115,14 @@ public class TestScene  extends Scene {
     }
 
     @Override
-    public void onStart() {
+    protected  void onStart() {
         log.debug("onStart ");
         super.onStart();
 
     }
 
     @Override
-    public void onStop() {
+    protected  void onStop() {
         log.debug("onStop ");
         super.onStop();
     }

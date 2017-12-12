@@ -48,42 +48,43 @@ public class ObjectFactory {
 
 
 
-
+        /*
     public interface AnimationFactory {
         Animation onBuildClips(AnimationBuilder builder);
         void      onAttachAnimation(Animation animation);
         boolean   hasCustomClips();
-    }
+    }*/
 
     /**
      * Implement this interface to instantiate Animate objects...
      * For instance the layers implements it for define its Objects
      */
+    /*
     public interface GameObjectFactory {
         RequestCollection onRequestObjects(RequestObjectBuilder builder);
         void onAttachObjects(GameObjectCollection collection);
         void onGroupObjectsCreated();
-    }
+    }*/
 
     /**
      * Implement this interface to instantiate Layers objects. It is
      * if the object is a group of layers needs implement this
      */
+
+    /*
      protected interface LayerFactory {
         RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder);
         void onAttachLayers(GameObjectList layerList);
         void onGroupLayersCreated();
-    }
+     }/*
 
-    public interface AttachParameters{
+    /*public interface AttachParameters{
         void onAttachParameters(RequestObject request);
-    }
+    }*/
 
 
 
-
-
-   public GameObjectList factoryGroupLayer(LayerFactory group) {
+   public GameObjectList factoryGroupLayer(BaseGroupLayer group) {
 
         RequestCollection.RequestList requestLayersList = group
                 .onLayersRequest(new RequestLayersBuilder());
@@ -93,30 +94,40 @@ public class ObjectFactory {
         for (int i=0; i< size ; i++) {
             RequestObject request = requestLayersList.get(i);
             BaseLayer baselayer = (BaseLayer) instantiate(request);
-            baselayer.onAttachScene(mScene);
-            baselayer.onAttachLayerFactory(group);
             listLayers.add(baselayer);
 
-            if(LayerFactory.class.isAssignableFrom(baselayer.getClass())) {
-                LayerFactory groupLayer = (LayerFactory) baselayer;
+            if(GroupLayer.class.isAssignableFrom(baselayer.getClass())) {
+                ((GroupLayer)baselayer).onAttachScene(mScene);
+                ((GroupLayer)baselayer).onAttachGroupLayers(group);
+            }
+
+
+            if(BaseGroupLayer.class.isAssignableFrom(baselayer.getClass())) {
+                BaseGroupLayer groupLayer = (BaseGroupLayer) baselayer;
                 factoryGroupLayer(groupLayer);
 
-            }else{
-                Layer objectFactory = (Layer) baselayer;
+            }else if(Layer.class.isAssignableFrom(baselayer.getClass())) {
 
+                @SuppressWarnings("ConstantConditions")
+                Layer layer = (Layer) baselayer;
+                layer.onAttachScene(mScene);
+                layer.onAttachGroupLayers(group);
 
-                AnimationSheet animationSheet = objectFactory
+                AnimationSheet animationSheet = layer
                         .onDefineAnimations(new AnimationSheet.Builder());
 
 
                 RequestCollection requestObjectsList =
-                        objectFactory.onRequestObjects(new RequestObjectBuilder());
+                        layer.onRequestObjects(new RequestObjectBuilder());
 
                 GameObjectCollection collection = factoryAnimatedCollection(requestObjectsList,
                         new AnimationBuilder(mTextureManager, animationSheet));
                 //  onAttachObjects
-                objectFactory.onAttachObjects(collection);
-                objectFactory.onGroupObjectsCreated();
+                layer.onAttachObjects(collection);
+                layer.onGroupObjectsCreated();
+
+            }else{
+                throw new RuntimeException("The class of BaseLayer is unknown");
             }
         }
 

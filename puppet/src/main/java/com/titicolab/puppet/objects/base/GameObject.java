@@ -17,9 +17,6 @@
 package com.titicolab.puppet.objects.base;
 
 
-import com.titicolab.nanux.touch.ObservableInput;
-import com.titicolab.puppet.draw.DrawTools;
-
 /**
  * Created by campino on 02/06/2016.
  *
@@ -29,28 +26,12 @@ public interface GameObject {
 
 
 
-    interface OnTouch{
-        boolean onTouchEvent(ObservableInput.Event input);
-    }
-
-
-    interface OnDraw{
-        void onDraw(DrawTools drawer);
-    }
 
 
 
 
-    interface Life {
-        void onCreated();
-        void onStart();
-        void onStop();
-    }
 
 
-    interface Updatable {
-        void updateLogic();
-        void updateRender();
-    }
+
 
 }

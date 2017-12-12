@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.titicolab.puppet.objects;
+package com.titicolab.puppet.objects.base;
 
 
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.DisplayInfo;
+import com.titicolab.puppet.objects.Physics;
 
 /**
  * Created by campino on 24/11/2016.

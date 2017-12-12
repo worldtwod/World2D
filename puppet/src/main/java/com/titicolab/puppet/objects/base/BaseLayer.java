@@ -17,6 +17,7 @@
 package com.titicolab.puppet.objects.base;
 
 import com.titicolab.puppet.animation.AnimationSheet;
+import com.titicolab.puppet.draw.DrawTools;
 import com.titicolab.puppet.objects.factory.Parameters;
 
 /**
@@ -24,27 +25,13 @@ import com.titicolab.puppet.objects.factory.Parameters;
  *
  */
 
-public abstract class BaseLayer<T extends Parameters> extends BaseObject<T>
-                implements AnimationSheet.DefineAnimations, GameObject.OnDraw{
-
-    private Scene mScene;
-    private ObjectFactory.LayerFactory mLayerFactory;
-
-    void onAttachScene(Scene scene){
-        mScene=scene;
-    }
-    void onAttachLayerFactory(ObjectFactory.LayerFactory group) {
-        mLayerFactory =group;
-    }
+public abstract class BaseLayer<T extends Parameters> extends BaseObject<T>{
 
 
-    public Scene getScene() {
-        return mScene;
-    }
+    protected abstract AnimationSheet onDefineAnimations(AnimationSheet.Builder builder);
+
+    protected abstract void onDraw(DrawTools drawer);
 
 
-    @Override
-    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
-        return mScene.onDefineAnimations(builder);
-    }
+
 }
