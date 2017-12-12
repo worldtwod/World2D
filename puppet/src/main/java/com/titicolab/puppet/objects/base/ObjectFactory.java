@@ -176,16 +176,16 @@ public class ObjectFactory {
 
 
     /**
-     * Instantiate a object type BaseObject, it is responsible for call to
+     * Instantiate a object type GameObject, it is responsible for call to
      * event:
      *  onAttachParameters()
      *
      * @param request data for instantiation
      * @return the new object
      */
-    private static BaseObject instantiate(RequestObject request){
-        BaseObject gameObject = null;
-        Class<? extends BaseObject> c = request.getType();
+    private static GameObject instantiate(RequestObject request){
+        GameObject gameObject = null;
+        Class<? extends GameObject> c = request.getType();
 
         try {
             gameObject = c.newInstance();
@@ -207,7 +207,7 @@ public class ObjectFactory {
     /******************************************* ERROR MANAGEMENT  ********************************
      * ********************************************************************************************
      */
-    private static void errorInstantiation(Class<? extends BaseObject> c,Exception tr) {
+    private static void errorInstantiation(Class<? extends GameObject> c, Exception tr) {
         if(isInnerClassNotStatic(c)) {
             String errorMessage = "the GameObject " +
                     c.getSimpleName() +

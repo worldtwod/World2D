@@ -25,7 +25,7 @@ import com.titicolab.puppet.objects.factory.Parameters;
  *
  */
 
-public abstract class BaseLayer<T extends Parameters> extends BaseObject<T>{
+public abstract class BaseLayer<T extends Parameters> extends GameObject<T> {
 
 
     protected abstract AnimationSheet onDefineAnimations(AnimationSheet.Builder builder);

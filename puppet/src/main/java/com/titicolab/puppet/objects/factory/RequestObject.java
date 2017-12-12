@@ -16,7 +16,7 @@
 
 package com.titicolab.puppet.objects.factory;
 
-import com.titicolab.puppet.objects.base.BaseObject;
+import com.titicolab.puppet.objects.base.GameObject;
 
 /**
  * @author campino//
@@ -27,7 +27,7 @@ public interface RequestObject{
 
 	int getId();
 	Parameters getParameters();
-	Class<? extends BaseObject> getType();
+	Class<? extends GameObject> getType();
 
 
 }

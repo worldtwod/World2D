@@ -17,7 +17,7 @@
 package com.titicolab.puppet.list;
 
 import com.titicolab.nanux.list.FlexibleList;
-import com.titicolab.puppet.objects.base.BaseObject;
+import com.titicolab.puppet.objects.base.GameObject;
 
 
 /**
@@ -36,7 +36,7 @@ public class GameObjectCollection extends FlexibleList<GameObjectList> {
      * @param type
      * @return
      */
-    public BaseObject getObject(Class<?> type){
+    public GameObject getObject(Class<?> type){
         int typeIndex = findIndexOf(type);
         if(typeIndex<0)throw new
                 IllegalArgumentException("Object not found,  the class " +type.getSimpleName() + "is unknown," +
@@ -62,7 +62,7 @@ public class GameObjectCollection extends FlexibleList<GameObjectList> {
             if(get(i)==null  || get(i).get(0)==null)
                 break;
 
-            BaseObject object = get(i).get(0);
+            GameObject object = get(i).get(0);
 
             if(object.getClass()== type){
                 typeIndex = i;
@@ -99,7 +99,7 @@ public class GameObjectCollection extends FlexibleList<GameObjectList> {
     }
 
 
-    public void addNew(BaseObject gameObject){
+    public void addNew(GameObject gameObject){
         int typeIndex = findIndexOf(gameObject.getClass());
         if(typeIndex<0){
             GameObjectList list= new GameObjectList(1);

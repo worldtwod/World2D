@@ -39,7 +39,7 @@ public class HelperObjects {
     }
 
 
-    public static void updateLogicObjects(FlexibleList<? extends BaseObject> objectCollection) {
+    public static void updateLogicObjects(FlexibleList<? extends GameObject> objectCollection) {
         int sizeObject =objectCollection.size();
         for (int item = 0; item < sizeObject; item++) {
             if(objectCollection.get(item).isUpdatable())
@@ -47,7 +47,7 @@ public class HelperObjects {
         }
     }
 
-    public static void updateRenderObjects(FlexibleList<? extends BaseObject> objectCollection){
+    public static void updateRenderObjects(FlexibleList<? extends GameObject> objectCollection){
         int sizeObject = objectCollection.size();
         for (int item = 0; item < sizeObject; item++) {
             if(objectCollection.get(item).isUpdatable())
@@ -61,7 +61,7 @@ public class HelperObjects {
 
 
     public static boolean notifyInputEvent(ObservableInput.Event input,
-                                    FlexibleList<? extends BaseObject> list) {
+                                    FlexibleList<? extends GameObject> list) {
         boolean r = false;
         int sizeObject = list.size();
         for (int item = 0; item < sizeObject; item++) {
@@ -72,7 +72,7 @@ public class HelperObjects {
         return r;
     }
 
-    private static boolean notifyToGuiObject(BaseObject listener,
+    private static boolean notifyToGuiObject(GameObject listener,
                                              ObservableInput.Event input) {
         return listener.onTouch(input);
     }

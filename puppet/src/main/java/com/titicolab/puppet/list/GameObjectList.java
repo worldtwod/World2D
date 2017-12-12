@@ -18,13 +18,13 @@ package com.titicolab.puppet.list;
 
 
 import com.titicolab.nanux.list.FlexibleList;
-import com.titicolab.puppet.objects.base.BaseObject;
+import com.titicolab.puppet.objects.base.GameObject;
 
 /**
  * Created by campino on 07/06/2016.
  *
  */
-public class GameObjectList extends FlexibleList<BaseObject>  {
+public class GameObjectList extends FlexibleList<GameObject>  {
     private int mAvailable;
 
 
@@ -39,7 +39,7 @@ public class GameObjectList extends FlexibleList<BaseObject>  {
         mAvailable+=resize;
     }
 
-    public BaseObject getObject(){
+    public GameObject getObject(){
         if((mAvailable -1)<0)
             throw new IllegalArgumentException
                     ("There are not more instances of this gameObject: " +
@@ -49,8 +49,8 @@ public class GameObjectList extends FlexibleList<BaseObject>  {
     }
 
 
-    public BaseObject findById(int id){
-        BaseObject results = null;
+    public GameObject findById(int id){
+        GameObject results = null;
         for (int i = 0; i < size(); i++) {
             if(get(i).getId()==id){
                 results = get(i);

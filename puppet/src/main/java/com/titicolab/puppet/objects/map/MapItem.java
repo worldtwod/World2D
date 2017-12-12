@@ -17,7 +17,7 @@
 package com.titicolab.puppet.objects.map;
 
 
-import com.titicolab.puppet.objects.base.BaseObject;
+import com.titicolab.puppet.objects.base.GameObject;
 import com.titicolab.puppet.objects.factory.Parameters;
 import com.titicolab.puppet.objects.factory.RequestObject;
 
@@ -28,11 +28,11 @@ import com.titicolab.puppet.objects.factory.RequestObject;
 
 public class MapItem implements RequestObject {
 
-    private final  Class  <? extends BaseObject> clazz;
+    private final  Class  <? extends GameObject> clazz;
     private final  int        id;
     private final  Parameters params;
 
-    public MapItem(Class<? extends BaseObject> clazz, int id, Parameters params){
+    public MapItem(Class<? extends GameObject> clazz, int id, Parameters params){
         this.clazz=clazz;
         this.id = id;
         this.params= params;
@@ -42,7 +42,7 @@ public class MapItem implements RequestObject {
         return params;
     }
 
-    public Class<? extends BaseObject> getType() {
+    public Class<? extends GameObject> getType() {
         return clazz;
     }
 

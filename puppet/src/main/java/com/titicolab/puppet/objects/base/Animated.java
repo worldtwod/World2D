@@ -29,7 +29,7 @@ import com.titicolab.puppet.objects.factory.RequestObject;
  *
  */
 
-public  class Animated   extends BaseObject {
+public  class Animated   extends GameObject {
 
     private Image               mImage;
     private Animator            mAnimator;

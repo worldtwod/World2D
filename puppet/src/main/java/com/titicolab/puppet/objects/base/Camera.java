@@ -19,13 +19,12 @@ package com.titicolab.puppet.objects.base;
 
 import com.titicolab.nanux.graphics.math.Projection;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
-import com.titicolab.puppet.objects.base.BaseObject;
 
 /**
  * Created by campino on 30/06/2016.
  *
  */
-public class Camera  extends BaseObject{
+public class Camera  extends GameObject {
 
     private Projection mProjection;
 
