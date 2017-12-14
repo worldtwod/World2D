@@ -28,8 +28,8 @@ import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
 import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.loop.Puppeteer;
 import com.titicolab.puppet.objects.base.Animated;
-import com.titicolab.puppet.objects.base.Layer;
 import com.titicolab.puppet.objects.base.Scene;
+import com.titicolab.puppet.objects.base.SceneLayer;
 import com.titicolab.puppet.objects.map.MapGroupLayers;
 import com.titicolab.puppet.objects.map.MapItem;
 import com.titicolab.puppet.objects.map.MapObjects;
@@ -75,14 +75,10 @@ public class PuppeteerTest extends GraphicsTestCase{
     }
 
     @Test
-    public void test_controller(){
+    public void testStartScene(){
 
         MockScene scene = new MockScene();
-
-
-
         mController.setStartScene(scene);
-
         //manager.startScene(scene);
         waitTouchSeconds(5);
 
@@ -113,7 +109,7 @@ public class PuppeteerTest extends GraphicsTestCase{
     }
 
 
-    public static class MockLayer extends Layer{
+    public static class MockLayer extends SceneLayer {
 
         Button button;
         Digit digit;
@@ -138,9 +134,12 @@ public class PuppeteerTest extends GraphicsTestCase{
         protected MapObjects onDefineMapObjects() {
             return new MapObjects.Builder()
                     .setName("MapTest")
-                    .item(new MapItem(Digit.class, 100, new Animated.ParamsAnimation("digits", 1)))
-                    .item(new MapItem(Digit.class, 101, new Animated.ParamsAnimation("digits", 1)))
-                    .item(new MapItem(Button.class, 100, new Animated.ParamsAnimation("button", 1)))
+                    .item(new MapItem(Digit.class, 100,
+                            new Animated.ParamsAnimation("digits", 1)))
+                    .item(new MapItem(Digit.class, 101,
+                            new Animated.ParamsAnimation("digits", 1)))
+                    .item(new MapItem(Button.class, 100,
+                            new Animated.ParamsAnimation("button", 1)))
                     .build();
         }
 
@@ -155,7 +154,9 @@ public class PuppeteerTest extends GraphicsTestCase{
 
 
     public static class Digit extends Animated {
+
     }
+
     public static class Button extends Animated {
     }
 

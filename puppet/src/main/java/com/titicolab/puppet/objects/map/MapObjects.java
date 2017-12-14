@@ -31,7 +31,9 @@ public class MapObjects implements JsonHelper.Serializable {
     FlexibleList<MapItem> mListMap;
     String mName;
 
-    MapObjects() {
+
+    protected MapObjects() {
+
     }
 
     @Override
@@ -48,11 +50,18 @@ public class MapObjects implements JsonHelper.Serializable {
     }
 
 
+    protected void setName(String name) {
+        mName = name;
+    }
+    protected void setList(FlexibleList<MapItem> list) {
+        this.mListMap = list;
+    }
+
 
     public static  class Builder{
 
-        private  String name;
-        private  FlexibleList<MapItem> list;
+          String name;
+          FlexibleList<MapItem> list;
 
         public   Builder(){
             list = new FlexibleList<>(10);

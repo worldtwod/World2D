@@ -81,7 +81,7 @@ public class GameObjectCollection extends FlexibleList<GameObjectList> {
         return get(typeIndex).getObjectsAvailable();
     }
 
-    int getCount(){
+    public int getCount(){
         int count=0;
         for (int i = 0; i < size(); i++) {
              count+=get(i).size();
@@ -108,6 +108,21 @@ public class GameObjectCollection extends FlexibleList<GameObjectList> {
         }else{
             get(typeIndex).add(gameObject);
         }
+    }
+
+
+    public int sizeAssignableFrom(Class<? extends GameObject> c){
+
+        int counter =0;
+        int sizeTypes = size();
+        for (int i = 0; i < sizeTypes; i++) {
+            int sizeObject =get(i).size();
+            for (int item = 0; item < sizeObject; item++) {
+                if(c.isAssignableFrom(get(i).get(item).getClass()))
+                    counter++;
+            }
+        }
+        return counter;
     }
 
 

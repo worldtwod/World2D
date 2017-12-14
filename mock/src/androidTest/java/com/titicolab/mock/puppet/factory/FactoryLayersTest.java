@@ -21,9 +21,9 @@ import com.titicolab.mock.cases.puppet.AnimationTestCase;
 import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.list.GameObjectList;
 import com.titicolab.puppet.objects.base.Animated;
-import com.titicolab.puppet.objects.base.Layer;
 import com.titicolab.puppet.objects.base.ObjectFactory;
 import com.titicolab.puppet.objects.base.Scene;
+import com.titicolab.puppet.objects.base.SceneLayer;
 import com.titicolab.puppet.objects.map.MapGroupLayers;
 import com.titicolab.puppet.objects.map.MapItem;
 import com.titicolab.puppet.objects.map.MapObjects;
@@ -85,7 +85,7 @@ public class FactoryLayersTest extends AnimationTestCase {
     }
 
 
-    public static class MockLayer extends Layer{
+    public static class MockLayer extends SceneLayer {
 
         Button button;
         Digit digit;

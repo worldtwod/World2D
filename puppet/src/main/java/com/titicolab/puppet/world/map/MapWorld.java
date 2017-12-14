@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.titicolab.puppet.objects.map;
+package com.titicolab.puppet.world.map;
+
+import com.titicolab.puppet.objects.map.MapGroupLayers;
 
 /**
  * Created by campino on 18/01/2017.

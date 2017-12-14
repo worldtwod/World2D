@@ -125,6 +125,13 @@ public  class Animated   extends GameObject {
     }
 
 
+    public float getWidth() {
+        return mImage.getWidth();
+    }
+
+    public float getHeight() {
+        return mImage.getHeight();
+    }
     /**
      * The screen coordinates have (0,0) in (leftSp, bottom) corner.
      * @param left left

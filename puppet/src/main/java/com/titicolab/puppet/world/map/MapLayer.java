@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-package com.titicolab.puppet.objects.map;
+package com.titicolab.puppet.world.map;
+
+import com.titicolab.nanux.list.FlexibleList;
+import com.titicolab.puppet.objects.map.MapItem;
+import com.titicolab.puppet.objects.map.MapObjects;
+import com.titicolab.puppet.world.objects.LayerObject;
 
 /**
  * Created by campino on 20/12/2016.
@@ -31,10 +36,10 @@ public class MapLayer extends MapObjects {
     private int offsetX;
     private int offsetY;
 
-
-    public MapLayer() {
+    MapLayer() {
         super();
     }
+
 
     public int getTilesX() {
         return tilesX;
@@ -57,7 +62,13 @@ public class MapLayer extends MapObjects {
 
 
 
+
+
+
     public static  class Builder{
+        private  String name;
+        private  FlexibleList<MapItem> list;
+
         private int tilesX;
         private int tilesY;
         private int tileWidth;
@@ -65,6 +76,14 @@ public class MapLayer extends MapObjects {
         private int offsetX;
         private int offsetY;
 
+        public Builder(){
+            list = new FlexibleList<>(10);
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
 
         public Builder setGridSize(int tilesX, int tilesY) {
             this.tilesX=tilesX;
@@ -83,11 +102,23 @@ public class MapLayer extends MapObjects {
             this.offsetY = offsetY;
             return this;
         }
-        
+
+        public Builder item(Class<? extends LayerObject> clazz,
+                            int id, int i, int j, String animation, int startClip) {
+            list.add(new MapItem(clazz,id,new LayerObject.Params(i,j,animation,startClip)));
+            return this;
+        }
+
+        /*private Builder item(Class<? extends LayerObject> clazz, int id, LayerObject.Params params){
+            list.add(new MapItem(clazz,id,params));
+            return this;
+        }*/
 
 
         public MapLayer build(){
             MapLayer mapLayer = new MapLayer();
+            mapLayer.setName(name);
+            mapLayer.setList(list);
             mapLayer.offsetX = offsetX;
             mapLayer.offsetY = offsetY;
             mapLayer.tileWidth = tileWidth;
@@ -96,6 +127,7 @@ public class MapLayer extends MapObjects {
             mapLayer.tilesY = tilesY;
             return  mapLayer;
         }
+
 
     }
 

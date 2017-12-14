@@ -22,8 +22,9 @@ import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.objects.base.Animated;
 import com.titicolab.puppet.objects.base.GroupLayer;
 import com.titicolab.puppet.objects.base.Layer;
-import com.titicolab.puppet.objects.base.Scene;
 import com.titicolab.puppet.objects.base.ObjectFactory;
+import com.titicolab.puppet.objects.base.Scene;
+import com.titicolab.puppet.objects.base.SceneLayer;
 import com.titicolab.puppet.objects.factory.RequestCollection;
 import com.titicolab.puppet.objects.factory.RequestLayersBuilder;
 import com.titicolab.puppet.objects.map.MapGroupLayers;
@@ -147,9 +148,9 @@ public class FactoryGroupLayersTest extends AnimationTestCase {
     }
     public static class Button extends Animated {
     }
-    public static class MockLayer0 extends Layer{
+    public static class MockLayer0 extends SceneLayer {
     }
-    public static class MockLayer1 extends Layer{
+    public static class MockLayer1 extends SceneLayer{
     }
 
 

@@ -17,6 +17,7 @@
 package com.titicolab.nanux.map;
 
 import com.titicolab.nanux.mock.MockAnimated;
+import com.titicolab.puppet.objects.base.Layer;
 import com.titicolab.puppet.objects.map.MapItem;
 import com.titicolab.puppet.objects.map.MapObjects;
 
@@ -38,10 +39,11 @@ public class MapObjectsTest {
     public void mapLayerTest() {
 
 
+
         MapObjects mapLayer = new MapObjects.Builder()
                 .setName("Collection")
-                .item(new MapItem(MockAnimated.class, 100, "params"))
-                .item(new MapItem(MockAnimated.class, 101, "params"))
+                .item(new MapItem(MockAnimated.class, 100, new Layer.ParamsLayer(null)))
+                .item(new MapItem(MockAnimated.class, 101, new Layer.ParamsLayer(null)))
                 .build();
 
         Assert.assertEquals(mapLayer.getName(), "Collection");

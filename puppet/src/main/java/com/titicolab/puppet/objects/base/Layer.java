@@ -16,12 +16,9 @@
 
 package com.titicolab.puppet.objects.base;
 
-import com.titicolab.nanux.graphics.drawer.Drawer;
-import com.titicolab.nanux.list.FlexibleList;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.draw.DrawTools;
-import com.titicolab.puppet.draw.Image;
 import com.titicolab.puppet.list.GameObjectCollection;
 import com.titicolab.puppet.objects.factory.Parameters;
 import com.titicolab.puppet.objects.factory.RequestCollection;
@@ -34,15 +31,10 @@ import com.titicolab.puppet.objects.map.MapObjects;
  *
  */
 
-public  class Layer extends BaseLayer<Layer.ParamsLayer>{
+public abstract class Layer extends BaseLayer<Layer.ParamsLayer>{
 
 
     private MapObjects mMapObjects;
-    private GameObjectCollection mObjectCollection;
-
-    private FlexibleList<UiObject> uiRenderList;
-    private FlexibleList<Animated> worldRenderList;
-
     private Scene mScene;
     private BaseGroupLayer mGroupLayers;
 
@@ -61,7 +53,8 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer>{
 
 
     protected MapObjects onDefineMapObjects(){
-        return getParameters()!=null? getParameters().mapObjects: new MapObjects.Builder().build();
+        return getParameters()!=null?
+                getParameters().mapObjects: new MapObjects.Builder().build();
     }
 
 
@@ -83,107 +76,31 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer>{
         return builder.object(mMapObjects.getList()).build();
     }
 
-    protected void onAttachObjects(GameObjectCollection collection) {
-            mObjectCollection = collection;
-            loadListObjects(collection);
-    }
+    protected abstract void onAttachObjects(GameObjectCollection collection);
 
-    protected void onGroupObjectsCreated() {
+    protected abstract void onGroupObjectsCreated();
 
-    }
+    protected abstract void updateLogic();
 
 
-    @Override
-    protected void updateLogic() {
-        if(isUpdatable()) {
-            HelperObjects.updateLogicObjects(uiRenderList);
-            HelperObjects.updateLogicObjects(worldRenderList);
-        }
-    }
+    protected abstract void updateRender();
 
-    @Override
-    protected void updateRender() {
-        if(isDrawable()) {
-            HelperObjects.updateRenderObjects(uiRenderList);
-            HelperObjects.updateRenderObjects(worldRenderList);
-        }
-    }
+    protected abstract void onDraw(DrawTools drawer);
 
-    @Override
-    protected void onDraw(DrawTools drawer) {
-        if (isDrawable()) {
-            onDrawGameObjects(drawer.images);
-            onDrawUiObjects(drawer.ui);
-            onDrawText(drawer.text);
-        }
-    }
+    protected abstract boolean onTouch(ObservableInput.Event input);
 
-    private void onDrawGameObjects(Drawer<Image> spriteDrawer) {
-        if(worldRenderList.size()>0) {
-            spriteDrawer.begin(getCamera2D().getProjection().getMatrix());
-            HelperObjects.drawGameObjects(spriteDrawer,worldRenderList);
-            spriteDrawer.end();
-        }
-    }
-
-    private void onDrawUiObjects(Drawer<Image> uiDrawer){
-        if(uiRenderList.size()>0){
-            uiDrawer.begin(getCameraUi().getProjection().getMatrix());
-            HelperObjects.drawGameObjects(uiDrawer,uiRenderList);
-            uiDrawer.end();
-        }
-    }
-
-
-    private void onDrawText(Drawer drawerText) {
-
-       //TODO
-    }
-
-    @Override
-    protected boolean onTouch(ObservableInput.Event input) {
-        return isTouchable()
-                && HelperObjects.notifyInputEvent(input, uiRenderList)
-                | HelperObjects.notifyInputEvent(input, worldRenderList);
-    }
-
-
-    private  void loadListObjects(GameObjectCollection objectCollection) {
-        uiRenderList = new FlexibleList<>(100);
-        worldRenderList = new FlexibleList<>(100);
-        if( objectCollection==null) return;
-
-        int sizeTypes = objectCollection.size();
-        for (int i = 0; i < sizeTypes; i++) {
-            int sizeObject =objectCollection.get(i).size();
-            for (int item = 0; item < sizeObject; item++) {
-                if(UiObject.class.isAssignableFrom(objectCollection.get(i).get(item).getClass()))
-                    uiRenderList.add((UiObject) objectCollection.get(i).get(item));
-                else {
-                    worldRenderList.add((Animated) objectCollection.get(i).get(item));
-                }
-            }
-        }
-    }
-
-
-
-
-
-
-    public GameObjectCollection getObjectCollection() {
-        return mObjectCollection;
-    }
-
-    public <T>   T findById(Class<T> clazz, int id){
-        return mObjectCollection.findById(clazz,id);
-    }
 
     protected Camera2D getCamera2D(){
         return mScene.getCamera2D();
     }
     protected CameraUi getCameraUi(){
         return mScene.getCameraUi();
+    }
+    public Scene getScene() {
+        return mScene;
+    }
+    public MapObjects getMapObjects(){
+        return mMapObjects;
     }
 
 
@@ -193,6 +110,5 @@ public  class Layer extends BaseLayer<Layer.ParamsLayer>{
             this.mapObjects = mapObjects;
         }
     }
-
 
 }
