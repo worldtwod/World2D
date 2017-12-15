@@ -31,9 +31,12 @@ public class Camera2D extends Camera {
     public static final int HOLD_WIDTH = ProjectionUi.SCALE_HEIGHT;
     public static final int HOLD_HEIGHT = ProjectionUi.SCALE_WIDTH;
 
-    private final Physics body;
+    protected final Physics body;
     private final DisplayInfo mDisplayInfo;
-    private float mZoom;
+
+
+
+    private float zoom;
     private float ratio;
 
 
@@ -41,7 +44,7 @@ public class Camera2D extends Camera {
         super(new ProjectionUi(displayInfo));
         body = new Physics();
         setViewport(1280, 720, ProjectionUi.SCALE_HEIGHT);
-        mZoom = 1;
+        zoom = 1;
         ratio = displayInfo.getAspectRatio();
         mDisplayInfo = displayInfo;
     }
@@ -49,7 +52,7 @@ public class Camera2D extends Camera {
 
     @Override
     public void updateLogic() {
-        getProjection().setScale(mZoom);
+        getProjection().setScale(zoom);
     }
 
     public void setViewport(int refWidth, int refHeight, int scaleType) {
@@ -76,13 +79,15 @@ public class Camera2D extends Camera {
 
     public void zoom(float zoom) {
         zoom *= -1;
-        if (mZoom + zoom > 1.5f || mZoom + zoom < 0.5f) {
+        if (this.zoom + zoom > 1.5f || this.zoom + zoom < 0.5f) {
             return;
         }
-        mZoom += zoom;
+        this.zoom += zoom;
     }
 
-
+    public float getZoom() {
+        return zoom;
+    }
 
     public float getX() {
         return body.position.x;
@@ -103,6 +108,10 @@ public class Camera2D extends Camera {
         return (int) (super.getViewPortHeight() * getProjection().getScale());
     }
 
+    /**
+     * The ratio Ratio of display
+     * @return aspect ratio display
+     */
     public float getAspectRatio() {
         return ratio;
     }

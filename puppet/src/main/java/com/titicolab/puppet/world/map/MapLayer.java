@@ -32,7 +32,6 @@ public class MapLayer extends MapObjects {
     private int tilesY;
     private int tileWidth;
     private int tileHeight;
-
     private int offsetX;
     private int offsetY;
 
@@ -59,22 +58,46 @@ public class MapLayer extends MapObjects {
     public int getHeight() {
         return tileHeight*tilesY;
     }
+    public int getOffsetX() {
+        return offsetX;
+    }
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    protected void  setGridSize(int tilesX, int tilesY) {
+        this.tilesX=tilesX;
+        this.tilesY = tilesY;
+    }
+
+    protected void  setTileSize(int width, int height) {
+        this.tileHeight = height;
+        this.tileWidth = width;
+    }
+
+    protected void  setOffset(int offsetX, int offsetY) {
+        this.offsetX=offsetX;
+        this.offsetY = offsetY;
+    }
+
+
+    static  class BuilderMapTiledLayer{
+
+    }
 
 
 
+    public static  class Builder {
 
+        String name;
+        FlexibleList<MapItem> list;
 
-
-    public static  class Builder{
-        private  String name;
-        private  FlexibleList<MapItem> list;
-
-        private int tilesX;
-        private int tilesY;
-        private int tileWidth;
-        private int tileHeight;
-        private int offsetX;
-        private int offsetY;
+        int tilesX;
+        int tilesY;
+        int tileWidth;
+        int tileHeight;
+        int offsetX;
+        int offsetY;
 
         public Builder(){
             list = new FlexibleList<>(10);
@@ -103,19 +126,28 @@ public class MapLayer extends MapObjects {
             return this;
         }
 
+
+        void checkParameters(){
+            if(name==null)
+                throw new RuntimeException("The map needs a name, set it with setName");
+            if(tilesX==0 || tilesY==0)
+                throw new RuntimeException("Before of addNew items to MapLayer you must  setTileSize()");
+            if(tileHeight==0 || tileWidth==0){
+                throw new RuntimeException("Before of addNew items to MapLayer you must  setWindowSize()");
+            }
+        }
         public Builder item(Class<? extends LayerObject> clazz,
                             int id, int i, int j, String animation, int startClip) {
             list.add(new MapItem(clazz,id,new LayerObject.Params(i,j,animation,startClip)));
             return this;
         }
 
-        /*private Builder item(Class<? extends LayerObject> clazz, int id, LayerObject.Params params){
-            list.add(new MapItem(clazz,id,params));
-            return this;
-        }*/
-
 
         public MapLayer build(){
+            checkParameters();
+            checkCoordinates();
+            checkIds();
+
             MapLayer mapLayer = new MapLayer();
             mapLayer.setName(name);
             mapLayer.setList(list);
@@ -128,7 +160,51 @@ public class MapLayer extends MapObjects {
             return  mapLayer;
         }
 
+        private void checkCoordinates() {
+            for (int i = 0; i < list.size(); i++) {
+                LayerObject.Params params= (LayerObject.Params)
+                        list.get(i).getParameters();
+                checkCoordinates(list.get(i).getId(),params.i,params.j);
+            }
+        }
 
+
+
+        private void checkCoordinates(int id, int i, int j) {
+            if(i>=tilesX)
+                throw new RuntimeException("Error item id=["+ id +"]" +
+                        "The coordinate i musts less then: " + tilesX
+                        + ". You are trying to tile in: " + i);
+            if(j>=tilesY)
+                throw new RuntimeException("Error item id=["+ id +"]" +
+                        "The coordinate j musts less then: "
+                        + tilesY + ". You are trying to tile in: " + j);
+        }
+
+
+
+        protected void checkIds(){
+            int[] equals= getEqualsIds();
+            if(equals!=null){
+                throw new RuntimeException("Error in the MapWorld, there are items width the same id, " +
+                        "type [" + list.get(equals[0]).getType().getSimpleName() + "] " +
+                        "id [" + equals[1] + "]");
+            }
+        }
+
+        private int[] getEqualsIds() {
+            int[] result = null;
+            for (int i = 0; i < list.size(); i++) {
+                MapItem item=list.get(i);
+                for (int k = i+1; k < list.size(); k++) {
+                    if(item.getId()==list.get(k).getId()){
+                        result= new int[]{k,item.getId()};
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
     }
 
 }

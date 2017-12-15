@@ -86,7 +86,7 @@ public class Animator {
         if (index<0)
             throw new  RuntimeException
                     ("You are attempting play the clip [" + id + "]," +
-                            " but it does not exist in the animation [" + getAnimation().getKey()+ "]");
+                            " but it does not exist in the animation [ " + getAnimation().getKey()+ " ]");
         playByIndex(index);
     }
 

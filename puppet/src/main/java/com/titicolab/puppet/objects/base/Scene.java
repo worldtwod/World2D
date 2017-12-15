@@ -39,10 +39,16 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
 
     private SceneManager    mSceneManager;
     private DisplayInfo     mDisplayInfo;
+
+
+
     private MapGroupLayers  mMapGroupLayers;
 
 
     private GameObjectList mLayerList;
+
+
+
     private CameraUi mCameraUi;
     private Camera2D mCamera2D;
     private final FlagSync mFlagOnCreated;
@@ -96,12 +102,13 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
 
     @Override
     protected void onAttachLayers(GameObjectList layerList) {
-            mLayerList=layerList;
+        mLayerList=layerList;
+        mFlagOnCreated.assertFlag();
     }
 
     @Override
     protected void onGroupLayersCreated(){
-        mFlagOnCreated.assertFlag();
+
     }
 
 
@@ -160,6 +167,9 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
         return mCamera2D;
     }
 
+    public MapGroupLayers getMapGroupLayers() {
+        return mMapGroupLayers;
+    }
 
 
     @Override
@@ -191,4 +201,12 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
     }
 
 
+
+    protected void setCameraUi(CameraUi cameraUi) {
+        this.mCameraUi = cameraUi;
+    }
+
+    protected void setCamera2D(Camera2D camera2D) {
+        this.mCamera2D = camera2D;
+    }
 }

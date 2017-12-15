@@ -17,7 +17,10 @@
 package com.titicolab.puppet.world.objects;
 
 
+import com.titicolab.nanux.util.DisplayInfo;
+import com.titicolab.puppet.objects.base.CameraUi;
 import com.titicolab.puppet.objects.base.Scene;
+import com.titicolab.puppet.world.map.MapWorld;
 
 /**
  * Created by campino on 18/01/2017.
@@ -27,5 +30,35 @@ import com.titicolab.puppet.objects.base.Scene;
 public abstract class World2D extends Scene {
 
 
+    //private Rectangle worldBondary;
     // setLayer
+
+
+    protected abstract MapWorld onDefineMapWorld(MapWorld.Builder builder);
+
+
+    @Override
+    protected MapWorld onDefineMapGroupLayers() {
+        return onDefineMapWorld(new MapWorld.Builder());
+    }
+
+
+    @Override
+    protected void onDefineCameras(DisplayInfo displayInfo) {
+        setCameraUi(new CameraUi(displayInfo));
+        CameraWorld2D cameraWorld = new CameraWorld2D(displayInfo);
+        cameraWorld.setViewport(getMapWorld());
+        setCamera2D(cameraWorld);
+    }
+
+
+
+    public MapWorld getMapWorld(){
+        return (MapWorld) getMapGroupLayers();
+    }
+
+    @Override
+    public CameraWorld2D getCamera2D() {
+        return (CameraWorld2D) super.getCamera2D();
+    }
 }

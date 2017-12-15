@@ -30,13 +30,26 @@ public class MapGroupLayers extends MapObjects{
 
 
 
+
+
+
     public static  class Builder{
 
-        private  String name;
-        private  FlexibleList<MapItem> list;
+
+
+        private String name;
+        private FlexibleList<MapItem> list;
 
         public   Builder(){
             list = new FlexibleList<>(10);
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public FlexibleList<MapItem> getList() {
+            return list;
         }
 
         public MapGroupLayers.Builder layer(Class<? extends BaseLayer> clazz, int id, Parameters params){

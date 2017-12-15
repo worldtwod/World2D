@@ -25,4 +25,10 @@ public interface Drawer<T>{
     void begin(float[] matrix);
     void add(T item);
     void end();
+
+
+    interface Brush<T> extends Drawer<T> {
+        void setColor(float r, float g, float b, float a);
+        void setBrushSize(float lineSize);
+    }
 }

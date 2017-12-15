@@ -22,6 +22,7 @@ import com.titicolab.opengl.util.LogHelper;
 import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.draw.DrawTools;
 import com.titicolab.puppet.list.GameObjectCollection;
+import com.titicolab.puppet.objects.base.Scene;
 import com.titicolab.puppet.objects.base.SceneLayer;
 import com.titicolab.puppet.objects.factory.RequestCollection;
 import com.titicolab.puppet.objects.factory.RequestObject;
@@ -43,8 +44,9 @@ public class TestLayer extends SceneLayer {
     public final ObjectSync<Integer> onRequestObjects;
     public final ObjectSync<Integer> onAttachObjects;
     public final ObjectSync<Integer> onGroupObjectsCreated;
-    private int counter;
+    public ObjectSync<Integer> onAttachScene;
 
+    private int counter;
     public TestLayer() {
         log = new LogHelper(this, GameActivity.class.getSimpleName());
         counter=1;
@@ -54,6 +56,7 @@ public class TestLayer extends SceneLayer {
         onRequestObjects= new ObjectSync<>();
         onAttachObjects= new ObjectSync<>();
         onGroupObjectsCreated= new ObjectSync<>();
+        onAttachScene= new ObjectSync<>();
     }
 
 
@@ -102,6 +105,12 @@ public class TestLayer extends SceneLayer {
 
     }
 
+    @Override
+    protected void onAttachScene(Scene scene) {
+        log.debug(counter + " onAttachScene " + getId() );
+        onAttachScene.setResult(counter++);
+        super.onAttachScene(scene);
+    }
 
     @Override
     protected  void onStart() {

@@ -91,7 +91,7 @@ public class GeometryDrawerTest extends GraphicsTestCase{
     public void a_shader(){
         assertNotNull(drawer);
         drawer.setColor(0,1,1,1);
-        drawer.setLineWidth(10.0f);
+        drawer.setBrushSize(10.0f);
 
         waitTouchSeconds(60);
 

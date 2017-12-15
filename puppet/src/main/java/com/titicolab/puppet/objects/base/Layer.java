@@ -58,7 +58,7 @@ public abstract class Layer extends BaseLayer<Layer.ParamsLayer>{
     }
 
 
-    void onAttachScene(Scene scene) {
+    protected void onAttachScene(Scene scene) {
        mScene = scene;
     }
 
@@ -105,10 +105,15 @@ public abstract class Layer extends BaseLayer<Layer.ParamsLayer>{
 
 
     public static class ParamsLayer extends Parameters {
-        final  MapObjects mapObjects;
+        protected final  MapObjects mapObjects;
         public ParamsLayer(MapObjects mapObjects) {
             this.mapObjects = mapObjects;
         }
+
+        public MapObjects getMapObjects(){
+            return  this.mapObjects;
+        }
+
     }
 
 }

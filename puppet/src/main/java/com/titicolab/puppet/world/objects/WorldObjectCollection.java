@@ -18,7 +18,6 @@ package com.titicolab.puppet.world.objects;
 
 import com.titicolab.nanux.list.FlexibleList;
 import com.titicolab.puppet.list.GameObjectCollection;
-import com.titicolab.puppet.objects.base.GameObject;
 
 /**
  * Created by campino on 24/01/2017.
@@ -31,11 +30,9 @@ public class WorldObjectCollection {
 
 
     private FlexibleList<Tile> mTileList;
-    private FlexibleList<SpritePhysics> mSpritePhysicsList;
-
-
-
-    private FlexibleList<GameObject>    mInputObservers;
+    private FlexibleList<SpritePhysics> mSpriteList;
+    private FlexibleList<LayerObject>    mInputObservers;
+    private FlexibleList<LayerObject>   mLayerObjectList;
 
 
     public WorldObjectCollection(GameObjectCollection objectCollection) {
@@ -48,19 +45,25 @@ public class WorldObjectCollection {
         mInputObservers = new FlexibleList<>(100);
         mTileList = new FlexibleList<>
                 (objectCollection.sizeAssignableFrom(Tile.class));
-        mSpritePhysicsList = new FlexibleList<>
+        mSpriteList = new FlexibleList<>
                 (objectCollection.sizeAssignableFrom(SpritePhysics.class));
+
+        mLayerObjectList = new FlexibleList<>(mTileList.capacity()
+                + mSpriteList.capacity());
+
+
         int sizeTypes = objectCollection.size();
         for (int i = 0; i < sizeTypes; i++) {
             int sizeObject =objectCollection.get(i).size();
             for (int item = 0; item < sizeObject; item++) {
 
-                GameObject object = objectCollection.get(i).get(item);
+                LayerObject object = (LayerObject) objectCollection.get(i).get(item);
+                mLayerObjectList.add(object);
 
                 if(Tile.class.isAssignableFrom(object.getClass()))
                     mTileList.add((Tile)object);
                 else {
-                    mSpritePhysicsList.add((SpritePhysics)object);
+                    mSpriteList.add((SpritePhysics)object);
                 }
 
                 if(object.isTouchable()){
@@ -74,7 +77,7 @@ public class WorldObjectCollection {
 
     public void sortLeftBottomToRightTop(int tilesX){
         sortList(mTileList,tilesX);
-        sortList(mSpritePhysicsList,tilesX);
+        sortList(mSpriteList,tilesX);
     }
 
 
@@ -102,18 +105,48 @@ public class WorldObjectCollection {
         }
     }
 
+
+
+    public LayerObject findById(int id){
+        LayerObject object=null;
+        int index = findIndexOf(mLayerObjectList,id);
+        if(!(index<0))
+            object =mLayerObjectList.get(index);
+        return object;
+    }
+
+
+
+
+
+    private  static int findIndexOf(FlexibleList<?> list, int id) {
+        int result = -1;
+        int size =list.size();
+        for (int k = 0; k < size; k++) {
+            LayerObject object = (LayerObject) list.get(k);
+            if(object.getId()== id){
+                result = k; break;
+            }
+        }
+        return result;
+    }
+
+
     public FlexibleList<Tile> getTileList() {
         return mTileList;
     }
 
     public FlexibleList<SpritePhysics> getSpriteList() {
-        return mSpritePhysicsList;
+        return mSpriteList;
     }
 
-    public FlexibleList<GameObject> getInputObservers() {
+    public FlexibleList<LayerObject> getInputObservers() {
         return mInputObservers;
     }
 
+    public FlexibleList<LayerObject> getLayerObjectList(){
+        return mLayerObjectList;
+    }
 
 
     /*
@@ -124,7 +157,7 @@ public class WorldObjectCollection {
         int tileSize = mMapLayer.getNumberObjects(Tile.class);
         int spritesSize = mMapLayer.getNumberObjects(SpritePhysics.class);
         mTileList = new FlexibleList<>(tileSize);
-        mSpritePhysicsList = new FlexibleList<>(spritesSize);
+        mSpriteList = new FlexibleList<>(spritesSize);
         for (int i = 0; i < size; i++) {
             MapItem mapItem = mMapLayer.get(i);
             notifyAttachAttachMapItem(mapItem);
@@ -146,7 +179,7 @@ public class WorldObjectCollection {
             SpritePhysics sprite = (SpritePhysics) layerObject;
             if(sprite!=null) {
                 sprite.onAttachMapItem(mapItem);
-                mSpritePhysicsList.add(sprite);
+                mSpriteList.add(sprite);
             }
         }else{
             throw new RuntimeException("The the item in the map is not a GroupUiObject class");
@@ -162,13 +195,13 @@ public class WorldObjectCollection {
         sortTiles();
         sortSpritesPhysics();
         layerCreated(mTileList,layer);
-        layerCreated(mSpritePhysicsList,layer);
+        layerCreated(mSpriteList,layer);
     }
 
 
-    void notifyOnAttachCollision(WorldLayer tiledLayer) {
+    void notifyOnAttachCollision(TiledLayer tiledLayer) {
         attachCollision(mTileList);
-        attachCollision(mSpritePhysicsList);
+        attachCollision(mSpriteList);
     }
 
 
@@ -189,13 +222,13 @@ public class WorldObjectCollection {
 
 
     private void sortSpritesPhysics(){
-        int size = mSpritePhysicsList.size();
+        int size = mSpriteList.size();
         for (int current = 0; current < size; current++)
             for (int item = current + 1; item < size; item++) {
-                if(mSpritePhysicsList.get(current).getCellId()>mSpritePhysicsList.get(item).getCellId()){
-                    SpritePhysics tem = mSpritePhysicsList.get(current);
-                    mSpritePhysicsList.set(current,mSpritePhysicsList.get(item));
-                    mSpritePhysicsList.set(item,tem);
+                if(mSpriteList.get(current).getCellId()>mSpriteList.get(item).getCellId()){
+                    SpritePhysics tem = mSpriteList.get(current);
+                    mSpriteList.set(current,mSpriteList.get(item));
+                    mSpriteList.set(item,tem);
                 }
             }
     }
@@ -219,15 +252,15 @@ public class WorldObjectCollection {
     }
 
     public FixList<SpritePhysics> getListSpritesPhysics() {
-        return mSpritePhysicsList;
+        return mSpriteList;
     }
 
 
 
     SpritePhysics findSpriteById(Class<? extends SpritePhysics> spriteClass, int id) {
-        int size = mSpritePhysicsList.size();
+        int size = mSpriteList.size();
         for (int k = 0; k < size; k++) {
-            SpritePhysics sprite = mSpritePhysicsList.get(k);
+            SpritePhysics sprite = mSpriteList.get(k);
             if(sprite.getClass().equals(spriteClass)
                     && sprite.getId()== id){
                 return sprite;
@@ -238,9 +271,9 @@ public class WorldObjectCollection {
 
 
     SpritePhysics findSpriteByIj(Class<? extends SpritePhysics> spriteClass, int i, int j) {
-        int size = mSpritePhysicsList.size();
+        int size = mSpriteList.size();
         for (int k = 0; k < size; k++) {
-            SpritePhysics sprite = mSpritePhysicsList.get(k);
+            SpritePhysics sprite = mSpriteList.get(k);
             if(sprite.getClass().equals(spriteClass)
                     && sprite.getI()==i
                     && sprite.getJ()==j){
@@ -272,7 +305,7 @@ public class WorldObjectCollection {
     }
 
     private SpritePhysics findSpritePhysicsByIJ(int i, int j) {
-        return (SpritePhysics) findLayerObjectByIJ(mSpritePhysicsList,i,j);
+        return (SpritePhysics) findLayerObjectByIJ(mSpriteList,i,j);
     }
 
     Tile findTileById(Class<? extends Tile> tileClass, int id) {
@@ -411,7 +444,7 @@ public class WorldObjectCollection {
         SpritePhysics layerObject;
         layerObject = findSpriteById(clazz,id);
         if(layerObject!=null) {
-            mSpritePhysicsList.remove(layerObject);
+            mSpriteList.remove(layerObject);
             mObjectManager.remove(layerObject);
             mMapLayer.remove(layerObject.getMapItem());
             removed = true;
@@ -431,7 +464,7 @@ public class WorldObjectCollection {
             if(layerObject.getClass().isAssignableFrom(Tile.class)) {
                 mTileList.remove((Tile) layerObject);
             }else if(layerObject.getClass().isAssignableFrom(SpritePhysics.class)){
-                mSpritePhysicsList.remove((SpritePhysics) layerObject);
+                mSpriteList.remove((SpritePhysics) layerObject);
             }else{
                 throw new RuntimeException("The layerObject is no available for remove");
             }

@@ -26,12 +26,16 @@ import com.titicolab.nanux.graphics.drawer.Drawer;
 public class DrawTools {
 
 
-    public final Drawer<Image>     images;
-    public final Drawer<Geometry>  geometry;
-    public final Drawer<Image>     text;
-    public final Drawer<Image>     ui;
+    public final Drawer<Image>          images;
+    public final Drawer.Brush<Geometry> geometry;
+    public final Drawer<Image>          text;
+    public final Drawer<Image>          ui;
 
-    public DrawTools(Drawer<Image> images, Drawer<Image> ui, Drawer<Geometry> geometry, Drawer<Image> text) {
+    public DrawTools(Drawer<Image> images,
+                     Drawer<Image> ui,
+                     Drawer.Brush<Geometry> geometry,
+                     Drawer<Image> text) {
+
         this.images = images;
         this.ui = ui;
         this.geometry = geometry;
@@ -41,5 +45,6 @@ public class DrawTools {
     public interface Builder{
         DrawTools build();
     }
+
 
 }

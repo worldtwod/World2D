@@ -45,8 +45,6 @@ public  class SceneLayer extends Layer{
         setTouchable(true);
     }
 
-
-
     @Override
     protected void onAttachObjects(GameObjectCollection collection) {
             mObjectCollection = collection;
@@ -57,7 +55,6 @@ public  class SceneLayer extends Layer{
     protected void onGroupObjectsCreated() {
 
     }
-
 
     @Override
     protected void updateLogic() {

@@ -35,7 +35,7 @@ public class GraphicsTestCase implements Renderer, ObservableInput.InputListener
 
     private FlagSync mFlagTouch = new FlagSync();
 
-    final protected  LogHelper log = new LogHelper(this,RenderTestRule.TEST_LOG_LABEL);
+    final protected  LogHelper log = new LogHelper(this,"GameActivity");
 
 
 

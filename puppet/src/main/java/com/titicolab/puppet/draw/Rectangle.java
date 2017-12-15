@@ -30,5 +30,10 @@ public class Rectangle extends Geometry {
         this.width =(int)width;
         this.height =(int)height;
     }
+    public Rectangle(float width, float height, float scalePixel) {
+        super(new GeometryModel(scalePixel));
+        this.width =(int)width;
+        this.height =(int)height;
+    }
 
 }

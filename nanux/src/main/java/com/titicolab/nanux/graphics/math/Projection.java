@@ -12,7 +12,7 @@ public abstract class Projection {
     Projection() {
     }
 
-    protected float[] getMatrix() {
+    public float[] getMatrix() {
         return mProjectionMatrix;
     }
 
@@ -27,4 +27,6 @@ public abstract class Projection {
     public float getViewPortHeight() {
         return mViewPortHeight;
     }
+
+
 }

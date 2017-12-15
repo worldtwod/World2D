@@ -16,7 +16,7 @@
 
 package com.titicolab.puppet.world.collision;
 
-import com.titicolab.puppet.world.objects.WorldLayer;
+import com.titicolab.puppet.world.objects.TiledLayer;
 
 /**
  * Created by campino on 17/01/2017.
@@ -25,7 +25,7 @@ import com.titicolab.puppet.world.objects.WorldLayer;
 
 public class CollisionEngine {
 
-    private void checkCollisionWithSprites(WorldLayer layer){
+    private void checkCollisionWithSprites(TiledLayer layer){
 
     }
 

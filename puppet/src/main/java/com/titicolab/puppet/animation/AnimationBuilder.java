@@ -49,8 +49,8 @@ public class AnimationBuilder {
         AnimationMap map = mAnimationSheet.findByKey(key);
 
         if(map==null)
-            throw  new RuntimeException("Can not build the animation width key: " + key +
-                    " please check that you have defined it onDefineAnimations() ");
+            throw  new RuntimeException("Can not build the animation width key=[" + key +
+                    "] please check that you have defined it onDefineAnimations() ");
 
         FlexibleList<ClipMap> listClipMaps = map.getListClipMaps();
         Animation animation = new Animation();

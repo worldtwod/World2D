@@ -98,4 +98,8 @@ public class Camera  extends GameObject {
     protected void updateRender() {
 
     }
+
+    public float[] getMatrix() {
+        return mProjection.getMatrix();
+    }
 }

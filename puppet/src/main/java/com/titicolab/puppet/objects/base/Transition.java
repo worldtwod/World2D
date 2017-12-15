@@ -151,7 +151,7 @@ public class Transition extends Scene {
     private void updateIn(float averageTimeStep) {
         float alpha = mTimeCurrent/mTimeTransition;
         mFade.setColor(r,g,b,alpha);
-        //updateFrame the mStatus
+        //updateWindows the mStatus
         if(alpha<1 && mTimeCurrent < mTimeTransition)
             mTimeCurrent+=  averageTimeStep;
         else{
@@ -169,7 +169,7 @@ public class Transition extends Scene {
     private void updateOut(float averageTimeStep) {
         float alpha = mTimeCurrent/mTimeTransition;
         mFade.setColor(r,g,b,alpha);
-        //updateFrame the mStatus
+        //updateWindows the mStatus
         if(mTimeCurrent > 0  && alpha>0)
             mTimeCurrent-=  averageTimeStep;
         else{

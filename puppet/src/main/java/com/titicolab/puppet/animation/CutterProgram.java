@@ -416,7 +416,7 @@ public class CutterProgram implements JsonHelper.Serializable {
             } else if (clipCommand.type == ClipMap.TYPE_CLIP_GRID_CELLS) {
                 Grid grid = clipCommand.grid;
                 Area area = clipCommand.area;
-                cutter.setSize(area.width, area.height);
+                cutter.setViewport(area.width, area.height);
                 cutter.setLeftTop(area.left, area.top);
                 cutter.makeGridGroup(grid.columns, grid.rows, grid.cells);
                 if (clipCommand.hasCells())

@@ -37,9 +37,9 @@ import com.titicolab.puppet.objects.base.SceneManager;
 public class Puppeteer extends Controller {
 
 
-    private GameContext mGameContext;
+    private GameContext           mGameContext;
     private DisplayInfo           mDisplayInfo;
-    private GamePerformance mPerformance;
+    private GamePerformance       mPerformance;
     private RunnerTask            mRunnerTask;
     private GPUInfo               mGPUInfo;
 
@@ -49,7 +49,8 @@ public class Puppeteer extends Controller {
     private TextureManager mTextureManager;
     private SceneManager   mSceneManager;
 
-    private DrawTools   mDrawTools;
+
+    private DrawTools         mDrawTools;
     private DrawTools.Builder mDrawToolsBuilder;
 
     private boolean mFlatStart;
@@ -179,6 +180,10 @@ public class Puppeteer extends Controller {
 
     public RunnerTask getRunnerTask() {
         return mRunnerTask;
+    }
+
+    public DrawTools getDrawTools() {
+        return mDrawTools;
     }
 
 

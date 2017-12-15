@@ -17,6 +17,7 @@
 package com.titicolab.opengl.shader;
 
 
+import com.titicolab.nanux.graphics.drawer.Drawer;
 import com.titicolab.puppet.draw.Geometry;
 import com.titicolab.puppet.model.GeometryModel;
 import com.titicolab.puppet.model.ModelBuffer;
@@ -25,7 +26,7 @@ import com.titicolab.puppet.model.ModelBuffer;
  * Created by campino on 19/06/2016.
  *
  */
-public  class DrawerGeometry extends BaseDrawer<Geometry> {
+public  class DrawerGeometry extends BaseDrawer<Geometry> implements Drawer.Brush<Geometry> {
 
     private float mColor[];
     private float mLineWidth;
@@ -43,6 +44,7 @@ public  class DrawerGeometry extends BaseDrawer<Geometry> {
         mColor[3]=1;
         mLineWidth =1.0f;
         mStatus = STATUS_END;
+
     }
 
 
@@ -75,6 +77,7 @@ public  class DrawerGeometry extends BaseDrawer<Geometry> {
         mModelBuffer.add(geometry.getDrawModel());
     }
 
+    @Override
     public void setColor(float r, float g, float b, float a){
         mColor[0]=r;
         mColor[1]=g;
@@ -82,7 +85,9 @@ public  class DrawerGeometry extends BaseDrawer<Geometry> {
         mColor[3]=a;
     }
 
-    public void setLineWidth(float lineWidth) {
+
+    @Override
+    public void setBrushSize(float lineWidth) {
         mLineWidth = lineWidth;
     }
 

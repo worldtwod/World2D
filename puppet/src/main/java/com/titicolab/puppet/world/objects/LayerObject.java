@@ -23,7 +23,7 @@ import com.titicolab.puppet.objects.base.Animated;
 /**
  * Created by campino on 16/01/2017.
  *
- * Child of a WorldLayer
+ * Child of a TiledLayer
  *
  *
  */
@@ -33,14 +33,41 @@ public class LayerObject extends Animated {
     private int i;
     private int j;
 
+    private TiledLayer mLayer;
+
+    private boolean mFocused;
 
     @Override
     protected void onAttachAnimation(Animation animation) {
         super.onAttachAnimation(animation);
-        i = getParameters().i;
-        j = getParameters().j;
     }
 
+    protected void onAttachLayer(TiledLayer layer){
+        mLayer = layer;
+        setPositionIj(getParameters().i,getParameters().j);
+    }
+
+    /**
+     * set the position of object from parameters  i,j
+     * @param i coordinate i  left as zero reference
+     * @param j coordinate j  bottom as zero reference
+     */
+    public void setPositionIj(int i, int j){
+        setIj(i,j);
+        updateXYFromIj();
+    }
+
+
+    /**
+     * Update the position from i, j coordinates and tile size, it is:
+     */
+    private void updateXYFromIj() {
+        int tileWidth = mLayer.getTileWidth();
+        int tileHeight = mLayer.getTileHeight();
+        float x = tileWidth*i +tileWidth / 2;
+        float y = tileHeight*j + tileHeight / 2;
+        setPosition(x,y);
+    }
 
     /**
      * set the position of object from parameters  i,j
@@ -60,6 +87,13 @@ public class LayerObject extends Animated {
         return j;
     }
 
+    public boolean isFocused() {
+        return mFocused;
+    }
+
+    public void setFocused(boolean focused) {
+        this.mFocused = focused;
+    }
 
     /******** Parameters **********************************************************************/
 

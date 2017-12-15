@@ -27,6 +27,7 @@ public abstract class BaseModel implements DrawModel {
     float[]     mVertexModel;
     float       mScalePixel=1;
 
+
     BaseModel(float scalePixel) {
         mScalePixel = scalePixel;
     }
@@ -34,5 +35,7 @@ public abstract class BaseModel implements DrawModel {
     public float[] getVertex(){
         return mVertexModel;
     }
-
+    public void setScalePixel(float scalePixel) {
+        this.mScalePixel = scalePixel;
+    }
 }

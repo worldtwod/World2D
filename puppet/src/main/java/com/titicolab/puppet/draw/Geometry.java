@@ -25,6 +25,7 @@ import com.titicolab.puppet.model.DrawableObject;
  *
  */
 public class Geometry extends DrawableObject {
+
     public Geometry(DrawModel drawModel) {
         super(drawModel);
         color = new float[4];
