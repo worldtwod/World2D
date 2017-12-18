@@ -96,7 +96,7 @@ public class MapTiledLayerTest extends World2DTestCase {
                     .setGridSize(35, 8)
                     .setTileSize(128, 128)
                     .setCameraSize(7,false)
-                    .setForegroundSize(9,false)
+                    .setFocusedWindowSize(9,false)
                     .layer(MockTiledLayer.class,1,null)
                     .build();
         }

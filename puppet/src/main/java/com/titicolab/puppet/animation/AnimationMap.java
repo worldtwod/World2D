@@ -110,7 +110,7 @@ public class AnimationMap {
 
         public Builder clip(int key ){
             if(mStatus!= STATUS_WAITING_START_CLIP && mStatus!= STATUS_WAITING_ADD_CLIP) {
-                throw new RuntimeException("You must call to mResources() before start a new clip");
+                throw new RuntimeException("You must call to setResources() before start a new clip");
             }
             if(mStatus== STATUS_WAITING_ADD_CLIP) {
                 listMap.add(clipBuilder.build());

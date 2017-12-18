@@ -138,7 +138,7 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
     }
 
     @Override
-    protected void updateRender() {
+    public void updateRender() {
         mCameraUi.updateRender();
         mCamera2D.updateRender();
         HelperObjects.updateRenderLayers(mLayerList);

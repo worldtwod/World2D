@@ -95,7 +95,7 @@ public class Camera  extends GameObject {
     }
 
     @Override
-    protected void updateRender() {
+    public void updateRender() {
 
     }
 

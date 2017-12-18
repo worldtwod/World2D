@@ -109,7 +109,7 @@ public  class GroupLayer extends BaseGroupLayer<GroupLayer.ParamsGroupLayer>{
     }
 
     @Override
-    protected void updateRender() {
+    public void updateRender() {
         HelperObjects.updateRenderLayers(mLayerList);
     }
 

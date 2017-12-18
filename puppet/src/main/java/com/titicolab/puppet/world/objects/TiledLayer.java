@@ -19,6 +19,7 @@ package com.titicolab.puppet.world.objects;
 
 import com.titicolab.nanux.graphics.drawer.Drawer;
 import com.titicolab.nanux.list.FixList;
+import com.titicolab.nanux.list.FlexibleList;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.puppet.draw.DrawTools;
@@ -29,6 +30,7 @@ import com.titicolab.puppet.objects.base.HelperObjects;
 import com.titicolab.puppet.objects.base.Layer;
 import com.titicolab.puppet.objects.base.Scene;
 import com.titicolab.puppet.world.map.MapLayer;
+import com.titicolab.puppet.world.map.MapWorld;
 
 public  class TiledLayer extends Layer {
 
@@ -37,6 +39,8 @@ public  class TiledLayer extends Layer {
     private final FlagSync        mFlagOnCreatedObjects;
 
     private  Camera2D             mCamera;
+
+    private TileWindow            mTileWindow;
 
 
     public TiledLayer() {
@@ -59,10 +63,42 @@ public  class TiledLayer extends Layer {
 
     @Override
     protected void onAttachObjects(GameObjectCollection collection) {
+        onAttachFocusWindows();
         mCollection = new WorldObjectCollection(collection);
         mCollection.sortLeftBottomToRightTop(getMapObjects().getTilesX());
         executeAttachLayer();
         mFlagOnCreatedObjects.assertFlag();
+    }
+
+
+    protected void onAttachFocusWindows() {
+        mTileWindow = new TileWindow();
+        MapWorld mapWorld = getWorld().getMapWorld();
+
+        if( mapWorld!=null && mapWorld.getFocusedWindowSize()!=0) {
+            mTileWindow.setWindowSize( mapWorld.getFocusedWindowSize()
+                    ,mapWorld.isForegroundFixedHeight()
+                    ,getCamera2D().getAspectRatio());
+            mTileWindow.setWorldSize(mapWorld.getTilesX(),
+                    mapWorld.getTilesY());
+            mTileWindow.setTileSize(mapWorld.getTileWidth()
+                    ,mapWorld.getTileHeight());
+
+        }else {
+            int tilesX = getMapLayer().getTilesX();
+            int tilesY = getMapLayer().getTilesY();
+            tilesX = tilesX%2==0? tilesX-1: tilesX;
+            tilesY = tilesY%2==0? tilesY-1: tilesY;
+            mTileWindow.setWindowSize(tilesX,tilesY);
+            mTileWindow.setWorldSize(getMapLayer().getTilesX()
+                    ,getMapLayer().getTilesY());
+            mTileWindow.setTileSize(getMapLayer().getTileWidth()
+                    ,getMapLayer().getTileHeight());
+
+        }
+
+
+
     }
 
 
@@ -75,13 +111,19 @@ public  class TiledLayer extends Layer {
     @Override
     protected void updateLogic() {
         if(isUpdatable()) {
+
+
+            mTileWindow.setPosition(mCamera.getX(),mCamera.getY());
+
+            updateFocus(mCollection.getTileList());
+            updateFocus(mCollection.getSpriteList());
             HelperObjects.updateLogicObjects(mCollection.getTileList());
             HelperObjects.updateLogicObjects(mCollection.getSpriteList());
         }
     }
 
     @Override
-    protected void updateRender() {
+    public void updateRender() {
         if(isDrawable()) {
             updateParametersCamera(mCamera);
             HelperObjects.updateRenderObjects(mCollection.getTileList());
@@ -154,6 +196,7 @@ public  class TiledLayer extends Layer {
             int cj = listTiles.get(i).getJ();
             listTiles.get(i).setPosition(offsetTileW+ ci*tileWidth,
                     offsetTileH+cj*tileHeight);
+            listTiles.get(i).setSize(tileWidth,tileHeight);
         }
     }
 
@@ -161,6 +204,16 @@ public  class TiledLayer extends Layer {
         int size = mCollection.getLayerObjectList().size();
         for (int i = 0; i < size; i++) {
             mCollection.getLayerObjectList().get(i).onAttachLayer(this);
+        }
+    }
+
+
+    private  void updateFocus(FlexibleList<? extends LayerObject> objectCollection){
+        int sizeObject =objectCollection.size();
+        for (int item = 0; item < sizeObject; item++) {
+            boolean isFocused = mTileWindow.isFocused(objectCollection.get(item));
+                objectCollection.get(item).setUpdatable(isFocused );
+                objectCollection.get(item).setDrawable(isFocused );
         }
     }
 

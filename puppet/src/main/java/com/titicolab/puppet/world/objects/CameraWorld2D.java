@@ -125,10 +125,6 @@ public class CameraWorld2D extends Camera2D {
         this.mCarrier = carrier;
     }
 
-    //public void setViewport(MapWorld mapWorld) {
-    //    this.mMapWorld = mapWorld;
-    //}
-
     public void setSetPointX(float x){
         setPointX = x;
     }

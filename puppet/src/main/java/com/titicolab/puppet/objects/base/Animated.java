@@ -163,6 +163,10 @@ public  class Animated   extends GameObject {
         mImage.setColor(r, g, b, alpha);
     }
 
+    public void setSize(float width, float height) {
+        mImage.setSize((int)width,(int)height);
+    }
+
 
     /**********************************************************************************************
      * Class para initialize el object Animator

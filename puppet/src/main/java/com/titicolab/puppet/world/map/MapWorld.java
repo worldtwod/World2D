@@ -50,7 +50,7 @@ public class MapWorld extends MapGroupLayers {
     public boolean  isForegroundFixedHeight() {
         return fixForegroundHeight;
     }
-    public int      getForegroundSize() {
+    public int getFocusedWindowSize() {
         return foregroundSize;
     }
 
@@ -136,7 +136,7 @@ public class MapWorld extends MapGroupLayers {
 
 
 
-        public Builder  setForegroundSize(int tiles, boolean fixHeight) {
+        public Builder setFocusedWindowSize(int tiles, boolean fixHeight) {
             this.foregroundSize = tiles;
             this.fixForegroundHeight = fixHeight;
             return this;

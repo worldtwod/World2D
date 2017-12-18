@@ -34,8 +34,8 @@ public class TileWindow {
     private int i;
     private int j;
     
-    private int layerTilesX;
-    private int layerTilesY;
+    private int worldTilesX;
+    private int worldTilesY;
     private int tileWidth;
     private int tileHeight;
 
@@ -45,9 +45,9 @@ public class TileWindow {
     }
 
 
-    public void setLayerSize(int tilesX, int tilesY){
-            layerTilesX =tilesX;
-            layerTilesY =tilesY;
+    public void setWorldSize(int tilesX, int tilesY){
+            worldTilesX =tilesX;
+            worldTilesY =tilesY;
     }
 
     public void setTileSize(int width, int height){
@@ -58,12 +58,12 @@ public class TileWindow {
     /**
      * Size in tiles, the size must be a odd number.
      * @param tileX number of tiles in x axis
-     * @param tilesY number of tiles in y axis
+     * @param tileY number of tiles in y axis
      */
-    public void setWindowSize(int tileX, int tilesY) {
-        checkOdd(tileX,tilesY);
-        tilesX = tileX;
-        this.tilesY = tilesY;
+    public void setWindowSize(int tileX, int tileY) {
+        checkOdd(tileX,tileY);
+        this.tilesX = tileX;
+        this.tilesY = tileY;
     }
 
 
@@ -78,7 +78,7 @@ public class TileWindow {
             tilesY = size;
             tilesX = (int) (size*cameraRatio);
         }else{
-            tilesY = (int) (size*cameraRatio);
+            tilesY = (int) (size/cameraRatio);
             tilesX = size;
         }
 
@@ -90,12 +90,15 @@ public class TileWindow {
         setWindowSize(tilesX,tilesY);
     }
 
-
-    
-    protected void updateWindows(int x, int y){
-        setPosition(x,y);
+    /*public void updateWindows(int  i, int j){
+        setPositionIj(i,j);
         updateWindows();
     }
+    
+    public void updateWindows(float x, float y){
+        setPosition(x,y);
+        updateWindows();
+    }*/
 
 
     private void updateWindows(){
@@ -115,20 +118,23 @@ public class TileWindow {
             jEnd = tilesY -1;
         }
 
-        if(iEnd>= layerTilesX){
-            iStart = layerTilesX - tilesX;
-            iEnd = layerTilesX -1;
+        if(iEnd>= worldTilesX){
+            iStart = worldTilesX - tilesX;
+            iEnd = worldTilesX -1;
         }
-        if(jEnd>= layerTilesY){
-            jStart = layerTilesY - tilesY;
-            jEnd = layerTilesY -1;
+        if(jEnd>= worldTilesY){
+            jStart = worldTilesY - tilesY;
+            jEnd = worldTilesY -1;
         }
     }
     
 
-    private boolean isInsideWindow(LayerObject layerObject) {
-        boolean vertical = iStart <= layerObject.getI() && layerObject.getI() <= iEnd;
-        boolean horizontal = jStart <= layerObject.getJ() && layerObject.getJ() <= jEnd;
+    public boolean isFocused(LayerObject layerObject) {
+        int objectI = (int) ((layerObject.getX()/tileWidth));
+        int objectJ = (int) ((layerObject.getY()/tileHeight));
+
+        boolean vertical = iStart <= objectI && objectI <= iEnd;
+        boolean horizontal = jStart <= objectJ && objectJ <= jEnd;
         return vertical && horizontal;
     }
 
@@ -143,6 +149,7 @@ public class TileWindow {
     }
 
 
+    /*
     public int getIStart() {
         return iStart;
     }
@@ -158,14 +165,32 @@ public class TileWindow {
     public int getJEnd() {
         return jEnd;
     }
+    */
 
-    protected void setPosition(int x, int y){
-        i = x/tileWidth;
-        j = y/tileHeight;
+    public void setPosition(float x, float y){
+        checkTileSize();
+        i = (int) (x/tileWidth);
+        j = (int) (y/tileHeight);
+        updateWindows();
     }
 
     public void setPositionIj(int i, int j) {
         this.i=i;
         this.j=j;
+        checkTileSize();
+        updateWindows();
+    }
+
+    private void checkTileSize() {
+        if(tileWidth==0) throw new RuntimeException("The tilesWidth can not be zero");
+        if(tileHeight==0) throw new RuntimeException("The tilesHeight can not be zero");
+    }
+
+    public int getTilesX() {
+        return tilesX;
+    }
+
+    public int getTilesY() {
+        return tilesY;
     }
 }
