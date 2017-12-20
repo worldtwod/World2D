@@ -17,9 +17,9 @@
 package com.titicolab.puppet.objects.base;
 
 
-import com.titicolab.puppet.draw.DrawTools;
-import com.titicolab.puppet.draw.Geometry;
-import com.titicolab.puppet.model.SquareModel;
+import com.titicolab.puppet.objects.factory.RequestCollection;
+import com.titicolab.puppet.objects.factory.RequestLayersBuilder;
+import com.titicolab.puppet.objects.map.MapItem;
 
 /**
  * Created by campino on 12/06/2016.
@@ -27,146 +27,90 @@ import com.titicolab.puppet.model.SquareModel;
  */
 public class Transition extends Scene {
 
-    private static final int STATUS_FINISHED = 0;
-    private static final int STATUS_IN       =  1;
-    private static final int STATUS_FULL     = 2;
-    private static final int STATUS_OUT      = 4;
-    private static final int STATUS_WAITING_OUT      = 3;
+    private Class<? extends BaseLayer> clazz;
+
+    private static final int RED = 0;
+    private static final int GREEN = 1;
+    private static final int BLUE = 2;
+    private static final int ALPHA = 3;
+
+    private  float[] color;
+
+    public float[] getColor() {
+        return color;
+    }
 
 
-    private static final float TRANSITION_DEFAULT_TIME_IN = 1000;
+    public interface TransitionTrigger {
+        void in(OnFullIn listener);
+        void out(OnFullOut listener);
+    }
 
-    private int   mStatus;
-    private PortViewFade mPortViewFade;
-    private float mTimeTransition;
-    private float mTimeCurrent;
-    private OnTransitionIn mListenerIn;
-    private OnTransitionOut mListenerOut;
-
-    private float r=0;
-    private float g=1;
-    private float b=0;
-
-
-    public  interface OnTransitionIn{
+    public  interface OnFullIn {
         void onFullIn();
     }
 
-    public  interface OnTransitionOut{
+    public  interface OnFullOut {
         void onFullOut();
     }
 
+    private TransitionTrigger mTransitionTrigger;
+
+
+
+    public Transition(Class<? extends BaseLayer> clazz){
+            super();
+            if(!TransitionTrigger.class.isAssignableFrom(clazz))
+                throw  new RuntimeException("The clazz must be a " +
+                        "Layer that implements TransitionTrigger");
+
+        this.clazz = clazz;
+        color = new float[]{1,1,1,1};
+    }
+
     public Transition(){
-        super();
+       this(TransitionLayer.Fade.class);
     }
 
-    public void in(OnTransitionIn listener){
-        mListenerIn = listener;
-        mStatus = STATUS_IN;
-        mTimeCurrent = 0;
-        mPortViewFade.setColor(r,g,b,0);
+    @Override
+    protected RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
+        return builder
+                .objects(new MapItem(clazz,1,null))
+                .build();
     }
-
-    public void out(OnTransitionOut listener){
-        mListenerOut=listener;
-        mStatus = STATUS_OUT;
-    }
-
-    public void setColor(float r, float g, float b){
-        this.r=r;
-        this.g=g;
-        this.b=b;
-    }
-
 
     @Override
     public void onGroupLayersCreated() {
-        mPortViewFade = new PortViewFade(getCameraUi().getViewPortWidth()
-                ,getCameraUi().getViewPortHeight()
-                ,getDisplayInfo().getScalePixel());
-        mPortViewFade.setPosition(getCameraUi().getX(),getCameraUi().getY());
-        mStatus = STATUS_FINISHED;
-        mTimeTransition= TRANSITION_DEFAULT_TIME_IN;
-        mTimeCurrent = 0;
+        mTransitionTrigger = (TransitionTrigger) findLayer(1);
+
     }
 
 
-
     @Override
-    public void updateLogic() {
-
-        synchronized (this) {
-            if (mStatus == STATUS_IN) {
-                updateIn(15);
-            } else if (mStatus == STATUS_FULL) {
-                updateFull();
-            } else if (mStatus == STATUS_WAITING_OUT) {
-                // waiting command of go out
-                mPortViewFade.setColor(r, g, b, 1);
-            } else if (mStatus == STATUS_OUT) {
-                updateOut(15);
-            }
-        }
-    }
-
-    @Override
-    public void updateRender() {
-        mPortViewFade.updateRender();
+    protected void updateLogic() {
+        super.updateLogic();
     }
 
 
     @Override
-    public void onDraw(DrawTools drawer) {
-        float[] color = mPortViewFade.getColor();
-        drawer.geometry.setBrushSize(1f);
-        drawer.geometry.setColor(color[0],color[1],color[2],color[3]);
-        drawer.geometry.begin(getCameraUi().getMatrix());
-        drawer.geometry.add(mPortViewFade);
-        drawer.geometry.end();
+    public void updateRender() {
+        super.updateRender();
+    }
+
+    public void in(OnFullIn listener){
+        mTransitionTrigger.in(listener);
+    }
+
+    public void out(OnFullOut listener){
+        mTransitionTrigger.out(listener);
     }
 
 
-    private void updateIn(float averageTimeStep) {
-        float alpha = mTimeCurrent/mTimeTransition;
-        mPortViewFade.setColor(r,g,b,alpha);
-        //updateWindows the mStatus
-        if(alpha<1 && mTimeCurrent < mTimeTransition)
-            mTimeCurrent+=  averageTimeStep;
-        else{
-            mStatus = STATUS_FULL;
-        }
-    }
-
-    private void updateFull() {
-        mTimeCurrent = mTimeTransition;
-        mStatus = STATUS_WAITING_OUT;
-        if(mListenerIn !=null)
-            mListenerIn.onFullIn();
-    }
-
-    private void updateOut(float averageTimeStep) {
-        float alpha = mTimeCurrent/mTimeTransition;
-        mPortViewFade.setColor(r,g,b,alpha);
-        //updateWindows the mStatus
-        if(mTimeCurrent > 0  && alpha>0)
-            mTimeCurrent-=  averageTimeStep;
-        else{
-            if(mListenerOut !=null)
-                mListenerOut.onFullOut();
-            mTimeCurrent = 0;
-            mStatus = STATUS_FINISHED;
-        }
-    }
-
-
-
-
-    public static class PortViewFade extends Geometry{
-        public PortViewFade(float width, float height, float scalePixel) {
-            super(new SquareModel(scalePixel,true));
-            setSize(width,height);
-        }
-
+    public void setColor(float r, float g, float b, float a) {
+        color[RED] = r;
+        color[GREEN] = g;
+        color[BLUE] = b;
+        color[ALPHA] = a;
     }
 
 

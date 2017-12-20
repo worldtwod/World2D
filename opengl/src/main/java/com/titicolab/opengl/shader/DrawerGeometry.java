@@ -69,21 +69,6 @@ public  class DrawerGeometry extends BaseDrawer<Geometry> implements Drawer.Brus
 
 
 
-    /*@Override
-    public void add(Geometry geometry){
-        super.add(geometry);
-        mModelBuffer.add(geometry.getDrawModel());
-    }
-    @Override
-    protected void draw(){
-        if(isEmpty())return;
-        getShaderProgram().binAttributes(mModelBuffer.getVertexBuffer());
-        getShaderProgram().draw(mModelBuffer.getIndexBuffer(), mModelBuffer.size());
-        reset();
-        mModelBuffer.reset();
-    }*/
-
-
     @Override
     public void add(Geometry geometry){
         if(!isEmpty() && (

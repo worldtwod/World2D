@@ -47,43 +47,6 @@ public class ObjectFactory {
     }
 
 
-
-        /*
-    public interface AnimationFactory {
-        Animation onBuildClips(AnimationBuilder builder);
-        void      onAttachAnimation(Animation animation);
-        boolean   hasCustomClips();
-    }*/
-
-    /**
-     * Implement this interface to instantiate Animate objects...
-     * For instance the layers implements it for define its Objects
-     */
-    /*
-    public interface GameObjectFactory {
-        RequestCollection onRequestObjects(RequestObjectBuilder builder);
-        void onAttachObjects(GameObjectCollection collection);
-        void onGroupObjectsCreated();
-    }*/
-
-    /**
-     * Implement this interface to instantiate Layers objects. It is
-     * if the object is a group of layers needs implement this
-     */
-
-    /*
-     protected interface LayerFactory {
-        RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder);
-        void onAttachLayers(GameObjectList layerList);
-        void onGroupLayersCreated();
-     }/*
-
-    /*public interface AttachParameters{
-        void onAttachParameters(RequestObject request);
-    }*/
-
-
-
    public GameObjectList factoryGroupLayer(BaseGroupLayer group) {
 
         RequestCollection.RequestList requestLayersList = group
@@ -138,7 +101,31 @@ public class ObjectFactory {
     }
 
 
-    public GameObjectCollection factoryAnimatedCollection(
+    public static void startLayer(Layer baseLayer,
+                                  Scene scene,
+                                  BaseGroupLayer group,
+                                  TextureManager textureManager){
+        Layer layer = baseLayer;
+        layer.onAttachScene(scene);
+        layer.onAttachGroupLayers(group);
+
+        AnimationSheet animationSheet = layer
+                .onDefineAnimations(new AnimationSheet.Builder());
+
+
+        RequestCollection requestObjectsList =
+                layer.onRequestObjects(new RequestObjectBuilder());
+
+        GameObjectCollection collection = factoryAnimatedCollection(requestObjectsList,
+                new AnimationBuilder(textureManager, animationSheet));
+        //  onAttachObjects
+        layer.onAttachObjects(collection);
+        layer.onGroupObjectsCreated();
+    }
+
+
+
+    public static GameObjectCollection factoryAnimatedCollection(
             RequestCollection requestCollection, AnimationBuilder builder) {
 
         int size = requestCollection.size();
@@ -152,7 +139,7 @@ public class ObjectFactory {
     }
 
 
-    public  GameObjectList factoryAnimatedList(
+    public  static GameObjectList factoryAnimatedList(
                         RequestCollection.RequestList requestList,
                         AnimationBuilder builder) {
 

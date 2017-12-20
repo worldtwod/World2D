@@ -60,7 +60,7 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
         //glClearColor(83f/255, 93f/255, 108f/255, 1f);
-        glClearColor(55f/255, 62f/255, 72f/255, 1f);
+        glClearColor(0, 0, 0, 1f);
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 

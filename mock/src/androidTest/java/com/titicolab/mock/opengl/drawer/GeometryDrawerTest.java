@@ -30,7 +30,7 @@ import com.titicolab.opengl.shader.DrawerGeometry;
 import com.titicolab.opengl.shader.GeometryShaderProgram;
 import com.titicolab.opengl.util.TextResourceReader;
 import com.titicolab.puppet.draw.Geometry;
-import com.titicolab.puppet.model.SquareModel;
+import com.titicolab.puppet.model.RectModel;
 import com.titicolab.puppet.model.TriangleModel;
 
 import org.junit.FixMethodOrder;
@@ -95,10 +95,10 @@ public class GeometryDrawerTest extends GraphicsTestCase{
     public void a_shader(){
 
         drawer = new DrawerGeometry(3,shader);
-        drawer.setColor(0,1,1,1);
+        drawer.setColor(1,1,1,0.5f);
         drawer.setBrushSize(5.0f);
        // assertNotNull(drawer);
-        Geometry geometry = new Geometry(new SquareModel(getDisplayInfo().getScalePixel()));
+        Geometry geometry = new Geometry(new RectModel(getDisplayInfo().getScalePixel()));
         geometry.setPosition(projectionUi.getViewPortWidth()/2,projectionUi.getViewPortHeight()/2);
         geometry.setSize((int)projectionUi.getViewPortWidth()/2,(int)projectionUi.getViewPortHeight()/2);
 
@@ -106,7 +106,7 @@ public class GeometryDrawerTest extends GraphicsTestCase{
         triangle.setSize((int)projectionUi.getViewPortWidth()/3,(int)projectionUi.getViewPortHeight()/3);
         triangle.setPosition(projectionUi.getViewPortWidth()/3/2,projectionUi.getViewPortHeight()/3/2);
 
-        Geometry square = new Geometry(new SquareModel(getDisplayInfo().getScalePixel(),true));
+        Geometry square = new Geometry(new RectModel(getDisplayInfo().getScalePixel(),true));
         square.setSize((int)projectionUi.getViewPortWidth()/4,(int)projectionUi.getViewPortHeight()/4);
         square.setPosition(projectionUi.getViewPortWidth()/2,projectionUi.getViewPortHeight()/2);
 

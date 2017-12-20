@@ -17,7 +17,7 @@
 package com.titicolab.puppet.draw;
 
 
-import com.titicolab.puppet.model.SquareModel;
+import com.titicolab.puppet.model.RectModel;
 
 /**
  * Created by campino on 20/06/2016.
@@ -26,12 +26,12 @@ import com.titicolab.puppet.model.SquareModel;
 public class Rectangle extends Geometry {
 
     public Rectangle(float width, float height) {
-        super(new SquareModel(1));
+        super(new RectModel(1));
         this.width =(int)width;
         this.height =(int)height;
     }
     public Rectangle(float width, float height, float scalePixel) {
-        super(new SquareModel(scalePixel));
+        super(new RectModel(scalePixel));
         this.width =(int)width;
         this.height =(int)height;
     }

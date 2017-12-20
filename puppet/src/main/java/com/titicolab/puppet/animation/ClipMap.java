@@ -209,7 +209,7 @@ public class ClipMap {
 
         public Builder cells(Cells cells) {
             if (mStatus != STATUS_GRID)
-                throw new RuntimeException("You must call to start()");
+                throw new RuntimeException("You must call to reset()");
             this.cells = cells;
             mStatus = STATUS_GRID;
             return this;

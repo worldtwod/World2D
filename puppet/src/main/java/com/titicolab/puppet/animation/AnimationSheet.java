@@ -87,13 +87,13 @@ public class AnimationSheet {
         }
 
         /******************************************************************************************
-         * Set the start of a sequence
+         * Set the reset of a sequence
          * @param key  key identification of that sequence
          * @return The builder
          */
         public Builder sequence(String key) {
             if(mStatus!= STATUS_IDLE && mStatus!=STATUS_WAITING_ADD_SEQUENCE)
-                throw new RuntimeException("You must call to build() before start a new sequence");
+                throw new RuntimeException("You must call to build() before reset a new sequence");
 
             if(mStatus==STATUS_WAITING_ADD_SEQUENCE){
                 listSequenceMap.add(animationBuilder.build());
@@ -117,7 +117,7 @@ public class AnimationSheet {
          */
         public Builder resources(int resources){
             if(mStatus!= STATUS_WAITING_START_RESOURCES && mStatus!=STATUS_WAITING_ADD_SEQUENCE)
-                throw new RuntimeException("You must call to build() before start a new sequence");
+                throw new RuntimeException("You must call to build() before reset a new sequence");
 
             this.resources =resources;
             animationBuilder.resources(resources);

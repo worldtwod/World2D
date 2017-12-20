@@ -24,6 +24,7 @@ import com.titicolab.puppet.objects.base.Scene;
 import com.titicolab.puppet.objects.base.SceneLayer;
 import com.titicolab.puppet.objects.base.SceneManager;
 import com.titicolab.puppet.objects.base.Transition;
+import com.titicolab.puppet.objects.base.TransitionLayer;
 import com.titicolab.puppet.objects.map.MapGroupLayers;
 import com.titicolab.puppet.objects.map.MapItem;
 import com.titicolab.puppet.objects.map.MapObjects;
@@ -40,17 +41,13 @@ import org.junit.Test;
 public class SceneManagerTransitionTest extends SceneManagerTestCase{
 
 
-
-
-
-
-
-
     @Test
     public void test_No_transition(){
 
         MockSceneDigit scene = new MockSceneDigit();
         SceneManager manager = getSceneManager();
+
+
         manager.play(scene);
         waitTouchSeconds(4);
 
@@ -58,6 +55,8 @@ public class SceneManagerTransitionTest extends SceneManagerTestCase{
         int h = scene.getCamera2D().getViewPortHeight()/2;
         Assert.assertEquals(w,scene.layer.digit.getX(),0.1);
         Assert.assertEquals(h,scene.layer.digit.getY(),0.1);
+
+
 
         MockSceneButton sceneButton = new MockSceneButton();
         manager.play(sceneButton);
@@ -74,8 +73,11 @@ public class SceneManagerTransitionTest extends SceneManagerTestCase{
 
         MockSceneDigit scene = new MockSceneDigit();
         SceneManager manager = getSceneManager();
-        getSceneManager().setTransition(new Transition());
+        Transition transition = new Transition();
+        transition.setColor(1,1,0,1);
+        getSceneManager().setTransition(transition);
         getSceneManager().setTransitionsEnable(true);
+
 
         manager.play(scene);
         waitTouchSeconds(4);
@@ -85,12 +87,36 @@ public class SceneManagerTransitionTest extends SceneManagerTestCase{
         Assert.assertEquals(w,scene.layer.digit.getX(),0.1);
         Assert.assertEquals(h,scene.layer.digit.getY(),0.1);
 
+        manager.getTransition().setColor(1,0,0,1);
+
         MockSceneButton sceneButton = new MockSceneButton();
         manager.play(sceneButton);
         waitTouchSeconds(4);
         w = scene.getCamera2D().getViewPortWidth()*5/7;
         Assert.assertEquals(w,sceneButton.layer.button.getX(),0.1);
         Assert.assertEquals(h,sceneButton.layer.button.getY(),0.1);
+
+        waitTouchSeconds(60*60);
+    }
+
+
+    @Test
+    public void test_transition_slide(){
+
+        MockSceneDigit scene = new MockSceneDigit();
+        SceneManager manager = getSceneManager();
+        Transition transition = new Transition(TransitionLayer.Sliding.class);
+        transition.setColor(1,1,0,1);
+        getSceneManager().setTransition(transition);
+        getSceneManager().setTransitionsEnable(true);
+
+
+        manager.play(scene);
+        waitTouchSeconds(5);
+
+        MockSceneButton sceneButton = new MockSceneButton();
+        manager.play(sceneButton);
+        waitTouchSeconds(10);
 
     }
 
@@ -191,7 +217,8 @@ public class SceneManagerTransitionTest extends SceneManagerTestCase{
         protected MapObjects onDefineMapObjects() {
             return new MapObjects.Builder()
                     .setName("MapTest")
-                    .item(new MapItem(Button.class, 100, new Animated.ParamsAnimation("button", 1)))
+                    .item(new MapItem(Button.class, 100,
+                            new Animated.ParamsAnimation("button", 1)))
                     .build();
         }
 

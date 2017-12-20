@@ -82,7 +82,7 @@ public class AnimationMap {
 
         public Builder sequence(String key){
             if(mStatus!=STATUS_IDLE){
-                throw new RuntimeException("You must call to build() before start a new sequence");
+                throw new RuntimeException("You must call to build() before reset a new sequence");
             }
             this.key = key;
             listMap = new FlexibleList<>(10);
@@ -101,7 +101,7 @@ public class AnimationMap {
                 listMap.add(clipBuilder.build());
             }
 
-            //start builder
+            //reset builder
             this.resources = resources;
             mStatus= STATUS_WAITING_START_CLIP;
             return this;
@@ -110,7 +110,7 @@ public class AnimationMap {
 
         public Builder clip(int key ){
             if(mStatus!= STATUS_WAITING_START_CLIP && mStatus!= STATUS_WAITING_ADD_CLIP) {
-                throw new RuntimeException("You must call to setResources() before start a new clip");
+                throw new RuntimeException("You must call to setResources() before reset a new clip");
             }
             if(mStatus== STATUS_WAITING_ADD_CLIP) {
                 listMap.add(clipBuilder.build());

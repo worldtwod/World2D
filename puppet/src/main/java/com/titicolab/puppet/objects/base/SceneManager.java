@@ -275,11 +275,14 @@ public class SceneManager  implements ObservableInput.InputListener{
     }
 
 
+    /**
+     * The SceneManager is an observer of onFullIn(), the Transition notify of this event
+     */
     private void transitionIn() {
         if(!mLoadingTransitionIn) {
             mLoadingTransitionIn=true;
             isRunningTransition = true;
-            mTransition.in(new Transition.OnTransitionIn() {
+            mTransition.in(new Transition.OnFullIn() {
                 @Override
                 public void onFullIn() {
                     setSyncStatus(STATUS_TRANSITION_OUT);
@@ -288,12 +291,14 @@ public class SceneManager  implements ObservableInput.InputListener{
         }
     }
 
-
+    /**
+     * The SceneManager is an observer of onFullOut(), the Transition notify of this event
+     */
     private void transitionOut() {
         if(!mLoadingTransitionOut) {
             mLoadingTransitionOut=true;
             loadScene(mNextCommand.scene,false);
-            mTransition.out(new Transition.OnTransitionOut() {
+            mTransition.out(new Transition.OnFullOut() {
                 @Override
                 public void onFullOut() {
                     isRunningTransition = false;

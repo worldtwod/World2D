@@ -27,7 +27,11 @@ import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
 import com.titicolab.puppet.loop.Puppeteer;
+import com.titicolab.puppet.objects.base.BaseLayer;
 import com.titicolab.puppet.objects.base.Scene;
+import com.titicolab.puppet.objects.factory.RequestCollection;
+import com.titicolab.puppet.objects.factory.RequestLayersBuilder;
+import com.titicolab.puppet.objects.map.MapItem;
 
 import org.junit.runner.RunWith;
 
@@ -44,9 +48,7 @@ public class SceneTestCase extends GraphicsTestCase {
     public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
         Context appContext = InstrumentationRegistry.getTargetContext();
-
         mController  = new Puppeteer(new AndroidDrawToolsBuilder(appContext));
-
         mController.onSurfaceCreated(game,eglConfig);
     }
 
@@ -74,6 +76,12 @@ public class SceneTestCase extends GraphicsTestCase {
         scene.waitOnCreated(60*10);
     }
 
+    protected  void syncPlay(Class<? extends BaseLayer> clazz){
+        DefaultScene scene = new DefaultScene(clazz);
+        mController.getSceneManager().play(scene);
+        scene.waitOnCreated(60*10);
+    }
+
     public void runAndWaitOnGLThread(RunnableTask runnable){
         mController.getRunnerTask().runAndWait(runnable);
     }
@@ -83,4 +91,38 @@ public class SceneTestCase extends GraphicsTestCase {
     }
 
 
+    /**
+     * DefaultFade scene for hold the layer, it is useful when you only want test a layer
+     */
+    public class DefaultScene extends Scene{
+        final Class<? extends BaseLayer> clazz;
+            DefaultScene(Class<? extends BaseLayer> clazz) {
+                this.clazz = clazz;
+            }
+
+
+            @Override
+            protected RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
+                return builder
+                        .objects(new MapItem(clazz,1,null))
+                        .build();
+            }
+
+        @Override
+        protected void onGroupLayersCreated() {
+            super.onGroupLayersCreated();
+        }
+
+        @Override
+        protected void updateLogic() {
+            super.updateLogic();
+        }
+
+        @Override
+        public void updateRender() {
+            super.updateRender();
+        }
+
+
+    }
 }

@@ -20,7 +20,7 @@ package com.titicolab.puppet.model;
  * Created by campino on 20/06/2016.
  *
  */
-public  class SquareModel extends GeometryModel{
+public  class RectModel extends GeometryModel{
 
     private  static final int VERTEX_PER_MODEL      =  4;
     private  static final int INDEX_PER_MODEL       =  4;
@@ -28,13 +28,13 @@ public  class SquareModel extends GeometryModel{
 
     private boolean mFilled;
 
-    public SquareModel(float scalePixel){
+    public RectModel(float scalePixel){
         super(scalePixel,GeometryModel.GL_LINE_LOOP,
                 VERTEX_PER_MODEL*FLOAT_PER_VERTEX, INDEX_PER_MODEL);
         mFilled= false;
     }
 
-    public SquareModel(float scalePixel, boolean filled){
+    public RectModel(float scalePixel, boolean filled){
         super(scalePixel,
                 filled? GeometryModel.GL_TRIANGLES : GeometryModel.GL_LINE_LOOP,
                 VERTEX_PER_MODEL*FLOAT_PER_VERTEX,

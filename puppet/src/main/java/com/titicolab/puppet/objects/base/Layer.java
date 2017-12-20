@@ -17,6 +17,7 @@
 package com.titicolab.puppet.objects.base;
 
 import com.titicolab.nanux.touch.ObservableInput;
+import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.draw.DrawTools;
 import com.titicolab.puppet.list.GameObjectCollection;
@@ -102,7 +103,9 @@ public abstract class Layer extends BaseLayer<Layer.ParamsLayer>{
     public MapObjects getMapObjects(){
         return mMapObjects;
     }
-
+    public DisplayInfo getDisplayInfo() {
+        return mScene.getDisplayInfo();
+    }
 
     public static class ParamsLayer extends Parameters {
         protected final  MapObjects mapObjects;
