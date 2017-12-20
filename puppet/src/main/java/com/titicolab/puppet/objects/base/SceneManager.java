@@ -84,7 +84,7 @@ public class SceneManager  implements ObservableInput.InputListener{
         mRunnerTask=runnerTask;
         mTextureManager = textureManager;
         mDisplayInfo = screenMetrics;
-        mCommandList = new FixList<SceneCommand>(5);
+        mCommandList = new FixList<>(5);
 
        // mTouchManager.add(this);
     }

@@ -17,9 +17,9 @@
 package com.titicolab.puppet.objects.base;
 
 
-import com.titicolab.puppet.animation.Animation;
-import com.titicolab.puppet.animation.AnimationBuilder;
 import com.titicolab.puppet.draw.DrawTools;
+import com.titicolab.puppet.draw.Geometry;
+import com.titicolab.puppet.model.SquareModel;
 
 /**
  * Created by campino on 12/06/2016.
@@ -36,8 +36,8 @@ public class Transition extends Scene {
 
     private static final float TRANSITION_DEFAULT_TIME_IN = 1000;
 
-    private int mStatus;
-    private Fade mFade;
+    private int   mStatus;
+    private PortViewFade mPortViewFade;
     private float mTimeTransition;
     private float mTimeCurrent;
     private OnTransitionIn mListenerIn;
@@ -46,8 +46,6 @@ public class Transition extends Scene {
     private float r=0;
     private float g=1;
     private float b=0;
-
-
 
 
     public  interface OnTransitionIn{
@@ -66,7 +64,7 @@ public class Transition extends Scene {
         mListenerIn = listener;
         mStatus = STATUS_IN;
         mTimeCurrent = 0;
-        mFade.setColor(r,g,b,0);
+        mPortViewFade.setColor(r,g,b,0);
     }
 
     public void out(OnTransitionOut listener){
@@ -83,74 +81,54 @@ public class Transition extends Scene {
 
     @Override
     public void onGroupLayersCreated() {
-
-    }
-
-
-
-
-   /* @Override
-    public GameObjectRequest onObjectRequest() {
-        return new GameObjectRequest()
-                .uiObject(Fade.class,1);
-    }*/
-
-
-    /*@Override
-    public void onObjectsCreated() {
-        //super.onSceneObjectCreated(gameTool);
-        mFade = (Fade) getUiObject(Fade.class);
-        CameraUi cameraUi = getCameraUi();
-        cameraUi.setViewport(1280,720, ProjectionUi.SCREEN_EXPAND);
-        cameraUi.setPosition(1280/2,720/2);
-        mFade.setSizeFade(1280,720);
-        mFade.setColor(r,g,b,0);
-        mFade.getAnimation().playByIndex(0);
-        mFade.setPosition(1280/2,720/2);
+        mPortViewFade = new PortViewFade(getCameraUi().getViewPortWidth()
+                ,getCameraUi().getViewPortHeight()
+                ,getDisplayInfo().getScalePixel());
+        mPortViewFade.setPosition(getCameraUi().getX(),getCameraUi().getY());
         mStatus = STATUS_FINISHED;
         mTimeTransition= TRANSITION_DEFAULT_TIME_IN;
         mTimeCurrent = 0;
-    }*/
+    }
 
 
 
     @Override
     public void updateLogic() {
 
-        /*synchronized (this) {
+        synchronized (this) {
             if (mStatus == STATUS_IN) {
                 updateIn(15);
             } else if (mStatus == STATUS_FULL) {
                 updateFull();
             } else if (mStatus == STATUS_WAITING_OUT) {
                 // waiting command of go out
-                mFade.setColor(r, g, b, 1);
+                mPortViewFade.setColor(r, g, b, 1);
             } else if (mStatus == STATUS_OUT) {
                 updateOut(15);
             }
-        }*/
+        }
     }
 
     @Override
     public void updateRender() {
-       // mFade.updateRender();
+        mPortViewFade.updateRender();
     }
 
 
     @Override
     public void onDraw(DrawTools drawer) {
-       // drawer.ui.setProjection(getCameraUi().getProjection());
-       // drawer.ui.begin();
-       // drawer.ui.add(mFade.getImage());
-       // drawer.ui.end();
+        float[] color = mPortViewFade.getColor();
+        drawer.geometry.setBrushSize(1f);
+        drawer.geometry.setColor(color[0],color[1],color[2],color[3]);
+        drawer.geometry.begin(getCameraUi().getMatrix());
+        drawer.geometry.add(mPortViewFade);
+        drawer.geometry.end();
     }
-
-
 
 
     private void updateIn(float averageTimeStep) {
         float alpha = mTimeCurrent/mTimeTransition;
-        mFade.setColor(r,g,b,alpha);
+        mPortViewFade.setColor(r,g,b,alpha);
         //updateWindows the mStatus
         if(alpha<1 && mTimeCurrent < mTimeTransition)
             mTimeCurrent+=  averageTimeStep;
@@ -168,7 +146,7 @@ public class Transition extends Scene {
 
     private void updateOut(float averageTimeStep) {
         float alpha = mTimeCurrent/mTimeTransition;
-        mFade.setColor(r,g,b,alpha);
+        mPortViewFade.setColor(r,g,b,alpha);
         //updateWindows the mStatus
         if(mTimeCurrent > 0  && alpha>0)
             mTimeCurrent-=  averageTimeStep;
@@ -183,45 +161,11 @@ public class Transition extends Scene {
 
 
 
-    public static class Fade extends UiObject {
-         int widthFade;
-         int heightFade;
-
-        @Override
-        public Animation onBuildClips(AnimationBuilder builder) {
-            //TODO
-            return super.onBuildClips(builder);
+    public static class PortViewFade extends Geometry{
+        public PortViewFade(float width, float height, float scalePixel) {
+            super(new SquareModel(scalePixel,true));
+            setSize(width,height);
         }
-
-        @Override
-        public void onAttachAnimation(Animation sequence) {
-            super.onAttachAnimation(sequence);
-        }
-
-        @Override
-        public boolean hasCustomClips() {
-            return false;
-        }
-
-        @Override
-        public void onCreated() {
-            super.onCreated();
-        }
-
-        void setSizeFade(int width, int height){
-            this.widthFade =width;
-            this.heightFade =height;
-        }
-
-        @Override
-        public void updateRender() {
-            getImage().setUvCoordinates(getAnimator().getCurrentFrame());
-            getImage().setSize(widthFade, heightFade);
-            getAnimator().updateFrame();
-            getImage().updateRender();
-        }
-
-
 
     }
 

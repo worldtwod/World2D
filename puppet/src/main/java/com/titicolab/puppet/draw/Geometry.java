@@ -17,8 +17,8 @@
 package com.titicolab.puppet.draw;
 
 
-import com.titicolab.puppet.model.DrawModel;
 import com.titicolab.puppet.model.DrawableObject;
+import com.titicolab.puppet.model.GeometryModel;
 
 /**
  * Created by campino on 20/06/2016.
@@ -26,8 +26,8 @@ import com.titicolab.puppet.model.DrawableObject;
  */
 public class Geometry extends DrawableObject {
 
-    public Geometry(DrawModel drawModel) {
-        super(drawModel);
+    public Geometry(GeometryModel geometryModel) {
+        super(geometryModel);
         color = new float[4];
     }
 
@@ -38,7 +38,7 @@ public class Geometry extends DrawableObject {
         color[3]=a;
     }
 
-    public void setSize(int width, int height){
+    public void setSize(float width, float height){
         this.width = width;
         this.height = height;
     }
@@ -52,4 +52,9 @@ public class Geometry extends DrawableObject {
         this.scale = scale;
     }
 
+
+    @Override
+    public GeometryModel getDrawModel() {
+        return (GeometryModel) super.getDrawModel();
+    }
 }

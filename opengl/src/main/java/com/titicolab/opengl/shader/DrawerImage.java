@@ -35,6 +35,8 @@ public class DrawerImage  extends BaseDrawer<Image> implements Drawer<Image> {
         mModelBuffer = new ModelBuffer(size,
                 ImageModel.bytesPerVertexModel,
                 ImageModel.bytesPerIndexModel);
+
+
     }
 
     @Override

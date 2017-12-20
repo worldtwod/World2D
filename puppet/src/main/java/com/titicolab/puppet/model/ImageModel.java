@@ -29,7 +29,9 @@ public class ImageModel extends BaseModel{
     private static final int vertexPerModel  =  4;
 
     public static final int positionSize    =  2;
+
     public static final int coordinatesSize =  2;
+
     public static final int colorSize       =  4; //4 before
 
     public static final int indexPerModel   =  6;
@@ -48,17 +50,12 @@ public class ImageModel extends BaseModel{
     public static  final int  bytesPerIndexModel= 6* BYTES_PER_SHORT;
     public static final  int  bytesPerVertexModel = floatPerModel*BYTES_PER_FLOAT;
 
-    private static final short[] sVertexIndex = new short[indexPerModel];
-
-
-
 
     private UvCoordinates mUvCoordinates;
 
 
     public ImageModel(UvCoordinates uvCoordinates) {
-        super(uvCoordinates.getTexture().getScalePixel());
-        mVertexModel= new float[floatPerModel];
+        super(uvCoordinates.getTexture().getScalePixel(),floatPerModel,indexPerModel);
         mUvCoordinates = uvCoordinates;
     }
 
@@ -69,14 +66,16 @@ public class ImageModel extends BaseModel{
     public  short[] getIndex(int offset){
         int index = 0;
         short offsetModel = (short) (offset*vertexPerModel);
-        sVertexIndex[index++]=  offsetModel;
-        sVertexIndex[index++]= (short) (1 + offsetModel);
-        sVertexIndex[index++]= (short) (2 + offsetModel);
-        sVertexIndex[index++]= offsetModel;
-        sVertexIndex[index++]= (short) (2 + offsetModel);
-        sVertexIndex[index]= (short) (3 + offsetModel);
-        return sVertexIndex;
+        mIndex[index++]=  offsetModel;
+        mIndex[index++]= (short) (1 + offsetModel);
+        mIndex[index++]= (short) (2 + offsetModel);
+        mIndex[index++]= offsetModel;
+        mIndex[index++]= (short) (2 + offsetModel);
+        mIndex[index]= (short) (3 + offsetModel);
+        return mIndex;
     }
+
+
 
 
     @Override
@@ -106,50 +105,48 @@ public class ImageModel extends BaseModel{
         float a = drawable.color[3];
 
 
+        mVertex[index++]=vx-sWidth/2;
+        mVertex[index++]=vy+sHeight/2;
+        mVertex[index++]=left;  // origin u69*
+        mVertex[index++]=top;  // leftSp-topSp
 
-
-        mVertexModel[index++]=vx-sWidth/2;
-        mVertexModel[index++]=vy+sHeight/2;
-        mVertexModel[index++]=left;  // origin u69*
-        mVertexModel[index++]=top;  // leftSp-topSp
-
-        mVertexModel[index++]=r;  // position
-        mVertexModel[index++]=g;  // g
-        mVertexModel[index++]=b;  // b
-        mVertexModel[index++]=a;  // a
+        mVertex[index++]=r;  // position
+        mVertex[index++]=g;  // g
+        mVertex[index++]=b;  // b
+        mVertex[index++]=a;  // a
 
         // v1
-        mVertexModel[index++]=vx-sWidth/2;
-        mVertexModel[index++]=vy-sHeight/2;
-        mVertexModel[index++]=left;
-        mVertexModel[index++]=bottom;  //leftSp-bottom
+        mVertex[index++]=vx-sWidth/2;
+        mVertex[index++]=vy-sHeight/2;
+        mVertex[index++]=left;
+        mVertex[index++]=bottom;  //leftSp-bottom
 
-        mVertexModel[index++]=r;  // position
-        mVertexModel[index++]=g;  // g
-        mVertexModel[index++]=b;  // b
-        mVertexModel[index++]=a;  // a
+        mVertex[index++]=r;  // position
+        mVertex[index++]=g;  // g
+        mVertex[index++]=b;  // b
+        mVertex[index++]=a;  // a
 
         // v2
-        mVertexModel[index++]=vx+sWidth/2;
-        mVertexModel[index++]=vy-sHeight/2;
-        mVertexModel[index++]=right;
-        mVertexModel[index++]=bottom;  //right-bottom
+        mVertex[index++]=vx+sWidth/2;
+        mVertex[index++]=vy-sHeight/2;
+        mVertex[index++]=right;
+        mVertex[index++]=bottom;  //right-bottom
 
-        mVertexModel[index++]=r;  // position
-        mVertexModel[index++]=g;  // g
-        mVertexModel[index++]=b;  // b
-        mVertexModel[index++]=a;  // a
+        mVertex[index++]=r;  // position
+        mVertex[index++]=g;  // g
+        mVertex[index++]=b;  // b
+        mVertex[index++]=a;  // a
 
         //V3
-        mVertexModel[index++]=vx+sWidth/2;
-        mVertexModel[index++]=vy+sHeight/2;
-        mVertexModel[index++]=right;
-        mVertexModel[index++]=top;  //right-topSp
+        mVertex[index++]=vx+sWidth/2;
+        mVertex[index++]=vy+sHeight/2;
+        mVertex[index++]=right;
+        mVertex[index++]=top;  //right-topSp
 
-        mVertexModel[index++]=r;  // position
-        mVertexModel[index++]=g;  // g
-        mVertexModel[index++]=b;  // b
-        mVertexModel[index]=a;    // a
+        mVertex[index++]=r;  // position
+        mVertex[index++]=g;  // g
+        mVertex[index++]=b;  // b
+        mVertex[index]=a;    // a
     }
 
 

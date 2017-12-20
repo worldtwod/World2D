@@ -19,7 +19,7 @@ package com.titicolab.opengl.shader;
 
 import com.titicolab.nanux.graphics.drawer.Drawer;
 import com.titicolab.puppet.draw.Geometry;
-import com.titicolab.puppet.model.GeometryModel;
+import com.titicolab.puppet.model.BaseModel;
 import com.titicolab.puppet.model.ModelBuffer;
 
 /**
@@ -28,14 +28,20 @@ import com.titicolab.puppet.model.ModelBuffer;
  */
 public  class DrawerGeometry extends BaseDrawer<Geometry> implements Drawer.Brush<Geometry> {
 
+    private static final int   MAX_FLOAT_PER_MODEL = 4 * 2;
+    private static final int   MAX_SHORT_PER_INDEX = 4;
+
+    private static final  int  MAX_BYTE_MODEL = MAX_FLOAT_PER_MODEL*BaseModel.BYTES_PER_FLOAT;
+    private static  final int  MAX_BYTE_INDEX = MAX_SHORT_PER_INDEX* BaseModel.BYTES_PER_SHORT;
+
+
     private float mColor[];
     private float mLineWidth;
 
     public DrawerGeometry(int size, GeometryShaderProgram program) {
         super(size, program);
 
-        mModelBuffer = new ModelBuffer(size, GeometryModel.bytesPerVertexModel,
-                GeometryModel.bytesPerIndexModel);
+        mModelBuffer = new ModelBuffer(size,MAX_BYTE_MODEL,MAX_BYTE_INDEX);
 
         mColor = new float[4];
         mColor[0]=1;
@@ -44,7 +50,6 @@ public  class DrawerGeometry extends BaseDrawer<Geometry> implements Drawer.Brus
         mColor[3]=1;
         mLineWidth =1.0f;
         mStatus = STATUS_END;
-
     }
 
 
@@ -59,23 +64,53 @@ public  class DrawerGeometry extends BaseDrawer<Geometry> implements Drawer.Brus
         getShaderProgram().binColor(mColor);
         getShaderProgram().binLineWidth(mLineWidth);
         reset();
+        resetDrawOperations();
+    }
+
+
+
+    /*@Override
+    public void add(Geometry geometry){
+        super.add(geometry);
+        mModelBuffer.add(geometry.getDrawModel());
+    }
+    @Override
+    protected void draw(){
+        if(isEmpty())return;
+        getShaderProgram().binAttributes(mModelBuffer.getVertexBuffer());
+        getShaderProgram().draw(mModelBuffer.getIndexBuffer(), mModelBuffer.size());
+        reset();
+        mModelBuffer.reset();
+    }*/
+
+
+    @Override
+    public void add(Geometry geometry){
+        if(!isEmpty() && (
+                getCurrent().getDrawModel().getDrawMode()!=geometry.getDrawModel().getDrawMode()
+             || getCurrent().getDrawModel().getIndexPerModel()!= geometry.getDrawModel().getIndexPerModel()
+        )){
+            draw();
+        }
+
+        super.add(geometry);
+        mModelBuffer.add(geometry.getDrawModel());
     }
 
     @Override
     protected void draw(){
         if(isEmpty())return;
 
+        getShaderProgram().binGeometryModel( getCurrent().getDrawModel());
         getShaderProgram().binAttributes(mModelBuffer.getVertexBuffer());
         getShaderProgram().draw(mModelBuffer.getIndexBuffer(), mModelBuffer.size());
         reset();
         mModelBuffer.reset();
+        addDrawOperation();
     }
 
-    @Override
-    public void add(Geometry geometry){
-        super.add(geometry);
-        mModelBuffer.add(geometry.getDrawModel());
-    }
+
+
 
     @Override
     public void setColor(float r, float g, float b, float a){

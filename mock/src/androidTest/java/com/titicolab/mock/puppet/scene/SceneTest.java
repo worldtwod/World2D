@@ -62,7 +62,7 @@ public class SceneTest extends AnimationTestCase {
         @Override
         public MapGroupLayers onDefineMapGroupLayers() {
             return new MapGroupLayers.Builder()
-                    .setName("MockScene")
+                    .setName("MockSceneDigit")
                     .layer(MockLayer.class,1)
                     .build();
         }

@@ -1,11 +1,11 @@
 package com.titicolab.mock.cases;
 
+import android.app.Activity;
 import android.support.annotation.CallSuper;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.MotionEvent;
 
 import com.titicolab.android.GameActivity;
-import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.android.util.LogHelper;
 import com.titicolab.mock.MockActivity;
 import com.titicolab.mock.rule.RenderTestRule;
@@ -13,6 +13,7 @@ import com.titicolab.nanux.animation.GameContext;
 import com.titicolab.nanux.animation.ObservableRenderer.Renderer;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.DisplayInfo;
+import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.nanux.util.GPUInfo;
 
 import org.junit.Rule;
@@ -83,5 +84,9 @@ public class GraphicsTestCase implements Renderer, ObservableInput.InputListener
 
     public DisplayInfo getDisplayInfo(){
         return mGameContext.getDisplayInfo();
+    }
+
+    public Activity getActivity(){
+        return mRenderRule.getActivity();
     }
 }

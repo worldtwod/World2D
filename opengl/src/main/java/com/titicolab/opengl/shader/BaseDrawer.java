@@ -33,7 +33,12 @@ public abstract class BaseDrawer<T> extends FixList<T>  implements Drawer<T> {
     final private ShaderProgram mProgram;
 
     ModelBuffer mModelBuffer;
+
     int mStatus;
+
+
+
+    private int drawOperation;
 
     BaseDrawer(int size, ShaderProgram program) {
         super(size);
@@ -58,6 +63,7 @@ public abstract class BaseDrawer<T> extends FixList<T>  implements Drawer<T> {
         mProgram.use();
         mProgram.binMatrix(matrix);
         reset();
+        resetDrawOperations();
     }
 
 
@@ -85,4 +91,15 @@ public abstract class BaseDrawer<T> extends FixList<T>  implements Drawer<T> {
     }
 
 
+    public int getDrawOperation() {
+        return drawOperation;
+    }
+
+    protected void resetDrawOperations() {
+        drawOperation=0;
+    }
+
+    protected void addDrawOperation(){
+        drawOperation++;
+    }
 }

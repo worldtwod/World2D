@@ -90,10 +90,10 @@ public abstract class Layer extends BaseLayer<Layer.ParamsLayer>{
     protected abstract boolean onTouch(ObservableInput.Event input);
 
 
-    protected Camera2D getCamera2D(){
+    public Camera2D getCamera2D(){
         return mScene.getCamera2D();
     }
-    protected CameraUi getCameraUi(){
+    public CameraUi getCameraUi(){
         return mScene.getCameraUi();
     }
     public Scene getScene() {

@@ -108,7 +108,6 @@ public class Puppeteer extends Controller {
     }
 
 
-
     @Override
     public void onSurfaceChanged(int width, int height) {
         mGlWidth = width;
@@ -172,6 +171,7 @@ public class Puppeteer extends Controller {
 
     @Override
     public void onDestroy() {
+
     }
 
     public SceneManager getSceneManager() {

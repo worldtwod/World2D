@@ -20,94 +20,49 @@ package com.titicolab.puppet.model;
  * Created by campino on 20/06/2016.
  *
  */
-public  class GeometryModel extends BaseModel{
+public abstract class GeometryModel extends BaseModel{
 
-    public static final int vertexPerModel  =  4;
+    public static final int GL_POINTS=1;
+    public static final int GL_LINE_STRIP=2;
+    public static final int GL_LINE_LOOP=3;
+    public static final int GL_LINES=4;
+    public static final int GL_TRIANGLE_STRIP=5;
+    public static final int GL_TRIANGLE_FAN=6;
+    public static final int GL_TRIANGLES=7;
+    private final int mode;
 
-    public static final int positionSize    =  2;
-
-    public static final int indexPerModel   =  8;
-
-
-    public static final int floatPerVertex    = positionSize;
-    public static final int floatPerModel     = vertexPerModel *floatPerVertex;
-
-
-    public static final int stride             = floatPerVertex*BYTES_PER_FLOAT;
-    public static final int positionOffset     = 0;
-    public static final int colorOffset        = positionSize ;
+    protected static final int  FLOAT_PER_VERTEX =  2;
 
 
-    private static final short[] sVertexIndex = new short[indexPerModel];
-
-    public static  final int  bytesPerIndexModel= indexPerModel* BYTES_PER_SHORT;
-    public static final  int  bytesPerVertexModel = floatPerModel*BYTES_PER_FLOAT;
-
-
-
-    public GeometryModel(float scalePixel){
-        super(scalePixel);
-       mVertexModel = new float[floatPerModel];
-    }
-
-
-
-    public static String metrics(){
-        StringBuffer strBuffer= new StringBuffer();
-        strBuffer.append("       ImageModel Metrics\n");
-        strBuffer.append("\nVertexPerModel: " + vertexPerModel);
-        strBuffer.append("\n floatPerModel: " + floatPerModel);
-        strBuffer.append("\n bytesPerModel: " + bytesPerVertexModel);
-        strBuffer.append("\n");
-        strBuffer.append("\nIndexPerModel: " + indexPerModel);
-        strBuffer.append("\n bytesPerIndexModel: " + bytesPerIndexModel);
-        return strBuffer.toString();
-    }
-
-    @Override
-    public  short[] getIndex(int offset){
-        int index = 0;
-        short offsetModel = (short) (offset*vertexPerModel);
-        sVertexIndex[index++]= (short) (0 + offsetModel);
-        sVertexIndex[index++]= (short) (1 + offsetModel);
-        sVertexIndex[index++]= (short) (1 + offsetModel);
-        sVertexIndex[index++]= (short) (2 + offsetModel);
-        sVertexIndex[index++]= (short) (2 + offsetModel);
-        sVertexIndex[index++]= (short) (3 + offsetModel);
-
-        sVertexIndex[index++]= (short) (3 + offsetModel);
-        sVertexIndex[index++]= (short) (0 + offsetModel);
-
-        return sVertexIndex;
+    public GeometryModel(float scalePixel, int drawMode, int floatPerModel, int indexPerModel){
+        super(scalePixel,floatPerModel,indexPerModel);
+        mode = drawMode;
     }
 
 
     @Override
-    public void updateModel(DrawableObject drawable){
+    public abstract short[] getIndex(int offset);
 
-        int index=0;
 
-        float sWidth= drawable.width * drawable.scale *mScalePixel;
-        float sHeight= drawable.height * drawable.scale*mScalePixel;
-        float vx = drawable.x*mScalePixel;
-        float vy = drawable.y*mScalePixel;
 
-        // Triangle 1
-        // v0
-        mVertexModel[index++]=vx-sWidth/2;
-        mVertexModel[index++]=vy+sHeight/2;
-
-        // v1
-        mVertexModel[index++]=vx+sWidth/2;
-        mVertexModel[index++]=vy+sHeight/2;
-
-        // v2
-        mVertexModel[index++]=vx+sWidth/2;
-        mVertexModel[index++]=vy-sHeight/2;
-
-        //V3
-        mVertexModel[index++]=vx-sWidth/2;
-        mVertexModel[index++]=vy-sHeight/2;
-
+    public int getStride() {
+        return FLOAT_PER_VERTEX*BaseModel.BYTES_PER_FLOAT;
     }
+
+    public int getPositionSize() {
+        return FLOAT_PER_VERTEX;
+    }
+
+    public int getIndexPerModel() {
+        return mIndex.length;
+    }
+
+    public int getDrawMode(){
+        return mode;
+    }
+
+    @Override
+    public abstract void updateModel(DrawableObject drawable);
+
+
 }

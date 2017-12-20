@@ -38,6 +38,9 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
 
 
     private SceneManager    mSceneManager;
+
+
+
     private DisplayInfo     mDisplayInfo;
 
 
@@ -171,6 +174,9 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
         return mMapGroupLayers;
     }
 
+    public DisplayInfo getDisplayInfo() {
+        return mDisplayInfo;
+    }
 
     @Override
     protected boolean onTouch(ObservableInput.Event event) {

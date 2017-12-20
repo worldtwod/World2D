@@ -23,6 +23,8 @@ package com.titicolab.puppet.model;
 
 public interface DrawModel{
      void updateModel(DrawableObject drawable);
+
      short[] getIndex(int offset);
      float[] getVertex();
+
 }

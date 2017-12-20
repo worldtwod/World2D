@@ -25,6 +25,7 @@ import com.titicolab.mock.cases.opengl.TextureManagerTestCase;
 import com.titicolab.nanux.animation.GameContext;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.graphics.textures.Texture;
+import com.titicolab.nanux.list.FixList;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.DrawerImage;
 import com.titicolab.opengl.shader.ImageShaderProgram;
@@ -42,11 +43,12 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class ImageDrawerTest  extends TextureManagerTestCase {
 
-    final int IMAGE_LENGTH=5;
+
     private DrawerImage imageDrawer;
-    private Image[] imageArray;
-    private float imageWidth;
     private ProjectionUi projection;
+    private FixList<Image> list;
+    private ImageShaderProgram shader;
+
 
 
     @Override
@@ -58,38 +60,26 @@ public class ImageDrawerTest  extends TextureManagerTestCase {
         projection.setViewport(1280,720,ProjectionUi.SCALE_HEIGHT);
 
 
-        ImageShaderProgram shader = getMockProgram();
+        shader = getMockProgram();
         shader.buildProgram();
 
-        imageDrawer = new DrawerImage(IMAGE_LENGTH,shader);
-
-
-        imageArray = new Image[IMAGE_LENGTH];
-        imageWidth = game.getDisplayInfo().getReferenceWidth()/IMAGE_LENGTH;
-        int i;
-
-        for (i = 0; i < imageArray.length; i++) {
-            Texture texture = mTextureManager.getTexture(R.drawable.test_square_256);
-            imageArray[i] = new Image(texture);
-            imageArray[i].setSize((int)imageWidth,(int)imageWidth);
-        }
     }
 
 
     @Override
     public void onDrawFrame() {
         super.onDrawFrame();
-        float y=0;
-        for (int i = 0; i < imageArray.length; i++) {
-            float x = imageWidth / 2 + i * imageWidth;
-            y+= imageWidth/2;
-            imageArray[i].setPosition(x,y);
-            imageArray[i].updateRender();
+
+
+        if(list==null) return;
+
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).updateRender();
         }
 
         imageDrawer.begin(projection.getMatrix());
-        for (Image anImageArray : imageArray)
-            imageDrawer.add(anImageArray);
+        for (int i = 0; i < list.size(); i++)
+            imageDrawer.add(list.get(i));
         imageDrawer.end();
     }
 
@@ -97,6 +87,21 @@ public class ImageDrawerTest  extends TextureManagerTestCase {
 
     @Test
     public void testAnimation(){
+        int N=4;
+        float size = projection.getViewPortWidth()/N;
+
+        Texture texture = mTextureManager.getTexture(R.drawable.test_square_256);
+        FixList<Image> listImages = new FixList<>(N);
+
+        for (int i = 0; i < listImages.capacity(); i++) {
+            Image image = new Image(texture);
+            image.setSize(size,size);
+            image.setPosition(size/2+size*i,size);
+            listImages.add(image);
+        }
+
+        imageDrawer = new DrawerImage(listImages.size(),shader);
+        list = listImages;
         waitTouchSeconds(60*10);
     }
 

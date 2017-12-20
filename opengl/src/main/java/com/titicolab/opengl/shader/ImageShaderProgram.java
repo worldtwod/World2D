@@ -98,8 +98,7 @@ public class ImageShaderProgram extends ShaderProgram {
         glUniformMatrix4fv(uMatrixLocation, 1, false, matrix, 0);
     }
 
-
-
+    /*
     public void setAttributePosition(FloatBuffer floatBuffer){
         floatBuffer.position(ImageModel.positionOffset);
         glVertexAttribPointer(aPositionLocation,
@@ -131,7 +130,7 @@ public class ImageShaderProgram extends ShaderProgram {
                 ImageModel.stride,
                 floatBuffer);
         glEnableVertexAttribArray(aColorLocation);
-    }
+    }*/
 
 
     public void draw(ShortBuffer indexBuffer,int index) {

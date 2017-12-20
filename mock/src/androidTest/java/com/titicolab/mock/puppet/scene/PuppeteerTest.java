@@ -52,7 +52,6 @@ public class PuppeteerTest extends GraphicsTestCase{
         super.onSurfaceCreated(game, eglConfig);
         Context appContext = InstrumentationRegistry.getTargetContext();
         mController  = new Puppeteer(new AndroidDrawToolsBuilder(appContext));
-
         mController.onSurfaceCreated(game,eglConfig);
     }
 
@@ -96,7 +95,7 @@ public class PuppeteerTest extends GraphicsTestCase{
         @Override
         public MapGroupLayers onDefineMapGroupLayers() {
             return new MapGroupLayers.Builder()
-                    .setName("MockScene")
+                    .setName("MockSceneDigit")
                     .layer(MockLayer.class,1,null)
                     .build();
         }

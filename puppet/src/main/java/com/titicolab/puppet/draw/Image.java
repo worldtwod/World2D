@@ -84,7 +84,7 @@ public class Image extends DrawableObject {
         color[3]=a;
     }
 
-    public void setSize(int width, int height){
+    public void setSize(float width, float height){
         this.width = width;
         this.height = height;
     }

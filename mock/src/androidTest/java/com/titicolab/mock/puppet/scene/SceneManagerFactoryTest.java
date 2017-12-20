@@ -17,7 +17,7 @@
 package com.titicolab.mock.puppet.scene;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.AnimationTestCase;
+import com.titicolab.mock.cases.puppet.SceneManagerTestCase;
 import com.titicolab.puppet.animation.AnimationSheet;
 import com.titicolab.puppet.objects.base.Animated;
 import com.titicolab.puppet.objects.base.Scene;
@@ -36,20 +36,43 @@ import org.junit.Test;
  *
  */
 
-public class SceneManagerTest extends AnimationTestCase {
+public class SceneManagerFactoryTest extends SceneManagerTestCase{
+
+
+
+
 
 
     @Test
     public void test_factoryObjects(){
 
         MockScene scene = new MockScene();
-        SceneManager manager = new SceneManager(getRunnerTask(),getTextureManager(),getDisplayInfo());
-
+        SceneManager manager = getSceneManager();
         manager.startScene(scene);
-
         Assert.assertNotNull(scene.layer);
         Assert.assertNotNull(scene.layer.button);
         Assert.assertNotNull(scene.layer.digit);
+
+        Assert.assertNotNull(scene.getCamera2D());
+        Assert.assertNotNull(scene.getCameraUi());
+        Assert.assertNotNull(scene.layer.getCamera2D());
+        Assert.assertNotNull(scene.layer.getCameraUi());
+        Assert.assertNotNull(scene.layer.getScene());
+    }
+
+    @Test
+    public void test_UpdateObjects(){
+
+        MockScene scene = new MockScene();
+        SceneManager manager = getSceneManager();
+        manager.play(scene);
+        waitTouchSeconds(2);
+
+        int w = scene.getCamera2D().getViewPortWidth();
+        int h = scene.getCamera2D().getViewPortHeight();
+
+        Assert.assertEquals(w/2,scene.layer.digit.getX(),0.1);
+        Assert.assertEquals(h/2,scene.layer.digit.getY(),0.1);
     }
 
 
@@ -61,16 +84,16 @@ public class SceneManagerTest extends AnimationTestCase {
         @Override
         public MapGroupLayers onDefineMapGroupLayers() {
             return new MapGroupLayers.Builder()
-                    .setName("MockScene")
+                    .setName("MockSceneDigit")
                     .layer(MockLayer.class,1,null)
                     .build();
         }
-
 
         @Override
         public void onGroupLayersCreated() {
             layer = (MockLayer) findLayer(1);
         }
+
     }
 
 
@@ -78,6 +101,7 @@ public class SceneManagerTest extends AnimationTestCase {
 
         Button button;
         Digit digit;
+        private int x;
 
         @Override
         public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
@@ -110,7 +134,20 @@ public class SceneManagerTest extends AnimationTestCase {
         public void onGroupObjectsCreated() {
             button = findById(Button.class,100);
             digit =   findById(Digit.class,100);
+            digit.getAnimator().setSpeed(1);
+            x = 0;
         }
+
+
+        @Override
+        protected void updateLogic() {
+            super.updateLogic();
+            int w = getCamera2D().getViewPortWidth();
+            int h = getCamera2D().getViewPortHeight();
+            x = x<w/2? x+10:w/2;
+            digit.setPosition(x,h/2);
+        }
+
     }
 
 

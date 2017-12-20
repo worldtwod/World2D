@@ -24,18 +24,20 @@ public abstract class BaseModel implements DrawModel {
     public static final int BYTES_PER_FLOAT = 4;
     public static final int BYTES_PER_SHORT = 2;
 
-    float[]     mVertexModel;
-    float       mScalePixel=1;
+    final short[] mIndex;
+    final float[] mVertex;
+    float         mScalePixel=1;
 
-
-    BaseModel(float scalePixel) {
+    BaseModel(float scalePixel, int vertexPerModel, int indexPerModel) {
         mScalePixel = scalePixel;
+        mIndex = new short[indexPerModel];
+        mVertex = new float[vertexPerModel];
     }
 
     public float[] getVertex(){
-        return mVertexModel;
+        return mVertex;
     }
-    public void setScalePixel(float scalePixel) {
-        this.mScalePixel = scalePixel;
-    }
+
+    public abstract short[] getIndex(int offset);
+
 }

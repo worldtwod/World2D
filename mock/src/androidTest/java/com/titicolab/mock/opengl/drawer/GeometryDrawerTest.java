@@ -30,14 +30,13 @@ import com.titicolab.opengl.shader.DrawerGeometry;
 import com.titicolab.opengl.shader.GeometryShaderProgram;
 import com.titicolab.opengl.util.TextResourceReader;
 import com.titicolab.puppet.draw.Geometry;
-import com.titicolab.puppet.model.GeometryModel;
+import com.titicolab.puppet.model.SquareModel;
+import com.titicolab.puppet.model.TriangleModel;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by campino on 11/11/2016.
@@ -52,9 +51,14 @@ public class GeometryDrawerTest extends GraphicsTestCase{
     private DrawerGeometry drawer;
     private ProjectionUi projectionUi;
     private Geometry geometry;
+    private Geometry triangle;
+    private Geometry square;
+
 
     @Override
     public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+        super.onSurfaceCreated(game,eglConfig);
+
         Context appContext = InstrumentationRegistry.getTargetContext();
         AndroidDisplayMetrics displayMetrics = new AndroidDisplayMetrics(appContext);
         projectionUi = new ProjectionUi(displayMetrics);
@@ -64,36 +68,54 @@ public class GeometryDrawerTest extends GraphicsTestCase{
                 appContext, R.raw.geometry_vertex_shader);
         String fragmentSh = TextResourceReader.readTextFileFromResource(
                 appContext, R.raw.geometry_fragment_shader);
-
         shader = new GeometryShaderProgram(vertexSh,fragmentSh);
         shader.buildProgram();
-
-        drawer = new DrawerGeometry(1,shader);
-
-
-        geometry = new Geometry(new GeometryModel(displayMetrics.getScalePixel()));
-        geometry.setPosition(projectionUi.getViewPortWidth()/2,projectionUi.getViewPortHeight()/2);
-        geometry.setSize((int)projectionUi.getViewPortWidth(),(int)projectionUi.getViewPortHeight());
-
     }
 
     @Override
     public void onDrawFrame() {
 
-        geometry.updateRender();
-        drawer.begin(projectionUi.getMatrix());
-         drawer.add(geometry);
-        drawer.end();
+        if(geometry==null || triangle==null || square==null)
+            return;
 
+        geometry.updateRender();
+        triangle.updateRender();
+        square.updateRender();
+
+        drawer.begin(projectionUi.getMatrix());
+
+         drawer.add(geometry);
+         drawer.add(square);
+         drawer.add(triangle);
+
+        drawer.end();
     }
 
     @Test
     public void a_shader(){
-        assertNotNull(drawer);
-        drawer.setColor(0,1,1,1);
-        drawer.setBrushSize(10.0f);
 
-        waitTouchSeconds(60);
+        drawer = new DrawerGeometry(3,shader);
+        drawer.setColor(0,1,1,1);
+        drawer.setBrushSize(5.0f);
+       // assertNotNull(drawer);
+        Geometry geometry = new Geometry(new SquareModel(getDisplayInfo().getScalePixel()));
+        geometry.setPosition(projectionUi.getViewPortWidth()/2,projectionUi.getViewPortHeight()/2);
+        geometry.setSize((int)projectionUi.getViewPortWidth()/2,(int)projectionUi.getViewPortHeight()/2);
+
+        Geometry triangle = new Geometry(new TriangleModel(getDisplayInfo().getScalePixel()));
+        triangle.setSize((int)projectionUi.getViewPortWidth()/3,(int)projectionUi.getViewPortHeight()/3);
+        triangle.setPosition(projectionUi.getViewPortWidth()/3/2,projectionUi.getViewPortHeight()/3/2);
+
+        Geometry square = new Geometry(new SquareModel(getDisplayInfo().getScalePixel(),true));
+        square.setSize((int)projectionUi.getViewPortWidth()/4,(int)projectionUi.getViewPortHeight()/4);
+        square.setPosition(projectionUi.getViewPortWidth()/2,projectionUi.getViewPortHeight()/2);
+
+
+        this.geometry = geometry;
+        this.triangle = triangle;
+        this.square = square;
+
+        waitTouchSeconds(60*60);
 
     }
 

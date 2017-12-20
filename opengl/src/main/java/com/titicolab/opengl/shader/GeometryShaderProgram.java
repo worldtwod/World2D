@@ -25,7 +25,6 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 import static android.opengl.GLES20.GL_FLOAT;
-import static android.opengl.GLES20.GL_LINES;
 import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glEnableVertexAttribArray;
 import static android.opengl.GLES20.glGetAttribLocation;
@@ -46,6 +45,11 @@ public class GeometryShaderProgram extends ShaderProgram {
 
     private int   vboIndex;
     private int   vboBuffer;
+
+    private int indexPerModel;
+    private int positionSize;
+    private int stride;
+    private int drawMode;
 
     public GeometryShaderProgram(String vertexShader, String fragmentShader) {
         super(vertexShader, fragmentShader);
@@ -100,19 +104,21 @@ public class GeometryShaderProgram extends ShaderProgram {
 
     }
 
+
+
     @Override
     public void binAttributes(FloatBuffer vertexBuffer){
         vertexBuffer.position(0);
         //log.info(IOUtils.toString(vertexBuffer));
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER,vboBuffer);
-        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, vertexBuffer.capacity() * BaseModel.BYTES_PER_FLOAT,
+        GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER,vertexBuffer.capacity()* BaseModel.BYTES_PER_FLOAT,
                 vertexBuffer, GLES20.GL_STATIC_DRAW);
 
         GLES20.glVertexAttribPointer(aPositionLocation,
-                GeometryModel.positionSize,
+                positionSize,
                 GL_FLOAT,
                 false,
-                GeometryModel.stride,
+                stride,
                 0);
 
         glEnableVertexAttribArray(aPositionLocation);
@@ -122,7 +128,6 @@ public class GeometryShaderProgram extends ShaderProgram {
     @Override
     public void draw(ShortBuffer indexBuffer,int index) {
         indexBuffer .position(0);
-
        //log.info(IOUtils.toString(indexBuffer));
 
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, vboIndex);
@@ -130,12 +135,31 @@ public class GeometryShaderProgram extends ShaderProgram {
                 * BaseModel.BYTES_PER_SHORT, indexBuffer, GLES20.GL_STATIC_DRAW);
 
 
-        glDrawElements(GL_LINES,index* GeometryModel.indexPerModel, GLES20.GL_UNSIGNED_SHORT,0);
+        glDrawElements(drawMode,index* indexPerModel, GLES20.GL_UNSIGNED_SHORT,0);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
         // glBindTexture(GL_TEXTURE_2D, 0);
-
     }
 
 
+    public void binGeometryModel(GeometryModel drawModel) {
+        this.stride = drawModel.getStride();
+        this.positionSize = drawModel.getPositionSize();
+        this.indexPerModel = drawModel.getIndexPerModel();
+        this.drawMode = parseDrawMode(drawModel.getDrawMode());
+    }
+
+    private int parseDrawMode(int drawMode) {
+        int glMode =0;
+        switch (drawMode){
+            case GeometryModel.GL_POINTS: glMode = GLES20.GL_POINTS; break;
+            case GeometryModel.GL_LINE_STRIP: glMode = GLES20.GL_LINE_STRIP; break;
+            case GeometryModel.GL_LINE_LOOP: glMode = GLES20.GL_LINE_LOOP; break;
+            case GeometryModel.GL_LINES: glMode = GLES20.GL_LINE_LOOP; break;
+            case GeometryModel.GL_TRIANGLE_STRIP: glMode = GLES20.GL_TRIANGLE_STRIP; break;
+            case GeometryModel.GL_TRIANGLE_FAN: glMode = GLES20.GL_TRIANGLE_FAN; break;
+            case GeometryModel.GL_TRIANGLES: glMode = GLES20.GL_TRIANGLES; break;
+        }
+        return glMode;
+    }
 }
