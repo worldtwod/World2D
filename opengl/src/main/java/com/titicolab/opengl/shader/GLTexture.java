@@ -16,13 +16,13 @@
 
 package com.titicolab.opengl.shader;
 
-import com.titicolab.nanux.graphics.textures.Texture;
+import com.titicolab.nanux.graphics.texture.Texture;
 
 /**
  * Created by campino on 17/05/2016.
  *
  */
-public  class GLTexture  implements Texture{
+public  class GLTexture  implements Texture {
 
     public static final int ACTIVITY_RESOURCES = -100;
     public static final int EXTERNAL_OES    = -100;

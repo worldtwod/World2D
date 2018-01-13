@@ -18,7 +18,7 @@ package com.titicolab.opengl.shader;
 
 import android.opengl.GLES20;
 
-import com.titicolab.puppet.model.ImageModel;
+import com.titicolab.nanux.graphics.model.ImageModel;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;

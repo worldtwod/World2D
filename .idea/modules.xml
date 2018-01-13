@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Nanux.iml" filepath="$PROJECT_DIR$/Nanux.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/components/component.iml" filepath="$PROJECT_DIR$/components/component.iml" />
       <module fileurl="file://$PROJECT_DIR$/mock/mock.iml" filepath="$PROJECT_DIR$/mock/mock.iml" />
       <module fileurl="file://$PROJECT_DIR$/nanux/nanux.iml" filepath="$PROJECT_DIR$/nanux/nanux.iml" />
       <module fileurl="file://$PROJECT_DIR$/opengl/opengl.iml" filepath="$PROJECT_DIR$/opengl/opengl.iml" />
-      <module fileurl="file://$PROJECT_DIR$/puppet/puppet.iml" filepath="$PROJECT_DIR$/puppet/puppet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/puppeteer/puppeteer.iml" filepath="$PROJECT_DIR$/puppeteer/puppeteer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/theater/theater.iml" filepath="$PROJECT_DIR$/theater/theater.iml" />
+      <module fileurl="file://C:\Users\campino\AndroidStudioProjects\world2D\world-2d-android\world-2d.iml" filepath="C:\Users\campino\AndroidStudioProjects\world2D\world-2d-android\world-2d.iml" />
+      <module fileurl="file://$PROJECT_DIR$/world2D.iml" filepath="$PROJECT_DIR$/world2D.iml" />
     </modules>
   </component>
 </project>

@@ -20,12 +20,12 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
-import com.titicolab.nanux.animation.GameContext;
-import com.titicolab.nanux.animation.RunnableTask;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.RunnableTask;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.DrawerImage;
-import com.titicolab.puppet.draw.Image;
+import com.titicolab.nanux.graphics.draw.Image;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;

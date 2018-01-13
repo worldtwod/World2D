@@ -18,9 +18,12 @@ package com.titicolab.opengl.shader;
 
 import android.content.Context;
 
+import com.titicolab.nanux.graphics.texture.Texture;
+import com.titicolab.nanux.graphics.texture.TextureManager;
 import com.titicolab.opengl.R;
 import com.titicolab.opengl.util.TextResourceReader;
-import com.titicolab.puppet.draw.DrawTools;
+import com.titicolab.nanux.animation.GridFrame;
+import com.titicolab.nanux.graphics.draw.DrawTools;
 
 /**
  * Created by campino on 11/12/2017.
@@ -30,19 +33,24 @@ import com.titicolab.puppet.draw.DrawTools;
 public class AndroidDrawToolsBuilder implements DrawTools.Builder {
 
 
+    private static final int MAX_SPRITES = 1000;
+    private static final int MAX_GEOMETRIES = 200;
+
     private final Context mContext;
+
 
 
     public AndroidDrawToolsBuilder(Context context) {
         mContext = context;
+
     }
 
     @Override
-    public DrawTools build() {
+    public DrawTools build(TextureManager textureManager) {
         return new DrawTools(setUpDrawerImage(mContext),
                 setUpDrawerImage(mContext),
                 setUpDrawerGeometry(mContext),
-                null);
+                setUpDrawerText(mContext,textureManager));
     }
 
 
@@ -53,9 +61,23 @@ public class AndroidDrawToolsBuilder implements DrawTools.Builder {
                 context, R.raw.image_fragment);
         ImageShaderProgram program = new ImageShaderProgram(vertexSh, fragmentSh);
         program.buildProgram();
-        return  new DrawerImage(100,program);
+        return  new DrawerImage(MAX_SPRITES,program);
     }
 
+    private static DrawerText setUpDrawerText(Context context, TextureManager textureManager) {
+        String vertexSh =  TextResourceReader.readTextFileFromResource(
+                context, R.raw.image_vertex);
+        String fragmentSh = TextResourceReader.readTextFileFromResource(
+                context, R.raw.image_fragment);
+        ImageShaderProgram program = new ImageShaderProgram(vertexSh, fragmentSh);
+        program.buildProgram();
+        Texture textureFont = textureManager.getTexture(R.drawable.lucida_console);
+        GridFrame gridFrame = new GridFrame(textureFont);
+        gridFrame.setGridShape(DrawerText.FONT_COLUMNS,DrawerText.FONT_ROWS)
+                .setGridSize(512,512)
+                .createFrames();
+        return   new DrawerText(gridFrame,program);
+    }
 
     private static DrawerGeometry setUpDrawerGeometry(Context context) {
         String vertexSh =  TextResourceReader.readTextFileFromResource(
@@ -65,7 +87,7 @@ public class AndroidDrawToolsBuilder implements DrawTools.Builder {
 
         GeometryShaderProgram shader = new GeometryShaderProgram(vertexSh, fragmentSh);
         shader.buildProgram();
-        return new DrawerGeometry(100,shader);
+        return new DrawerGeometry(MAX_GEOMETRIES,shader);
     }
 
 

@@ -20,18 +20,18 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.titicolab.android.engine.AndroidDisplayMetrics;
+import com.titicolab.puppeteer.AndroidDisplayMetrics;
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.animation.GameContext;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.graphics.draw.Geometry;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
+import com.titicolab.nanux.graphics.model.RectModel;
+import com.titicolab.nanux.graphics.model.TriangleModel;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.R;
 import com.titicolab.opengl.shader.DrawerGeometry;
 import com.titicolab.opengl.shader.GeometryShaderProgram;
 import com.titicolab.opengl.util.TextResourceReader;
-import com.titicolab.puppet.draw.Geometry;
-import com.titicolab.puppet.model.RectModel;
-import com.titicolab.puppet.model.TriangleModel;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;

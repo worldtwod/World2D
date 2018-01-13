@@ -20,11 +20,11 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.titicolab.android.engine.AndroidDisplayMetrics;
+import com.titicolab.puppeteer.AndroidDisplayMetrics;
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.animation.GameContext;
-import com.titicolab.nanux.animation.RunnerTask;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.RunnerTask;
 import com.titicolab.nanux.list.FixList;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidTextureManager;

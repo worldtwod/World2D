@@ -5,12 +5,12 @@ import android.support.annotation.CallSuper;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.MotionEvent;
 
-import com.titicolab.android.GameActivity;
-import com.titicolab.android.util.LogHelper;
+import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.puppeteer.util.LogHelper;
 import com.titicolab.mock.MockActivity;
 import com.titicolab.mock.rule.RenderTestRule;
-import com.titicolab.nanux.animation.GameContext;
-import com.titicolab.nanux.animation.ObservableRenderer.Renderer;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.nanux.util.FlagSync;
@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
  *
  */
 @RunWith(AndroidJUnit4.class)
-public class GraphicsTestCase implements Renderer, ObservableInput.InputListener {
+public class GraphicsTestCase implements ObservableRenderer.Renderer, ObservableInput.InputListener {
 
     @Rule
     public RenderTestRule<GameActivity> mRenderRule =
@@ -36,11 +36,11 @@ public class GraphicsTestCase implements Renderer, ObservableInput.InputListener
 
     private FlagSync mFlagTouch = new FlagSync();
 
-    final protected  LogHelper log = new LogHelper(this,"GameActivity");
+    final protected LogHelper log = new LogHelper(this,"GameActivity");
 
 
 
-    protected  GameContext mGameContext;
+    protected GameContext mGameContext;
 
     @Override
     public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {

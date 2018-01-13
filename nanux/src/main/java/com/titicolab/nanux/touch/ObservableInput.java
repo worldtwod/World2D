@@ -26,7 +26,7 @@ public interface ObservableInput {
      void start();
      void stop();
      void add(InputListener listener);
-     void remove(InputListener listener);
+
 
      interface InputListener {
          boolean onTouch (Event event);
@@ -34,7 +34,18 @@ public interface ObservableInput {
     }
 
      interface Event {
-        int getAction();
+
+        void setPositionUi(float uiX, float uiY);
+
+        void setPosition2D(float twodX, float twodY);
+
+         float getPixelX();
+         float getPixelY();
+
+
+
+         int getAction();
+
         /**
          * @return  X coordinate from ui
          */
@@ -44,8 +55,26 @@ public interface ObservableInput {
          * @return Y coordinates from ui
          */
         float getUiY();
-        float getPixelX();
-        float getPixelY();
 
+
+         /**
+          * @return  X coordinate from ui
+          */
+         float get2dX();
+
+         /**
+          * @return Y coordinates from ui
+          */
+         float get2dY();
+
+
+         boolean isUp();
+         boolean isDown();
+         boolean isMove();
     }
+
+
+
+
+
 }

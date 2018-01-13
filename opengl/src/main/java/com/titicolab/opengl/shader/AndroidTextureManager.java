@@ -24,9 +24,9 @@ import android.opengl.GLES20;
 import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
-import com.titicolab.nanux.animation.RunnableTask;
-import com.titicolab.nanux.animation.RunnerTask;
-import com.titicolab.nanux.graphics.textures.TextureManager;
+import com.titicolab.nanux.core.RunnableTask;
+import com.titicolab.nanux.core.RunnerTask;
+import com.titicolab.nanux.graphics.texture.TextureManager;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.opengl.util.LogHelper;
 

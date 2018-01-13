@@ -22,32 +22,33 @@ package com.titicolab.nanux.util;
  *
  */
 public interface DisplayInfo {
+        public static float scalePixel = 0;
 
     public static final int REFERENCE_WIDTH_DEFAULT = 1280;
     public static final int REFERENCE_HEIGHT_DEFAULT = 720;
 
-    public int getScreenWidth();
+    int getScreenWidth();
 
-    public int getScreenHeight();
+    int getScreenHeight();
 
 
-    public float getReferenceHeight();
+    float getReferenceHeight();
 
-    public float getReferenceWidth();
+    float getReferenceWidth();
 
-    public  float getScalePixel();
 
-    public int getFixWidth();
 
-    public int getFixHeight();
+    int getFixWidth();
 
-    public float px2dp(float px);
+    int getFixHeight();
 
-    public float dp2px(float dp);
+     float px2dp(float px);
 
-    public  int getOrientation();
+     float dp2px(float dp);
 
-    public float getAspectRatio();
+     int getOrientation();
 
+     float getAspectRatio();
+     float getScalePixel();
 
 }

@@ -18,8 +18,8 @@ package com.titicolab.opengl.shader;
 
 import android.opengl.GLES20;
 
-import com.titicolab.puppet.model.BaseModel;
-import com.titicolab.puppet.model.GeometryModel;
+import com.titicolab.nanux.graphics.model.BaseModel;
+import com.titicolab.nanux.graphics.model.GeometryModel;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -155,7 +155,7 @@ public class GeometryShaderProgram extends ShaderProgram {
             case GeometryModel.GL_POINTS: glMode = GLES20.GL_POINTS; break;
             case GeometryModel.GL_LINE_STRIP: glMode = GLES20.GL_LINE_STRIP; break;
             case GeometryModel.GL_LINE_LOOP: glMode = GLES20.GL_LINE_LOOP; break;
-            case GeometryModel.GL_LINES: glMode = GLES20.GL_LINE_LOOP; break;
+            case GeometryModel.GL_LINES: glMode = GLES20.GL_LINES; break;
             case GeometryModel.GL_TRIANGLE_STRIP: glMode = GLES20.GL_TRIANGLE_STRIP; break;
             case GeometryModel.GL_TRIANGLE_FAN: glMode = GLES20.GL_TRIANGLE_FAN; break;
             case GeometryModel.GL_TRIANGLES: glMode = GLES20.GL_TRIANGLES; break;

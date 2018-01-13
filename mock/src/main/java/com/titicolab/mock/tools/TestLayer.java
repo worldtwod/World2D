@@ -16,18 +16,19 @@
 
 package com.titicolab.mock.tools;
 
-import com.titicolab.android.GameActivity;
+
+import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.nanux.animation.AnimationSheet;
+import com.titicolab.nanux.graphics.draw.DrawTools;
+import com.titicolab.nanux.list.GameObjectCollection;
+import com.titicolab.nanux.objects.base.Scene;
+import com.titicolab.nanux.objects.base.SceneLayer;
+import com.titicolab.nanux.objects.factory.RequestCollection;
+import com.titicolab.nanux.objects.factory.RequestObject;
+import com.titicolab.nanux.objects.factory.RequestObjectBuilder;
+import com.titicolab.nanux.objects.map.MapObjects;
 import com.titicolab.nanux.util.ObjectSync;
 import com.titicolab.opengl.util.LogHelper;
-import com.titicolab.puppet.animation.AnimationSheet;
-import com.titicolab.puppet.draw.DrawTools;
-import com.titicolab.puppet.list.GameObjectCollection;
-import com.titicolab.puppet.objects.base.Scene;
-import com.titicolab.puppet.objects.base.SceneLayer;
-import com.titicolab.puppet.objects.factory.RequestCollection;
-import com.titicolab.puppet.objects.factory.RequestObject;
-import com.titicolab.puppet.objects.factory.RequestObjectBuilder;
-import com.titicolab.puppet.objects.map.MapObjects;
 
 /**
  * Created by campino on 12/12/2017.
@@ -76,7 +77,7 @@ public class TestLayer extends SceneLayer {
     }
 
     @Override
-    protected  AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
+    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
         log.debug(counter + " onDefineAnimations " + getId() );
         onDefineAnimations.setResult(counter++);
         return super.onDefineAnimations(builder);

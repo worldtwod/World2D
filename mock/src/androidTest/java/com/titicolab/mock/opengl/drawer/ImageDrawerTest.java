@@ -22,15 +22,15 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.opengl.TextureManagerTestCase;
-import com.titicolab.nanux.animation.GameContext;
+import com.titicolab.nanux.core.GameContext;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
-import com.titicolab.nanux.graphics.textures.Texture;
+import com.titicolab.nanux.graphics.texture.Texture;
 import com.titicolab.nanux.list.FixList;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.DrawerImage;
 import com.titicolab.opengl.shader.ImageShaderProgram;
 import com.titicolab.opengl.util.TextResourceReader;
-import com.titicolab.puppet.draw.Image;
+import com.titicolab.nanux.graphics.draw.Image;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -100,7 +100,7 @@ public class ImageDrawerTest  extends TextureManagerTestCase {
             listImages.add(image);
         }
 
-        imageDrawer = new DrawerImage(listImages.size(),shader);
+        imageDrawer = new DrawerImage(N,shader);
         list = listImages;
         waitTouchSeconds(60*10);
     }

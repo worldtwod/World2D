@@ -16,7 +16,7 @@
 
 package com.titicolab.mock.tools;
 
-import com.titicolab.puppet.objects.base.UiObject;
+import com.titicolab.nanux.objects.base.UiObject;
 
 /**
  * Created by campino on 12/12/2017.

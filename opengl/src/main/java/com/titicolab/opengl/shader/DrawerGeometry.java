@@ -17,10 +17,10 @@
 package com.titicolab.opengl.shader;
 
 
-import com.titicolab.nanux.graphics.drawer.Drawer;
-import com.titicolab.puppet.draw.Geometry;
-import com.titicolab.puppet.model.BaseModel;
-import com.titicolab.puppet.model.ModelBuffer;
+import com.titicolab.nanux.graphics.draw.Drawer;
+import com.titicolab.nanux.graphics.draw.Geometry;
+import com.titicolab.nanux.graphics.model.BaseModel;
+import com.titicolab.nanux.graphics.model.ModelBuffer;
 
 /**
  * Created by campino on 19/06/2016.
@@ -77,7 +77,6 @@ public  class DrawerGeometry extends BaseDrawer<Geometry> implements Drawer.Brus
         )){
             draw();
         }
-
         super.add(geometry);
         mModelBuffer.add(geometry.getDrawModel());
     }

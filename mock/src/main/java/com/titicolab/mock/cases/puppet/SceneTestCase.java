@@ -21,17 +21,17 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.animation.GameContext;
-import com.titicolab.nanux.animation.RunnableTask;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.RunnableTask;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
-import com.titicolab.puppet.loop.Puppeteer;
-import com.titicolab.puppet.objects.base.BaseLayer;
-import com.titicolab.puppet.objects.base.Scene;
-import com.titicolab.puppet.objects.factory.RequestCollection;
-import com.titicolab.puppet.objects.factory.RequestLayersBuilder;
-import com.titicolab.puppet.objects.map.MapItem;
+import com.titicolab.nanux.core.Puppeteer;
+import com.titicolab.nanux.objects.base.BaseLayer;
+import com.titicolab.nanux.objects.base.Scene;
+import com.titicolab.nanux.objects.factory.RequestCollection;
+import com.titicolab.nanux.objects.factory.RequestLayersBuilder;
+import com.titicolab.nanux.objects.map.MapItem;
 
 import org.junit.runner.RunWith;
 
@@ -100,7 +100,6 @@ public class SceneTestCase extends GraphicsTestCase {
                 this.clazz = clazz;
             }
 
-
             @Override
             protected RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
                 return builder
@@ -122,7 +121,6 @@ public class SceneTestCase extends GraphicsTestCase {
         public void updateRender() {
             super.updateRender();
         }
-
 
     }
 }

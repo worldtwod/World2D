@@ -17,14 +17,15 @@
 package com.titicolab.mock.tools;
 
 import com.titicolab.mock.R;
-import com.titicolab.puppet.animation.Animation;
-import com.titicolab.puppet.animation.AnimationSheet;
-import com.titicolab.puppet.animation.ClipMap;
-import com.titicolab.puppet.world.map.MapLayer;
-import com.titicolab.puppet.world.objects.Tile;
+import com.titicolab.nanux.animation.Animation;
+import com.titicolab.nanux.animation.AnimationSheet;
+import com.titicolab.nanux.animation.ClipMap;
+import com.titicolab.puppet.map.MapLayer;
+import com.titicolab.puppet.objects.Tile;
 
 /**
  * Created by campino on 18/12/2017.
+ *
  */
 
 public class TestMap {

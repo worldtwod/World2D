@@ -21,15 +21,15 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.animation.GameContext;
-import com.titicolab.nanux.animation.RunnableTask;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.RunnableTask;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
-import com.titicolab.puppet.draw.DrawTools;
-import com.titicolab.puppet.draw.Rectangle;
-import com.titicolab.puppet.loop.Puppeteer;
-import com.titicolab.puppet.world.objects.World2D;
+import com.titicolab.nanux.graphics.draw.DrawTools;
+import com.titicolab.nanux.graphics.draw.Rectangle;
+import com.titicolab.nanux.core.Puppeteer;
+import com.titicolab.puppet.objects.World2D;
 
 import org.junit.runner.RunWith;
 

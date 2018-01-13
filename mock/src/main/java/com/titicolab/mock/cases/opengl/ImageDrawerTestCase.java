@@ -23,9 +23,9 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.animation.GameContext;
-import com.titicolab.nanux.animation.RunnerTask;
-import com.titicolab.nanux.graphics.textures.TextureManager;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.RunnerTask;
+import com.titicolab.nanux.graphics.texture.TextureManager;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidTextureManager;
 import com.titicolab.opengl.shader.DrawerImage;

@@ -16,17 +16,17 @@
 
 package com.titicolab.mock.tools;
 
-import com.titicolab.android.GameActivity;
+import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.nanux.animation.AnimationSheet;
+import com.titicolab.nanux.list.GameObjectList;
+import com.titicolab.nanux.objects.base.Scene;
+import com.titicolab.nanux.objects.factory.RequestCollection;
+import com.titicolab.nanux.objects.factory.RequestLayersBuilder;
+import com.titicolab.nanux.objects.factory.RequestObject;
+import com.titicolab.nanux.objects.map.MapGroupLayers;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.nanux.util.ObjectSync;
 import com.titicolab.opengl.util.LogHelper;
-import com.titicolab.puppet.animation.AnimationSheet;
-import com.titicolab.puppet.list.GameObjectList;
-import com.titicolab.puppet.objects.base.Scene;
-import com.titicolab.puppet.objects.factory.RequestCollection;
-import com.titicolab.puppet.objects.factory.RequestLayersBuilder;
-import com.titicolab.puppet.objects.factory.RequestObject;
-import com.titicolab.puppet.objects.map.MapGroupLayers;
 
 /**
  * Created by campino on 12/12/2017.
@@ -69,7 +69,7 @@ public class TestScene  extends Scene {
     }
 
     @Override
-    protected  AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
+    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
         log.debug("onDefineAnimations "+ counter);
         onDefineAnimations.setResult(counter++);
         AnimationSheet tem= super.onDefineAnimations(builder);

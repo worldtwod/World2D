@@ -21,7 +21,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.animation.GameContext;
+import com.titicolab.nanux.core.GameContext;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.R;
 import com.titicolab.opengl.shader.GeometryShaderProgram;

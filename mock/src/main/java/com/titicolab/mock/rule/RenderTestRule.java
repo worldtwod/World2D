@@ -22,15 +22,15 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.test.rule.ActivityTestRule;
 
-import com.titicolab.android.GameActivity;
-import com.titicolab.android.GameActivityTestTools;
-import com.titicolab.nanux.util.FlagSync;
-import com.titicolab.android.util.LogHelper;
-import com.titicolab.nanux.animation.GameContext;
-import com.titicolab.nanux.animation.ObservableLifeCycle;
-import com.titicolab.nanux.animation.ObservableRenderer;
+import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.puppeteer.GameActivityTestTools;
+import com.titicolab.puppeteer.util.LogHelper;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.ObservableLifeCycle;
+import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.test.Monitor;
 import com.titicolab.nanux.touch.ObservableInput;
+import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.nanux.util.GPUInfo;
 
 

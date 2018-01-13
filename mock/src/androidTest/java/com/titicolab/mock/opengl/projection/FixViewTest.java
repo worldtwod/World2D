@@ -18,14 +18,14 @@ package com.titicolab.mock.opengl.projection;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.titicolab.android.engine.AndroidGame;
+import com.titicolab.puppeteer.GameActivity;
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
-import com.titicolab.nanux.animation.GameContext;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.graphics.draw.Image;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.DrawerImage;
-import com.titicolab.puppet.draw.Image;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -82,12 +82,13 @@ public class FixViewTest extends ImageDrawerTestCase {
                 720/2);
 
 
+        final GameActivity activity = (GameActivity) mRenderRule.getActivity();
 
 
-        mRenderRule.getActivity().runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((AndroidGame)mGameContext).getGLGameView().getHolder()
+                activity.getGLGameView().getHolder()
                         .setFixedSize(
                                 mGameContext.getDisplayInfo().getFixWidth(),
                                 mGameContext.getDisplayInfo().getFixHeight());

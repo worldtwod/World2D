@@ -3,16 +3,12 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 26
 
-
-
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -33,7 +29,11 @@ dependencies {
     implementation 'com.android.support.test:runner:1.0.1'
     implementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    implementation project(path: ':android')
-    compile project(path: ':puppet')
-    compile project(path: ':opengl')
+    implementation project(path: ':puppeteer')
+    implementation project(path: ':opengl')
+    implementation project(path: ':theater')
+    implementation project(path: ':nanux')
 }
+
+
+ apply from: rootProject.file('release-bintray.gradle')

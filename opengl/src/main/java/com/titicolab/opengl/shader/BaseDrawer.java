@@ -17,9 +17,9 @@
 package com.titicolab.opengl.shader;
 
 
-import com.titicolab.nanux.graphics.drawer.Drawer;
+import com.titicolab.nanux.graphics.draw.Drawer;
 import com.titicolab.nanux.list.FixList;
-import com.titicolab.puppet.model.ModelBuffer;
+import com.titicolab.nanux.graphics.model.ModelBuffer;
 
 /**
  * Created by campino on 18/05/2016.
@@ -49,7 +49,7 @@ public abstract class BaseDrawer<T> extends FixList<T>  implements Drawer<T> {
 
 
 
-    private int getStatus() {
+    int getStatus() {
         return mStatus;
     }
 

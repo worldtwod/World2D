@@ -17,10 +17,10 @@
 package com.titicolab.opengl.shader;
 
 
-import com.titicolab.nanux.graphics.drawer.Drawer;
-import com.titicolab.puppet.draw.Image;
-import com.titicolab.puppet.model.ImageModel;
-import com.titicolab.puppet.model.ModelBuffer;
+import com.titicolab.nanux.graphics.draw.Drawer;
+import com.titicolab.nanux.graphics.draw.Image;
+import com.titicolab.nanux.graphics.model.ImageModel;
+import com.titicolab.nanux.graphics.model.ModelBuffer;
 
 /**
  * Created by campino on 18/05/2016.
@@ -29,26 +29,24 @@ import com.titicolab.puppet.model.ModelBuffer;
 public class DrawerImage  extends BaseDrawer<Image> implements Drawer<Image> {
 
 
-
     public DrawerImage(int size, ImageShaderProgram program) {
         super(size,program);
         mModelBuffer = new ModelBuffer(size,
                 ImageModel.bytesPerVertexModel,
                 ImageModel.bytesPerIndexModel);
-
-
     }
+
 
     @Override
     public void add(Image image){
         if(size()>=capacity())
             throw new IllegalArgumentException
-                    ("Cannot gameObject more GLImages per DrawerImage, current limit:" + capacity());
+                    ("Cannot add more Images to DrawerImage, current limit:" + capacity());
         if(!isEmpty() && (getCurrent().getTextureId()!=image.getTextureId())){
             draw();
         }
-        super.add(image);
-        mModelBuffer.add(image.getDrawModel());
+      super.add(image);
+      mModelBuffer.add(image.getDrawModel());
     }
 
     @Override

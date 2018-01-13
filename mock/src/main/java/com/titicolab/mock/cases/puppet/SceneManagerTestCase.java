@@ -22,13 +22,13 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.animation.GameContext;
-import com.titicolab.nanux.animation.RunnerTask;
+import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.RunnerTask;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
 import com.titicolab.opengl.shader.AndroidTextureManager;
-import com.titicolab.puppet.draw.DrawTools;
-import com.titicolab.puppet.objects.base.SceneManager;
+import com.titicolab.nanux.graphics.draw.DrawTools;
+import com.titicolab.nanux.objects.base.SceneManager;
 
 import org.junit.runner.RunWith;
 
@@ -67,7 +67,7 @@ public class SceneManagerTestCase extends GraphicsTestCase{
         mSceneManager.setAsyncLaunch(true);
 
         DrawTools.Builder drawToolsBuilder  = new AndroidDrawToolsBuilder(appContext);
-        mDrawTools = drawToolsBuilder.build();
+        mDrawTools = drawToolsBuilder.build(mTextureManager);
     }
 
 

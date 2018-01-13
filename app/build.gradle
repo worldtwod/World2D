@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.titicolab.nanux"
+        applicationId "com.worldtwod.app"
         minSdkVersion 18
         targetSdkVersion 26
         versionCode 1
@@ -22,7 +22,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation project(path: ':android')
+
+    implementation project(path: ':puppeteer')
+    implementation project(path: ':nanux')
+    implementation project(path: ':theater')
+    implementation project(path: ':opengl')
+
 
     testImplementation 'junit:junit:4.12'
 
@@ -31,4 +36,5 @@ dependencies {
     androidTestImplementation project(path: ':mock')
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
 
+    compile project(path: ':components')
 }
