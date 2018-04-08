@@ -49,6 +49,7 @@ public class TiledLayerTest extends World2DTestCase {
         syncPlay(new World());
         setWorldBoundary(true);
 
+
         for (int i =0; i <40; i++) {
             showInfo();
             moveCamera(i,3);

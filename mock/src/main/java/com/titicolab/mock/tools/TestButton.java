@@ -25,4 +25,8 @@ import com.titicolab.nanux.objects.base.UiObject;
 
 public class TestButton extends UiObject {
 
+    @Override
+    public void onCreated() {
+
+    }
 }

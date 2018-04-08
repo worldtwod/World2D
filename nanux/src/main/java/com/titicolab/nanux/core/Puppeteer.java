@@ -150,7 +150,6 @@ public class Puppeteer extends Controller {
 
     @Override
     public boolean onTouch(ObservableInput.Event event) {
-
         return mSceneManager.onTouch(event);
     }
 
@@ -163,33 +162,9 @@ public class Puppeteer extends Controller {
     /************************Life Cycle **********************************************************/
 
     @Override
-    public void onRestart() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onResume() {
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
     public void onDestroy() {
-
+        if(mSceneManager!=null)
+            mSceneManager.onDestroy();
     }
 
     public SceneManager getSceneManager() {
@@ -206,8 +181,9 @@ public class Puppeteer extends Controller {
 
 
 
-    /************************* Helper *************************************************************/
+    /**********************    Helper  ************************************************************/
 
+    @Override
     public void showFPS(boolean mShowFPS) {
         this.mShowFPS = mShowFPS;
     }

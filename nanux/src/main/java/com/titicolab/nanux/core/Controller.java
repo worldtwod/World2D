@@ -26,11 +26,9 @@ import com.titicolab.nanux.util.GPUInfo;
  *
  */
 
-public abstract class Controller implements ObservableLifeCycle.LifeCycle, ObservableInput.InputListener, ObservableRenderer.Renderer {
-
-
-
-    //void setSceneLauncher(SceneLauncher sceneLauncher);
+public abstract class Controller implements ObservableLifeCycle.LifeCycle,
+        ObservableInput.InputListener,
+        ObservableRenderer.Renderer {
 
 
     public synchronized void setStartScene(Scene startScene) {
@@ -93,5 +91,7 @@ public abstract class Controller implements ObservableLifeCycle.LifeCycle, Obser
 
     }
 
+
+    abstract void showFPS(boolean showFPS);
 
 }

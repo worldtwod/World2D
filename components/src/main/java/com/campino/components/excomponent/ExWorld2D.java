@@ -67,7 +67,7 @@ public class ExWorld2D extends World2D {
     @Override
     protected boolean onTouch(ObservableInput.Event input) {
 
-        if(input.isUp()) {
+        if(input.isActionUp()) {
             if (input.getUiX() < (getCameraUi().getViewPortWidth() / 2)) {
                 flagTouchLeft = true;
             } else {

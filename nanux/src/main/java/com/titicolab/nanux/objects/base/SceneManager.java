@@ -128,7 +128,7 @@ public class SceneManager  implements ObservableInput.InputListener{
     }
 
     /**
-     * Launch a playScene, the playScene sequence to load a working thread.
+     * Launch a scene, the scene will be build in a working thread.
      * @param scene playScene to launch
      */
     synchronized public void play(final Scene scene) {
@@ -329,7 +329,7 @@ public class SceneManager  implements ObservableInput.InputListener{
         mCurrentScene =next;
     }
 
-    private void stopCurrentScene(Scene scene) {
+    void stopCurrentScene(Scene scene) {
         mCurrentScene=null;
         if(scene!=null){
             scene.onStop();
@@ -356,6 +356,10 @@ public class SceneManager  implements ObservableInput.InputListener{
         return scene;
     }
 
+    public void onDestroy() {
+        stopCurrentScene(mCurrentScene);
+    }
+
 
     private void notifyStartScene(final Scene next) {
         mRunnerTask.queueTask(new RunnableTask() {
@@ -374,6 +378,8 @@ public class SceneManager  implements ObservableInput.InputListener{
     public  void queueTask(RunnableTask task) {
         mRunnerTask.queueTask(task);
     }
+
+
 
     private class SceneCommand {
         static final int TYPE_PLAY_SCENE = 1;

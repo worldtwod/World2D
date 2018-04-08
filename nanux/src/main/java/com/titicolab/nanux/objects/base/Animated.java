@@ -51,7 +51,7 @@ public  class Animated   extends GameObject implements Animation.DefineAnimation
     }
 
     /**
-     * It method is called for the FactoryObject, it is only called one time when  hasCustomClips()
+     * This method is called for the FactoryObject, it is only called one time when  hasCustomClips()
      *  return true, it means that all instances of this object carri the same Animation
      * @param builder use for build the animation for this object
      * @return The animation with the clips

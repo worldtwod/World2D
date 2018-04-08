@@ -33,11 +33,18 @@ public interface ObservableInput {
          boolean onKey(int keyEvent);
     }
 
-     interface Event {
+
+    /**
+     * Adapter between generics nanux.Events and Android MotionEvent
+     */
+    interface Event {
 
         void setPositionUi(float uiX, float uiY);
 
         void setPosition2D(float twodX, float twodY);
+
+        void setPointerId(int pointerId);
+
 
          float getPixelX();
          float getPixelY();
@@ -68,10 +75,14 @@ public interface ObservableInput {
          float get2dY();
 
 
-         boolean isUp();
-         boolean isDown();
-         boolean isMove();
-    }
+         boolean isActionUp();
+         boolean isActionDown();
+         boolean isActionMove();
+
+         int getPointerId();
+
+
+     }
 
 
 

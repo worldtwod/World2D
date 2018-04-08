@@ -35,6 +35,7 @@ public class AndroidInputEvent implements ObservableInput.Event {
 
     private float twodX;
     private float twodY;
+    private int mPointerId;
 
     void setAction(int action) {
         this.action = action &  MotionEvent.ACTION_MASK;
@@ -81,6 +82,11 @@ public class AndroidInputEvent implements ObservableInput.Event {
         this.twodY = twodY;
     }
 
+    @Override
+    public void setPointerId(int pointerId) {
+        mPointerId = pointerId;
+    }
+
     public int getAction(){
         return action;
     }
@@ -105,16 +111,21 @@ public class AndroidInputEvent implements ObservableInput.Event {
 
 
     @Override
-    public boolean isUp() {
+    public boolean isActionUp() {
         return  action == MotionEvent.ACTION_UP;
     }
     @Override
-    public boolean isDown() {
+    public boolean isActionDown() {
         return action == MotionEvent.ACTION_DOWN;
     }
     @Override
-    public boolean isMove() {
+    public boolean isActionMove() {
         return action == MotionEvent.ACTION_MOVE;
+    }
+
+    @Override
+    public int getPointerId() {
+        return mPointerId;
     }
 
 

@@ -78,10 +78,6 @@ public class TransitionLayer extends SceneLayer implements Transition.Transition
         color[ALPHA] = a;
     }
 
-    public void setFramesInOut(long in, long out){
-        mMsf.setFramesInOut(in,out);
-    }
-
 
     public static class Fade extends TransitionLayer{
         private float alphaFactor= 0.0f;

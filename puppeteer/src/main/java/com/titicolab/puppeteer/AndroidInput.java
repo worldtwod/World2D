@@ -22,9 +22,9 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.titicolab.puppeteer.view.GLGameView;
 import com.titicolab.nanux.list.FlexibleList;
 import com.titicolab.nanux.touch.ObservableInput;
+import com.titicolab.puppeteer.view.GLGameView;
 
 
 /**
@@ -61,6 +61,9 @@ public class AndroidInput extends FlexibleList<ObservableInput.InputListener>
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         mInputEvent.setAction(event.getAction());
+
+        // Get the index of the pointer associated with the action.
+        mInputEvent.setPointerId(event.getPointerId(event.getActionIndex()));
         mInputEvent.setPositionPixel(event.getX(),event.getY());
         notifyTouchEvent(mInputEvent);
         return true;

@@ -70,6 +70,11 @@ public class GameActivity extends AppCompatActivity {
 
 
 
+    public void setShowFPS(boolean showFPS) {
+        mAndroidGame.setShowFPS(showFPS);
+    }
+
+
     /**
      * Hide the navigation bar, it set the screen to:
      * HIDE_NAVIGATION + FULLSCREEN + IMMERSIVE_STICKY

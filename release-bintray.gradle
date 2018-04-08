@@ -31,7 +31,7 @@ ext {
   siteUrl = 'https://github.com/worldtwod/World2D'
   gitUrl = 'https://github.com/worldtwod/World2D.git'
 
-  libraryVersion ='0.0.6-beta' //POM_VERSION
+  libraryVersion ='0.0.7-beta' //POM_VERSION
 
   developerId = 'fredycampino'
   developerName = 'Fredy Campino'

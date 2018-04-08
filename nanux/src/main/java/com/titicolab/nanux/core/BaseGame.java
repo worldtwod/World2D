@@ -122,4 +122,8 @@ public abstract class BaseGame implements GameContext {
 	protected void setTextureManager(TextureManager textureManager) {
 		mTextureManager = textureManager;
 	}
+
+	public void setShowFPS(boolean showFPS) {
+		this.mController.showFPS(showFPS);
+	}
 }

@@ -24,13 +24,7 @@ public abstract class UiObject extends Animated  {
 
 
 
-
-
-
-    @Override
-    public void onCreated() {
-
-    }
+    public abstract void onCreated();
 
 
     @Override
@@ -47,9 +41,6 @@ public abstract class UiObject extends Animated  {
     public void updateLogic() {
 
     }
-
-
-
 
 
 }
