@@ -43,8 +43,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile project(path: ':nanux')
-    compile project(path: ':opengl')
+    implementation  project(path: ':nanux')
+    implementation  project(path: ':opengl')
 
     implementation 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion
 

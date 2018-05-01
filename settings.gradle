@@ -1,1 +1,1 @@
-include ':app',  ':nanux', ':mock', ':opengl', ':theater', ':puppeteer', ':components', ':core'
+include ':app',  ':nanux', ':mock', ':opengl', ':theater', ':puppeteer', ':components'
