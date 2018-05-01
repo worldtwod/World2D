@@ -19,8 +19,8 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':nanux')
-    implementation 'com.google.code.gson:gson:2.8.1'
-    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.code.gson:gson:'+ rootProject.gsonVersion
+    testImplementation 'junit:junit:' + rootProject.junitVersion
 }
 
 sourceCompatibility = "1.7"

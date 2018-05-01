@@ -86,7 +86,10 @@ public class GameObjectCollectionUnitTest {
 
 
     static class MockTile0 extends UiObject {
+        @Override
+        public void onCreated() {
 
+        }
     }
 
     static class MockTile1 extends MockTile0 {

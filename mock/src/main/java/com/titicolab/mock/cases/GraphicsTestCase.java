@@ -5,8 +5,6 @@ import android.support.annotation.CallSuper;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.MotionEvent;
 
-import com.titicolab.puppeteer.GameActivity;
-import com.titicolab.puppeteer.util.LogHelper;
 import com.titicolab.mock.MockActivity;
 import com.titicolab.mock.rule.RenderTestRule;
 import com.titicolab.nanux.core.GameContext;
@@ -15,9 +13,12 @@ import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.nanux.util.GPUInfo;
+import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.puppeteer.util.LogHelper;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
 
 /**
  * Created by campino on 11/11/2016.

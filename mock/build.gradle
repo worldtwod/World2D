@@ -31,10 +31,10 @@ dependencies {
     implementation project(path: ':theater')
     implementation project(path: ':nanux')
 
-    testImplementation 'junit:junit:' + rootProject.junitVersion
+    implementation 'junit:junit:' + rootProject.junitVersion
+    implementation 'com.android.support.test:runner:' + rootProject.runnerVersion
+    implementation 'com.android.support.test.espresso:espresso-core:'  + rootProject.espressoVersion
 
-    androidTestImplementation 'com.android.support.test:runner:' + rootProject.runnerVersion
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:'  + rootProject.espressoVersion
 }
 
 

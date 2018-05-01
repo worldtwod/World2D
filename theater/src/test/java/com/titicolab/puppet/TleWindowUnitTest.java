@@ -19,6 +19,7 @@ package com.titicolab.puppet;
 import com.titicolab.puppet.objects.LayerObject;
 import com.titicolab.puppet.objects.TileWindow;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -51,7 +52,8 @@ public class TleWindowUnitTest {
 
 
 
-
+    @Deprecated
+    @Ignore
     @Test
     public void fixHeight() throws Exception {
 
@@ -100,7 +102,8 @@ public class TleWindowUnitTest {
 
     }
 
-
+    @Deprecated
+    @Ignore
     @Test
     public void fixWidth() throws Exception {
 
