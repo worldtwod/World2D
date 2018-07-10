@@ -38,6 +38,12 @@ android {
         }
     }
 
+    flavorDimensions "deploy"
+    productFlavors {
+        bin{
+            flavorDimensions "deploy"
+        }
+    }
 }
 
 dependencies {
@@ -48,6 +54,10 @@ dependencies {
 
     implementation 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion
 
+    binImplementation 'com.titicolab.world-2d:nanux:' + rootProject.libraryCoreVersion
+    binImplementation 'com.titicolab.world-2d:opengl:' + rootProject.libraryCoreVersion
+
+
     testImplementation 'junit:junit:' + rootProject.junitVersion
 
     androidTestImplementation 'com.android.support.test:runner:' + rootProject.runnerVersion
@@ -56,3 +66,4 @@ dependencies {
 }
 
 apply from: rootProject.file('release-bintray.gradle')
+//apply from: rootProject.file('jcenter/publish-puppeteer.gradle')

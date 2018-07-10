@@ -29,9 +29,9 @@ ext {
   libraryDescription = POM_DESCRIPTION
 
   siteUrl = 'https://github.com/worldtwod/World2D'
-  gitUrl = 'https://github.com/worldtwod/World2D.git'
+  gitUrl =  'https://github.com/worldtwod/World2D.git'
 
-  libraryVersion ='0.0.12-beta' //POM_VERSION
+  libraryVersion ='0.0.22-beta' //POM_VERSION
 
   developerId = 'fredycampino'
   developerName = 'Fredy Campino'
@@ -43,7 +43,8 @@ ext {
 }
 
 // Set up the Android Maven publication.
-apply from: rootProject.file('jcenter/maven-install.gradle')
+//apply from: rootProject.file('jcenter/maven-install.gradle')
 
 // Publish on Bintray.
-apply from: rootProject.file('jcenter/bintray.gradle')
+//apply from: rootProject.file('jcenter/bintray.gradle')
+apply from: rootProject.file('jcenter/publishing.gradle')

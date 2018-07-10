@@ -22,6 +22,12 @@ android {
         }
     }
 
+    flavorDimensions "deploy"
+    productFlavors {
+        bin{
+            flavorDimensions "deploy"
+        }
+    }
 }
 
 dependencies {
@@ -30,6 +36,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion
 
     implementation project(path: ':nanux')
+    binImplementation 'com.titicolab.world-2d:nanux:' + rootProject.libraryCoreVersion
 
     testImplementation 'junit:junit:' + rootProject.junitVersion
 
@@ -38,3 +45,4 @@ dependencies {
 }
 
 apply from: rootProject.file('release-bintray.gradle')
+//apply from: rootProject.file('jcenter/publish-opengl.gradle')

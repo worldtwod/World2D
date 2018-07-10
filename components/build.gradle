@@ -38,6 +38,12 @@ android {
         }
     }
 
+    flavorDimensions "deploy"
+    productFlavors {
+        bin{
+            flavorDimensions "deploy"
+        }
+    }
 }
 
 dependencies {
@@ -47,6 +53,10 @@ dependencies {
 
     implementation project(path: ':nanux')
     implementation project(path: ':theater')
+
+    binImplementation 'com.titicolab.world-2d:nanux:' + rootProject.libraryCoreVersion
+    binImplementation 'com.titicolab.world-2d:theater:' + rootProject.libraryCoreVersion
+
 
     testImplementation 'junit:junit:' + rootProject.junitVersion
 
