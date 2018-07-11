@@ -1,5 +1,8 @@
 *.iml
-.gradle
+/build.gradle
+/release-bintray.gradle
+/gradle.properties
+
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
@@ -7,7 +10,4 @@
 /build
 /captures
 .externalNativeBuild
-/gradle.properties
 .idea/vcs.xml
-
-/release-bintray.gradle
