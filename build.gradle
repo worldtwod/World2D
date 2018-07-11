@@ -36,5 +36,5 @@ task downloadFile() << {
     }
 }
 
-apply from: rootProject.file('dependency.gradle')
+apply from: rootProject.file('dependencies.gradle')
 
