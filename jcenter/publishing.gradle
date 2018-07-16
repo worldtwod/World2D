@@ -47,6 +47,15 @@ artifacts {
 }
 */
 
+def isAndroid = project.hasProperty("android")
+
+if(isAndroid) {
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+}
+
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
@@ -55,9 +64,16 @@ publishing {
     publications {
         Production(MavenPublication) {
             //artifact("$buildDir/outputs/aar/app-release.aar")
+
             groupId publishedGroupId
             artifactId artifact
-            version  this.version
+            version this.version
+
+            if(isAndroid) {
+                artifact(sourcesJar)
+                artifact("$buildDir/outputs/aar/$artifactId-release.aar")
+            }
+
 
             pom.withXml {
                 def dependenciesNode = asNode().appendNode('dependencies')
@@ -67,10 +83,14 @@ publishing {
                 configurations.implementation.allDependencies.each {
                     // Ensure dependencies such as fileTree are not included in the pom.
                     if (it.name != 'unspecified') {
-                        def dependencyNode = dependenciesNode.appendNode('dependencies')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
+                        //this conditional parse the  implementation project(path: ':moduleName')
+                        def dependencyGroup    = rootProject.name!=it.group?it.group:groupId
+                        def dependencyArtifact = it.name
+                        def dependencyVersion  = it.version
+                        def dependencyNode     = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', dependencyGroup)
+                        dependencyNode.appendNode('artifactId',dependencyArtifact)
+                        dependencyNode.appendNode('version', dependencyVersion)
                     }
                 }
             }
@@ -86,6 +106,7 @@ bintray {
 
     publications = ['Production']
     configurations = ['archives']
+
   pkg {
     repo = bintrayRepo
     name = bintrayName

@@ -26,14 +26,6 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion
     implementation 'com.android.support.constraint:constraint-layout:' + rootProject.constraintLayoutVersion
 
-    implementation project(path: ':puppeteer')
-        implementation project(path: ':nanux')
-        implementation project(path: ':theater')
-        implementation project(path: ':opengl')
-
-    //implementation 'com.titicolab.world-2d:puppeteer:0.0.12-beta'
-    implementation 'com.titicolab.world-2d:components:0.0.12-beta'
-
     testImplementation 'junit:junit:' + rootProject.junitVersion
     androidTestImplementation 'com.android.support.test:runner:' + rootProject.runnerVersion
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:'  + rootProject.espressoVersion

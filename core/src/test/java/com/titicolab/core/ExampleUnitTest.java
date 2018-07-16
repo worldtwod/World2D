@@ -13,18 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-apply plugin: 'java-library'
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':nanux')
-    //implementation 'com.titicolab.world-2d:nanux:' + rootProject.libraryCoreVersion
-    implementation 'com.google.code.gson:gson:'+ rootProject.gsonVersion
-    testImplementation 'junit:junit:' + rootProject.junitVersion
+package com.titicolab.core;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
+public class ExampleUnitTest {
+    @Test
+    public void addition_isCorrect() throws Exception {
+        assertEquals(4, 2 + 2);
+    }
 }
-
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
-
-apply from: rootProject.file('release-bintray.gradle')

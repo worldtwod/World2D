@@ -14,20 +14,12 @@
  * limitations under the License.
  */
 
-package com.campino.components;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+package com.titicolab.core;
 
 /**
- * Example local unit test, which will execute on the development machine (host).
+ * Created by campino on 11/07/2018.
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
-    }
+
+public class World2DConfig {
 }

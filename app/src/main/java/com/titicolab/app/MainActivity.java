@@ -15,29 +15,9 @@
  */
 
 package com.titicolab.app;
+import android.app.Activity;
+public class MainActivity extends Activity {
 
-import android.os.Bundle;
-
-import com.campino.components.excomponent.ExWorld2D;
-import com.titicolab.nanux.core.SceneLauncher;
-import com.titicolab.puppeteer.GameActivity;
-
-
-public class MainActivity extends GameActivity implements SceneLauncher{
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        sFlagFullScreen=true;
-        sFlagSensorLandscape=true;
-        super.onCreate(savedInstanceState);
-        setSceneLauncher(this);
-        setContentView(getGLGameView());
-    }
-
-    @Override
-    public ExWorld2D onLaunchScene() {
-            return new ExWorld2D();
-    }
 
 
 }

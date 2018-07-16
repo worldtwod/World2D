@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.campino.components;
+package com.titicolab.core;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -37,6 +37,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.campino.component.test", appContext.getPackageName());
+        assertEquals("com.titicolab.core.test", appContext.getPackageName());
     }
 }
