@@ -2,9 +2,9 @@
 # What is World-2D?
 World-2D is an open source library to facilitate the development of graphic applications, designed for Android developers. You can add it to you gradle file, such as: 
 
-`compile 'com.titicolab.world-2d:puppeteer:0.0.6-beta'`
+`compile 'com.titicolab.world-2d:core:0.0.29-beta'`
 
-For now we are writing some examples and documentation. We are looking for collaborators too.
+Check the a getting started [SampleWorld](https://github.com/worldtwod/SampleWorld), We are working in new samples an tutorials, collaborators are welcome.
 
 # Motivation
 As publisher, independent apps and games developer, I explored and experienced with different alternatives and frameworks, such as:
