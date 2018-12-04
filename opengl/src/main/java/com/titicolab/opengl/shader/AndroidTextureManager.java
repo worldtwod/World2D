@@ -16,12 +16,12 @@
 
 package com.titicolab.opengl.shader;
 
-
+import androidx.annotation.NonNull;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
-import android.support.annotation.NonNull;
+
 import android.util.SparseArray;
 
 import com.titicolab.nanux.core.RunnableTask;

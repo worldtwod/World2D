@@ -1,8 +1,8 @@
 package com.titicolab.mock.cases;
 
 import android.app.Activity;
-import android.support.annotation.CallSuper;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.annotation.CallSuper;
+import androidx.test.runner.AndroidJUnit4;
 import android.view.MotionEvent;
 
 import com.titicolab.mock.MockActivity;

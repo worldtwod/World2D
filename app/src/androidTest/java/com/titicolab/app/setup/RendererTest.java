@@ -1,6 +1,6 @@
 package com.titicolab.app.setup;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.rule.RenderTestRule;
 import com.titicolab.app.MainActivity;

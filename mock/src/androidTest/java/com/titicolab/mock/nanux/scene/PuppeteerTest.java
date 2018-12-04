@@ -17,7 +17,7 @@
 package com.titicolab.mock.nanux.scene;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.GraphicsTestCase;

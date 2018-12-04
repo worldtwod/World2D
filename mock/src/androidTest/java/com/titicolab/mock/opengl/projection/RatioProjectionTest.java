@@ -16,7 +16,7 @@
 
 package com.titicolab.mock.opengl.projection;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;

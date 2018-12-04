@@ -8,7 +8,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -22,8 +22,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion
-    implementation 'com.android.support.constraint:constraint-layout:' + rootProject.constraintLayoutVersion
+    implementation "androidx.appcompat:appcompat:$androidXVersion"
+
 
     implementation project(path: ':puppeteer')
     implementation project(path: ':opengl')
@@ -31,8 +31,10 @@ dependencies {
     implementation project(path: ':nanux')
 
     implementation 'junit:junit:' + rootProject.junitVersion
-    implementation 'com.android.support.test:runner:' + rootProject.runnerVersion
-    implementation 'com.android.support.test.espresso:espresso-core:'  + rootProject.espressoVersion
+
+    implementation "androidx.test:rules:$rulesVersion"
+    implementation "androidx.test:runner:$runnerVersion"
+    implementation "androidx.test.espresso:espresso-core:$espressoVersion"
 }
 
 

@@ -19,7 +19,7 @@ package com.titicolab.puppeteer;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.titicolab.nanux.core.SceneLauncher;
