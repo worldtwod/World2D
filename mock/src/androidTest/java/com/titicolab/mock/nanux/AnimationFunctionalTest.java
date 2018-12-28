@@ -23,6 +23,7 @@ import com.titicolab.mock.cases.puppet.ClipTestCase;
 import com.titicolab.nanux.animation.Animation;
 import com.titicolab.nanux.animation.AnimationBuilder;
 import com.titicolab.nanux.animation.AnimationSheet;
+import com.titicolab.nanux.animation.ClipMap;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +38,7 @@ public class AnimationFunctionalTest extends ClipTestCase {
 
     private static final int CLIP_ALL_TEXTURE = 1;
     private static final int CLIP_CELL_DIGITS = 2;
+    private static final int CLIP_ID = 120;
 
 
     @Test
@@ -51,16 +53,34 @@ public class AnimationFunctionalTest extends ClipTestCase {
                     .cells(new int[]{0,1,2,3,4,5,6,7,8,9})
                 .build();
 
-
         Animation animation
                 = new AnimationBuilder(getTextureManager(),sheet).build("digits");
 
-
         showClip(animation.findClipById(CLIP_CELL_DIGITS));
-
         showClip(animation.findClipById(CLIP_ALL_TEXTURE));
+    }
+
+    @Test
+    public void testFromGridResource2(){
+
+        ClipMap.Area area = new ClipMap.Area(0,0,32,16);
+        AnimationSheet sheet = new AnimationSheet.Builder()
+                .sequence("tile")
+                .resources(R.drawable.map_1024_1024)
+                .clip(CLIP_ID).area(area).grid(2,1).cells(1)
+                //.clip(1).area(area).grid(64,64).cells(1)
+                .build();
+
+        Animation animation
+                = new AnimationBuilder(getTextureManager(),sheet).build("tile");
+
+        setScale(5);
+
+        showClip(animation.findClipById(CLIP_ID));
+        setScale(10);
 
     }
+
 
 
 

@@ -41,6 +41,7 @@ public class ClipTestCase extends ImageDrawerTestCase{
 
     private FlexibleList<Image> mImagesTest;
     private ProjectionUi projection;
+    private float scale;
 
 
     @CallSuper
@@ -66,26 +67,31 @@ public class ClipTestCase extends ImageDrawerTestCase{
                 .getTexture(tem.getTexture().getResources()));
         imageBackground.setPositionLeftTop((projection.getViewPortWidth()-imageBackground.getWidth())/2
                 , projection.getViewPortHeight());
-        imageBackground.setColor(1,1,1,0.5f);
+
 
         Image image=null;
         for (int i = 0; i < clip.size() ; i++) {
+
+
+            imageBackground.setColor(1,1,1,0.2f);
+            addImage(imageBackground);
+
             Frame frame = clip.get(i);
             image = new Image(frame);
-            image.setPosition(projection.getViewPortWidth()/2,image.getHeight()/2);
-            addImage(imageBackground);
+            //image.setColor(0,1,0,1);
+            image.setPosition((projection.getViewPortWidth()-image.getWidth())/2,
+                    (projection.getViewPortHeight()-image.getHeight())/2);
+            image.setScale(scale);
             addImage(image);
+
             waitTouchSeconds(1);
         }
 
 
         assert image != null;
-        image.setColor(0,1,0,1);
+
         waitTouchSeconds(60);
     }
-
-
-
 
     private void updateImagesForRender() {
         int size = mImagesTest.size();
@@ -121,4 +127,8 @@ public class ClipTestCase extends ImageDrawerTestCase{
         });
     }
 
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
 }

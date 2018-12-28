@@ -3,7 +3,6 @@ package com.titicolab.app.animation;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.titicolab.app.MainActivity;
-import com.titicolab.mock.rule.RenderTestRule;
 import com.titicolab.nanux.core.GameContext;
 import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.core.RunnableTask;
@@ -11,6 +10,7 @@ import com.titicolab.nanux.core.RunnerTask;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.nanux.util.ObjectSync;
 import com.titicolab.puppeteer.GameActivity;
+
 
 import org.junit.Assert;
 import org.junit.Rule;
