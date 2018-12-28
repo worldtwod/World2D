@@ -23,7 +23,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.appcompat:appcompat:$androidXVersion"
-
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
     implementation project(path: ':puppeteer')
     implementation project(path: ':opengl')
