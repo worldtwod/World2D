@@ -41,9 +41,6 @@ import org.junit.Test;
 
 public class LifeCycleLayerTest extends SceneTestCase{
 
-
-
-
     @Test
     public void sceneTest(){
         MockScene scene = new MockScene();
@@ -54,12 +51,7 @@ public class LifeCycleLayerTest extends SceneTestCase{
         Assert.assertEquals(4,scene.onLayersRequest.getResults().intValue());
         Assert.assertEquals(5,scene.onAttachLayers.getResults().intValue());
         Assert.assertEquals(6,scene.onGroupLayersCreated.getResults().intValue());
-
-
-
-
     }
-
 
     public static class MockScene extends TestScene{
 
@@ -71,6 +63,9 @@ public class LifeCycleLayerTest extends SceneTestCase{
                     .clip(1)
                         .grid(8,4)
                         .cells(new int[]{0,1,2,3,4,5,6,7,8,9})
+                    .clip(2)
+                        .grid(8,4)
+                        .cells(0)
                     .sequence("button")
                     .clip(2)
                         .grid(8,4)
@@ -87,7 +82,7 @@ public class LifeCycleLayerTest extends SceneTestCase{
                     .item(new MapItem(TestDigit.class,  100,
                             new Animated.ParamsAnimation("digits", 1)))
                     .item(new MapItem(TestDigit.class,  101,
-                            new Animated.ParamsAnimation("digits", 1)))
+                            new Animated.ParamsAnimation("digits", 2)))
                     .item(new MapItem(TestButton.class, 100,
                             new Animated.ParamsAnimation("button", 2)))
                     .build();
@@ -121,10 +116,7 @@ public class LifeCycleLayerTest extends SceneTestCase{
             digit0.getAnimator().setSpeed(1);
             digit1.setPosition(850, 300);
             digit1.getAnimator().setSpeed(10);
-
-
         }
-
 
         @Override
         public void updateLogic() {

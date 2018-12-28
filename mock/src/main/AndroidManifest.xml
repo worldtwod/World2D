@@ -2,14 +2,14 @@
     package="com.titicolab.mock">
 
     <application
-        android:label="opengl"
+        android:label="mock"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         >
         <activity android:name="com.titicolab.mock.MockActivity">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
     </application>

@@ -28,6 +28,12 @@ dependencies {
 
     //implementation 'com.android.support.constraint:constraint-layout:' + rootProject.constraintLayoutVersion
 
+    implementation project(path: ':puppeteer')
+    implementation project(path: ':opengl')
+    implementation project(path: ':theater')
+    implementation project(path: ':nanux')
+    androidTestImplementation project(path: ':nanux')
+
     testImplementation 'junit:junit:' + rootProject.junitVersion
     //androidTestImplementation 'com.android.support.test:runner:' + rootProject.runnerVersion
     //androidTestImplementation 'com.android.support.test.espresso:espresso-core:'  + rootProject.espressoVersion
