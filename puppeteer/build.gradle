@@ -17,17 +17,17 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
 
 
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -45,12 +45,10 @@ dependencies {
     implementation  project(path: ':nanux')
     implementation  project(path: ':opengl')
 
-    implementation 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion
+    implementation "androidx.appcompat:appcompat:$androidXVersion"
 
     testImplementation 'junit:junit:' + rootProject.junitVersion
 
-    androidTestImplementation 'com.android.support.test:runner:' + rootProject.runnerVersion
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:'  + rootProject.espressoVersion
 
 }
 

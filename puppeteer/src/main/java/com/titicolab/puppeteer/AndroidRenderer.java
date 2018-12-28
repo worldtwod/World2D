@@ -18,7 +18,7 @@ package com.titicolab.puppeteer;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.titicolab.puppeteer.view.GLGameView;
 import com.titicolab.nanux.core.GameContext;
