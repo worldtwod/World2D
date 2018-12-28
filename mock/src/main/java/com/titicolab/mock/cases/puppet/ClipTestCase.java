@@ -16,8 +16,8 @@
 
 package com.titicolab.mock.cases.puppet;
 
-import android.support.annotation.CallSuper;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.annotation.CallSuper;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
 import com.titicolab.nanux.core.GameContext;

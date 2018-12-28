@@ -3,14 +3,14 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.worldtwod.app"
         minSdkVersion 18
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -23,12 +23,14 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion
-    implementation 'com.android.support.constraint:constraint-layout:' + rootProject.constraintLayoutVersion
+    implementation "androidx.appcompat:appcompat:$androidXVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+
+    //implementation 'com.android.support.constraint:constraint-layout:' + rootProject.constraintLayoutVersion
 
     testImplementation 'junit:junit:' + rootProject.junitVersion
-    androidTestImplementation 'com.android.support.test:runner:' + rootProject.runnerVersion
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:'  + rootProject.espressoVersion
-    androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:' + rootProject.uiautomator
+    //androidTestImplementation 'com.android.support.test:runner:' + rootProject.runnerVersion
+    //androidTestImplementation 'com.android.support.test.espresso:espresso-core:'  + rootProject.espressoVersion
+    //androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:' + rootProject.uiautomator
 
 }

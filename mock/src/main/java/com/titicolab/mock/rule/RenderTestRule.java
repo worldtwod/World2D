@@ -18,9 +18,9 @@
 
 package com.titicolab.mock.rule;
 
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.test.rule.ActivityTestRule;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.test.rule.ActivityTestRule;
 
 import com.titicolab.puppeteer.GameActivity;
 import com.titicolab.puppeteer.GameActivityTestTools;

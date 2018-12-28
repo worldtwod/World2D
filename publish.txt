@@ -1,0 +1,3 @@
+Publish a release
+1. Update the release version in release-bintray.gradle
+2. gradlew bintrayUpload

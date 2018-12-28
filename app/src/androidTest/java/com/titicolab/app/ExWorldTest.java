@@ -16,7 +16,7 @@
 
 package com.titicolab.app;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.app.objects.ExWorld2D;
 import com.titicolab.mock.cases.world.World2DTestCase;
