@@ -199,7 +199,7 @@ public class TileWindow {
         }
     }
 
-    FlexibleList<Tile> getTileList() {
+    public FlexibleList<Tile> getTileList() {
         return mListTile;
     }
 

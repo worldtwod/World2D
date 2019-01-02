@@ -41,7 +41,7 @@ public class ClipTestCase extends ImageDrawerTestCase{
 
     private FlexibleList<Image> mImagesTest;
     private ProjectionUi projection;
-    private float scale;
+    private float scale=1;
 
 
     @CallSuper
