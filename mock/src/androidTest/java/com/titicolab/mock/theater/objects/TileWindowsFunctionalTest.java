@@ -89,7 +89,6 @@ public class TileWindowsFunctionalTest extends World2DTestCase {
 
 
     public static class  World extends World2D{
-
         @Override
         protected MapWorld onDefineMapWorld(MapWorld.Builder builder) {
             return builderWorld.build();
