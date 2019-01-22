@@ -45,8 +45,12 @@ public class SceneTestCase extends GraphicsTestCase {
     public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
         Context appContext =InstrumentationRegistry.getInstrumentation().getTargetContext();
-        mController  = new Puppeteer(new AndroidDrawToolsBuilder(appContext));
+        mController = onAttachController(appContext);
         mController.onSurfaceCreated(game,eglConfig);
+    }
+
+    protected Puppeteer onAttachController(Context appContext){
+       return  new Puppeteer(new AndroidDrawToolsBuilder(appContext));
     }
 
     @Override

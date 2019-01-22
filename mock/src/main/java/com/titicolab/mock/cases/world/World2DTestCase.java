@@ -17,21 +17,20 @@
 package com.titicolab.mock.cases.world;
 
 import android.content.Context;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
 import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.Puppeteer;
 import com.titicolab.nanux.core.RunnableTask;
+import com.titicolab.nanux.graphics.draw.DrawTools;
+import com.titicolab.nanux.graphics.draw.Rectangle;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
-import com.titicolab.nanux.graphics.draw.DrawTools;
-import com.titicolab.nanux.graphics.draw.Rectangle;
-import com.titicolab.nanux.core.Puppeteer;
 import com.titicolab.puppet.objects.World2D;
 
-import org.junit.runner.RunWith;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 
 /**
  * Created by campino on 11/11/2016.
@@ -42,11 +41,15 @@ public class World2DTestCase extends GraphicsTestCase {
     private Puppeteer mController;
     private Rectangle mWorldBoundary;
 
+    protected Puppeteer onAttachController(Context appContext){
+        return  new Puppeteer(new AndroidDrawToolsBuilder(appContext));
+    }
+
     @Override
     public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
-        Context appContext = InstrumentationRegistry.getTargetContext();
-        mController  = new Puppeteer(new AndroidDrawToolsBuilder(appContext));
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        mController  = onAttachController(appContext);
         mController.onSurfaceCreated(game,eglConfig);
     }
 

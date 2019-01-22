@@ -32,9 +32,8 @@ import com.titicolab.nanux.graphics.draw.DrawTools;
 
 public class AndroidDrawToolsBuilder implements DrawTools.Builder {
 
-
-    private static final int MAX_SPRITES = 1000;
-    private static final int MAX_GEOMETRIES = 200;
+    private static final int MAX_SPRITES = 1024;
+    private static final int MAX_GEOMETRIES = 1024;
 
     private final Context mContext;
     private final int sizeSprites;

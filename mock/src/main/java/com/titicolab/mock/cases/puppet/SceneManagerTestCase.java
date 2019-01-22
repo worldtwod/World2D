@@ -38,9 +38,6 @@ import org.junit.runner.RunWith;
  */
 public class SceneManagerTestCase extends GraphicsTestCase{
 
-
-
-
     private SceneManager mSceneManager;
     private DrawTools mDrawTools;
     private AndroidTextureManager mTextureManager;

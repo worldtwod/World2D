@@ -36,6 +36,6 @@ World-2D should be easy to use and its applications are expected to be easy to m
  `compile 'com.titicolab.world-2d:core:0.1.1-beta'`
     Migrated to androidX
     
-  `compile 'com.titicolab.world-2d:core:0.1.4-beta'`
+  `compile 'com.titicolab.world-2d:core:0.1.5-beta'`
     Nao the size of render buffer can be customized
     
