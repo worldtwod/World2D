@@ -39,36 +39,11 @@ import com.titicolab.puppeteer.view.GLGameView;
 public class AndroidGame  extends BaseGame implements ObservableLifeCycle.LifeCycle{
 
 	/** GLSurfaceView needed for GL Context  **/
-	private final GLGameView mGLGameView;
+	private GLGameView mGLGameView;
 	private SceneLauncher sceneLauncher;
 
-	/**
-	 * Inject all instance that the game needs to run
-	 * @param activity  main activity
-	 */
-	AndroidGame(Activity activity){
-
-		setDisplayInfo(new AndroidDisplayMetrics(activity));
-
-		mGLGameView = new GLGameView(activity);
-		mGLGameView.setUpConfiguration();
-		mGLGameView.setDebug(true);
-		mGLGameView.getHolder().setFixedSize(
-						getDisplayInfo().getFixWidth(),
-						getDisplayInfo().getFixHeight());
-
-
-		setObservableInput(new AndroidInput(mGLGameView));
-		setObservableLifeCycle(new AndroidLifeCycle());
-		setObservableRenderer(new AndroidRenderer(this,mGLGameView));
-		setTextureManager(new AndroidTextureManager(activity, new RunnerTask(), getDisplayInfo()));
-
-
-		setMonitorEngineCreated(GameActivityTestTools.getMonitor());
-		Puppeteer controller = new Puppeteer(new AndroidDrawToolsBuilder(activity));
-		connectObserver(controller);
-
-		getObservableRenderer().start();
+	AndroidGame() {
+		mGLGameView = null;
 	}
 
 	/**
@@ -78,7 +53,6 @@ public class AndroidGame  extends BaseGame implements ObservableLifeCycle.LifeCy
 	GLGameView getGLGameView() {
 		return mGLGameView;
 	}
-
 
 	@Override
 	public void onStart() {
@@ -116,12 +90,12 @@ public class AndroidGame  extends BaseGame implements ObservableLifeCycle.LifeCy
 		getObservableLifeCycle().onDestroy();
 	}
 
-
-
 	@Override
 	public AndroidLifeCycle getObservableLifeCycle() {
 		return (AndroidLifeCycle) super.getObservableLifeCycle();
 	}
 
-
+	void setGLGameView(GLGameView glGameView) {
+		mGLGameView=glGameView;
+	}
 }

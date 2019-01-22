@@ -18,8 +18,7 @@ package com.titicolab.mock.cases.opengl;
 
 import android.content.Context;
 import androidx.annotation.CallSuper;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
 import com.titicolab.nanux.core.GameContext;
@@ -28,13 +27,12 @@ import com.titicolab.nanux.graphics.texture.TextureManager;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidTextureManager;
 
-import org.junit.runner.RunWith;
+
 
 /**
  * Created by campino on 11/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
 public class TextureManagerTestCase extends GraphicsTestCase {
 
     protected  TextureManager mTextureManager;
@@ -45,7 +43,7 @@ public class TextureManagerTestCase extends GraphicsTestCase {
     @Override
     public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext =InstrumentationRegistry.getInstrumentation().getTargetContext();
         mTextureManager = new AndroidTextureManager(appContext,
                 new RunnerTask(Thread.currentThread()),
                 game.getDisplayInfo());

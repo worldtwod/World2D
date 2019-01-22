@@ -17,7 +17,6 @@
 package com.titicolab.mock.cases.puppet;
 
 import androidx.annotation.CallSuper;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
 import com.titicolab.nanux.core.GameContext;
@@ -29,18 +28,14 @@ import com.titicolab.opengl.shader.DrawerImage;
 import com.titicolab.nanux.objects.base.Animated;
 import com.titicolab.nanux.objects.base.HelperObjects;
 
-import org.junit.runner.RunWith;
-
 /**
  * Created by campino on 15/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
 public class AnimationTestCase extends ImageDrawerTestCase{
 
     private FlexibleList<Animated> mAnimatedObjects;
     private ProjectionUi projection;
-
 
     @CallSuper
     @Override
@@ -56,7 +51,6 @@ public class AnimationTestCase extends ImageDrawerTestCase{
         updateForRender();
         drawImages(imageDrawer);
     }
-
 
     private void updateForRender() {
         HelperObjects.updateRenderObjects(mAnimatedObjects);

@@ -37,12 +37,20 @@ public class AndroidDrawToolsBuilder implements DrawTools.Builder {
     private static final int MAX_GEOMETRIES = 200;
 
     private final Context mContext;
-
+    private final int sizeSprites;
+    private final int sizeGeometries;
 
 
     public AndroidDrawToolsBuilder(Context context) {
+        this.sizeSprites = MAX_SPRITES;
+        this.sizeGeometries =MAX_GEOMETRIES;
         mContext = context;
+    }
 
+    public AndroidDrawToolsBuilder(Context context, int sizeSprites, int sizeGeometries) {
+        this.sizeSprites = sizeSprites;
+        this.sizeGeometries = sizeGeometries;
+        mContext = context;
     }
 
     @Override
@@ -54,17 +62,17 @@ public class AndroidDrawToolsBuilder implements DrawTools.Builder {
     }
 
 
-    private static DrawerImage setUpDrawerImage(Context context) {
+    private  DrawerImage setUpDrawerImage(Context context) {
         String vertexSh =  TextResourceReader.readTextFileFromResource(
                 context, R.raw.image_vertex);
         String fragmentSh = TextResourceReader.readTextFileFromResource(
                 context, R.raw.image_fragment);
         ImageShaderProgram program = new ImageShaderProgram(vertexSh, fragmentSh);
         program.buildProgram();
-        return  new DrawerImage(MAX_SPRITES,program);
+        return  new DrawerImage(sizeSprites,program);
     }
 
-    private static DrawerText setUpDrawerText(Context context, TextureManager textureManager) {
+    private  DrawerText setUpDrawerText(Context context, TextureManager textureManager) {
         String vertexSh =  TextResourceReader.readTextFileFromResource(
                 context, R.raw.image_vertex);
         String fragmentSh = TextResourceReader.readTextFileFromResource(
@@ -79,7 +87,7 @@ public class AndroidDrawToolsBuilder implements DrawTools.Builder {
         return   new DrawerText(gridFrame,program);
     }
 
-    private static DrawerGeometry setUpDrawerGeometry(Context context) {
+    private  DrawerGeometry setUpDrawerGeometry(Context context) {
         String vertexSh =  TextResourceReader.readTextFileFromResource(
                 context, R.raw.geometry_vertex_shader);
         String fragmentSh = TextResourceReader.readTextFileFromResource(
@@ -87,9 +95,6 @@ public class AndroidDrawToolsBuilder implements DrawTools.Builder {
 
         GeometryShaderProgram shader = new GeometryShaderProgram(vertexSh, fragmentSh);
         shader.buildProgram();
-        return new DrawerGeometry(MAX_GEOMETRIES,shader);
+        return new DrawerGeometry(sizeGeometries,shader);
     }
-
-
-
 }

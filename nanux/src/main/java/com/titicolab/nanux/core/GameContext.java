@@ -27,18 +27,14 @@ import com.titicolab.nanux.util.DisplayInfo;
 
 public interface GameContext {
 
+    ObservableRenderer  getObservableRenderer();
 
-    //void startController(Controller controller);
-
-    ObservableRenderer getObservableRenderer();
-
-    ObservableInput getObservableInput();
+    ObservableInput     getObservableInput();
 
     ObservableLifeCycle getObservableLifeCycle();
 
-    DisplayInfo getDisplayInfo();
+    DisplayInfo         getDisplayInfo();
 
-    TextureManager getTextureManager();
-
+    TextureManager      getTextureManager();
 
 }

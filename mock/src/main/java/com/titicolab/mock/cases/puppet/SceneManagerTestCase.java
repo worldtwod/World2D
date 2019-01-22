@@ -36,7 +36,6 @@ import org.junit.runner.RunWith;
  * Created by campino on 15/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
 public class SceneManagerTestCase extends GraphicsTestCase{
 
 
@@ -69,7 +68,6 @@ public class SceneManagerTestCase extends GraphicsTestCase{
         DrawTools.Builder drawToolsBuilder  = new AndroidDrawToolsBuilder(appContext);
         mDrawTools = drawToolsBuilder.build(mTextureManager);
     }
-
 
     @Override
     public void onDrawFrame() {

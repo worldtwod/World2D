@@ -120,7 +120,6 @@ public class RenderTestRule <M>
         game.getObservableInput().add(this);
         game.getObservableLifeCycle().add(lifeCycle);
 
-
         if(mObserverRender!=null)
             game.getObservableRenderer().add(mObserverRender);
 
@@ -149,11 +148,6 @@ public class RenderTestRule <M>
         super.afterActivityFinished();
         log.debug("\tafterActivityFinished");
     }
-
-
-
-
-
 
 
     @Override

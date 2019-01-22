@@ -16,7 +16,6 @@
 
 package com.titicolab.mock.theater.objects;
 
-import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.world.World2DTestCase;
 import com.titicolab.mock.tools.TestMap;
@@ -26,29 +25,19 @@ import com.titicolab.puppet.map.MapLayer;
 import com.titicolab.puppet.map.MapWorld;
 import com.titicolab.puppet.objects.TiledLayer;
 import com.titicolab.puppet.objects.World2D;
-
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Created by campino on 24/01/2017.
  *
  */
 
-
-@RunWith(AndroidJUnit4.class)
 public class TiledLayerTest extends World2DTestCase {
-
-
-
 
     @Test
     public void mapLayer(){
-
-
         syncPlay(new World());
         setWorldBoundary(true);
-
 
         for (int i =0; i <40; i++) {
             showInfo();
@@ -65,14 +54,12 @@ public class TiledLayerTest extends World2DTestCase {
        getWorld2D().getCamera2D().setPositionIj(i,j);
     }
 
-
     void showInfo(){
         log.debug("Camera i: " + (int)(getWorld2D().getCamera2D().getX()/128));
         log.debug("Camera j: " + (int)(getWorld2D().getCamera2D().getY()/128));
         log.debug("Camera width: " + getWorld2D().getCamera2D().getViewPortWidth()/128);
         log.debug("Camera height: " + getWorld2D().getCamera2D().getViewPortHeight()/128);
     }
-
 
     public static class  World extends World2D{
         MockTiledLayer layer;
@@ -93,9 +80,6 @@ public class TiledLayerTest extends World2DTestCase {
             layer = (MockTiledLayer) findLayer(1);
         }
     }
-
-
-
 
     public static class MockTiledLayer extends TiledLayer {
 
@@ -119,9 +103,5 @@ public class TiledLayerTest extends World2DTestCase {
 
         }
     }
-
-
-
-
 
 }

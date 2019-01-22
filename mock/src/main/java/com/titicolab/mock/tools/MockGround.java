@@ -28,7 +28,6 @@ import com.titicolab.puppet.objects.Tile;
 
 public class MockGround extends Tile {
 
-
     @Override
     public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
         ClipMap.Area area = new ClipMap.Area(0,0,84*5,84*3);

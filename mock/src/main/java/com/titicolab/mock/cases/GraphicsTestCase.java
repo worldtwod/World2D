@@ -2,7 +2,6 @@ package com.titicolab.mock.cases;
 
 import android.app.Activity;
 import androidx.annotation.CallSuper;
-import androidx.test.runner.AndroidJUnit4;
 import android.view.MotionEvent;
 
 import com.titicolab.mock.MockActivity;
@@ -15,16 +14,13 @@ import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.puppeteer.GameActivity;
 import com.titicolab.puppeteer.util.LogHelper;
-
 import org.junit.Rule;
-import org.junit.runner.RunWith;
-
 
 /**
  * Created by campino on 11/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
+
 public class GraphicsTestCase implements ObservableRenderer.Renderer, ObservableInput.InputListener {
 
     @Rule
@@ -38,8 +34,6 @@ public class GraphicsTestCase implements ObservableRenderer.Renderer, Observable
     private FlagSync mFlagTouch = new FlagSync();
 
     final protected LogHelper log = new LogHelper(this,"GameActivity");
-
-
 
     protected GameContext mGameContext;
 

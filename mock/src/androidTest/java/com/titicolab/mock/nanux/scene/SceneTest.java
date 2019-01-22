@@ -27,8 +27,7 @@ import com.titicolab.nanux.objects.map.MapGroupLayers;
 import com.titicolab.nanux.objects.map.MapItem;
 import com.titicolab.nanux.objects.map.MapObjects;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -41,24 +40,16 @@ public class SceneTest extends AnimationTestCase {
 
     @Test
     public void test_factoryObjects(){
-
         MockScene scene = new MockScene();
         SceneManager manager = new SceneManager(getRunnerTask(),getTextureManager(),getDisplayInfo());
-
         manager.startScene(scene);
-
-
         Assert.assertNotNull(scene.layer);
         Assert.assertNotNull(scene.layer.button);
         Assert.assertNotNull(scene.layer.digit);
     }
 
-
-
-
     public static class MockScene extends Scene{
         MockLayer layer;
-
         @Override
         public MapGroupLayers onDefineMapGroupLayers() {
             return new MapGroupLayers.Builder()
@@ -66,7 +57,6 @@ public class SceneTest extends AnimationTestCase {
                     .layer(MockLayer.class,1)
                     .build();
         }
-
 
         @Override
         public void onGroupLayersCreated() {
@@ -114,14 +104,9 @@ public class SceneTest extends AnimationTestCase {
         }
     }
 
-
-
     public static class Digit extends Animated {
     }
     public static class Button extends Animated {
     }
-
-
-
 
 }

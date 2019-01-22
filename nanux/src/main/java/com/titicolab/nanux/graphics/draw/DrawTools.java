@@ -25,15 +25,12 @@ import com.titicolab.nanux.graphics.texture.TextureManager;
 
 public class DrawTools {
 
-
-
     private static float scalePixel;
 
     public final Drawer<Image>          ui;
     public final Drawer<Image>          images;
     public final Drawer.Brush<Geometry> geometry;
     public final Drawer.Text<Image>     text;
-
 
     public DrawTools(Drawer<Image> images,
                      Drawer<Image> ui,
@@ -49,7 +46,6 @@ public class DrawTools {
     public interface Builder{
         DrawTools build(TextureManager manager);
     }
-
 
     public static float getScalePixel() {
         return scalePixel;

@@ -36,7 +36,6 @@ import org.junit.runner.RunWith;
  * Created by campino on 15/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
 public class ClipTestCase extends ImageDrawerTestCase{
 
     private FlexibleList<Image> mImagesTest;
@@ -126,7 +125,6 @@ public class ClipTestCase extends ImageDrawerTestCase{
             }
         });
     }
-
 
     public void setScale(float scale) {
         this.scale = scale;

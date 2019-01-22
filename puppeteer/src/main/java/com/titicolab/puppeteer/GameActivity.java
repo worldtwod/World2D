@@ -36,18 +36,26 @@ import com.titicolab.nanux.test.Monitor;
  */
 public class GameActivity extends AppCompatActivity {
 
+    /** Maximum size of sprite buffer  **/
+    public static int sMaximumSizeSprites = 1000;
+
+    /** Maximum size of geometries buffer  **/
+    public static int sMaximumSizeGeometries = 2500;
+
     /** This flag let that screen rote in horizontal axis  **/
     public static boolean sFlagSensorLandscape = false;
 
     /** This flag make that screen go full screen  **/
     public boolean sFlagFullScreen = false;
 
-
     /** AndroidGame */
     private AndroidGame mAndroidGame;
 
     /** This flat is for test settings, do no touch **/
     static Monitor.OnEngineCreated monitor=null;
+
+    /** flat to check if the on-create was executed **/
+    private boolean mFlatOnCreate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +67,24 @@ public class GameActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.
                     SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 
-        mAndroidGame = new AndroidGame(this);
+        mAndroidGame = new AndroidGameBuilder(getApplicationContext())
+                .setSizeGeometries(sMaximumSizeGeometries)
+                .setSizeSprites(sMaximumSizeSprites)
+                .build();
+
+        mFlatOnCreate = true;
     }
 
-
     public void setSceneLauncher(SceneLauncher sceneLauncher) {
+        checkOnCreate("setSceneLauncher");
         Scene scene = sceneLauncher.onLaunchScene();
         mAndroidGame.setStartScene(scene);
     }
 
-
-
     public void setShowFPS(boolean showFPS) {
+        checkOnCreate("setShowFPS");
         mAndroidGame.setShowFPS(showFPS);
     }
-
 
     /**
      * Hide the navigation bar, it set the screen to:
@@ -92,7 +103,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Return the GLSurfaceView when the action will live
      * @return  GLGameView
@@ -101,6 +111,10 @@ public class GameActivity extends AppCompatActivity {
         return mAndroidGame.getGLGameView();
     }
 
+    private void checkOnCreate(String method) {
+        if(!mFlatOnCreate)
+          throw new RuntimeException("The method "+ method +"needs be called after super.onCreate()");
+    }
 
     @Override
     public void onStart() {
@@ -128,7 +142,6 @@ public class GameActivity extends AppCompatActivity {
     public void onStop() {
         mAndroidGame.onStop();
         super.onStop();
-
     }
 
     @Override

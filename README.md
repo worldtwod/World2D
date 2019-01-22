@@ -28,4 +28,6 @@ World-2D should be easy to use and its applications are expected to be easy to m
 # Changelog
  
  `compile 'com.titicolab.world-2d:core:0.1.1-beta'`
+  The buffer sizes can be set from GameActivity, else the default value is set
+ `compile 'com.titicolab.world-2d:core:0.1.1-beta'`
   Migrated to androidX

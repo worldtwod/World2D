@@ -15,6 +15,4 @@ public class MockActivity extends GameActivity {
         setContentView(getGLGameView());
     }
 
-
-
 }

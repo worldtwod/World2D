@@ -18,7 +18,7 @@ package com.titicolab.mock.cases.opengl;
 
 import android.content.Context;
 import androidx.annotation.CallSuper;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
@@ -43,8 +43,6 @@ public abstract class ImageDrawerTestCase extends GraphicsTestCase {
 
     private static final int  IMAGE_LENGTH = 1000;
 
-
-
     protected  TextureManager mTextureManager;
     private    DrawerImage mImageDrawer;
 
@@ -53,7 +51,7 @@ public abstract class ImageDrawerTestCase extends GraphicsTestCase {
     @Override
     public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext =InstrumentationRegistry.getInstrumentation().getTargetContext();
         mTextureManager = new AndroidTextureManager(appContext,
                 new RunnerTask(Thread.currentThread()),
                 game.getDisplayInfo());

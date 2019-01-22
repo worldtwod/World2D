@@ -17,9 +17,6 @@
 package com.titicolab.mock.cases.puppet;
 
 import android.content.Context;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
-
 import com.titicolab.mock.cases.GraphicsTestCase;
 import com.titicolab.nanux.core.GameContext;
 import com.titicolab.nanux.core.RunnableTask;
@@ -33,13 +30,13 @@ import com.titicolab.nanux.objects.factory.RequestCollection;
 import com.titicolab.nanux.objects.factory.RequestLayersBuilder;
 import com.titicolab.nanux.objects.map.MapItem;
 
-import org.junit.runner.RunWith;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 
 /**
  * Created by campino on 11/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
 public class SceneTestCase extends GraphicsTestCase {
 
     private Puppeteer mController;
@@ -47,7 +44,7 @@ public class SceneTestCase extends GraphicsTestCase {
     @Override
     public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext =InstrumentationRegistry.getInstrumentation().getTargetContext();
         mController  = new Puppeteer(new AndroidDrawToolsBuilder(appContext));
         mController.onSurfaceCreated(game,eglConfig);
     }

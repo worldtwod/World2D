@@ -53,5 +53,4 @@ public class MockActor extends Actor {
         getAnimator().playAndRepeat(ROBOT_WALKING);
 
     }
-
 }

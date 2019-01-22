@@ -26,7 +26,6 @@ import com.titicolab.nanux.util.DisplayInfo;
 
 public abstract class BaseGame implements GameContext {
 
-
 	private Controller mController;
 
 	private ObservableRenderer mObservableRenderer;
@@ -41,8 +40,7 @@ public abstract class BaseGame implements GameContext {
 
 	private TextureManager mTextureManager;
 
-
-	protected void connectObserver(Controller controller) {
+	public void connectObserver(Controller controller) {
 		if(mMonitorEngineCreated!=null){
 			//Add the external observer
 			//The controller will be unconnected
@@ -55,22 +53,17 @@ public abstract class BaseGame implements GameContext {
 		mObservableLifeCycle.start();
 	}
 
-
-
-	protected void startController(Controller controller){
+	private void startController(Controller controller){
 		mController = controller;
 		mObservableLifeCycle.add(mController);
 		mObservableInput.add(mController);
 		mObservableRenderer.add(mController);
 	}
 
-
 	public void setStartScene(Scene scene) {
 		if(mMonitorEngineCreated==null)
 			mController.setStartScene(scene);
 	}
-
-
 
 	@Override
 	public ObservableRenderer getObservableRenderer() {
@@ -90,7 +83,6 @@ public abstract class BaseGame implements GameContext {
 		return mDisplayInfo;
 	}
 
-
 	@Override
 	public TextureManager getTextureManager() {
 		return mTextureManager;
@@ -98,32 +90,34 @@ public abstract class BaseGame implements GameContext {
 
 	/********* Setters ********************************************/
 
-	protected void setObservableRenderer(ObservableRenderer observableRenderer) {
+	public void setObservableRenderer(ObservableRenderer observableRenderer) {
 		this.mObservableRenderer = observableRenderer;
 	}
 
-	protected void setObservableLifeCycle(ObservableLifeCycle observableLifeCycle) {
+	public void setObservableLifeCycle(ObservableLifeCycle observableLifeCycle) {
 		this.mObservableLifeCycle = observableLifeCycle;
 	}
 
-	protected void setObservableInput(ObservableInput observableInput) {
+	public void setObservableInput(ObservableInput observableInput) {
 		this.mObservableInput =observableInput;
 	}
 
-	protected void setDisplayInfo(DisplayInfo displayInfo) {
+	public void setDisplayInfo(DisplayInfo displayInfo) {
 		this.mDisplayInfo = displayInfo;
 	}
 
 
-	protected void setMonitorEngineCreated(Monitor.OnEngineCreated onEngineCreated) {
+	public void setMonitorEngineCreated(Monitor.OnEngineCreated onEngineCreated) {
 		this.mMonitorEngineCreated = onEngineCreated;
 	}
 
-	protected void setTextureManager(TextureManager textureManager) {
+	public void setTextureManager(TextureManager textureManager) {
 		mTextureManager = textureManager;
 	}
 
 	public void setShowFPS(boolean showFPS) {
-		this.mController.showFPS(showFPS);
+		if(mController!=null) {
+			this.mController.showFPS(showFPS);
+		}
 	}
 }

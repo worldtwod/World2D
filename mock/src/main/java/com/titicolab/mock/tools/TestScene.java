@@ -45,7 +45,6 @@ public class TestScene  extends Scene {
     private int counter;
     final LogHelper log;
 
-
     public TestScene() {
         super();
 
@@ -126,6 +125,4 @@ public class TestScene  extends Scene {
         log.debug("onStop ");
         super.onStop();
     }
-
-
 }

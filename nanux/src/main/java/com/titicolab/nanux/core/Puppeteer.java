@@ -40,20 +40,15 @@ public class Puppeteer extends Controller {
     private RunnerTask            mRunnerTask;
     private GPUInfo               mGPUInfo;
 
-
     private TextureManager mTextureManager;
     private SceneManager   mSceneManager;
-
 
     private DrawTools         mDrawTools;
     private DrawTools.Builder mDrawToolsBuilder;
 
     private boolean mFlatStart;
 
-
     private Scene   mStartScene;
-
-
 
     private boolean mShowFPS;
 
@@ -69,7 +64,6 @@ public class Puppeteer extends Controller {
     /************************* Render    *******************************************************/
     @Override
     public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
-
 
         /*if(mTextureManager!=null) { //TODO
             onRecoveryContext();
@@ -134,9 +128,6 @@ public class Puppeteer extends Controller {
 
     /************************   Scene play ********************************************************/
 
-
-
-
     @Override
     public synchronized void setStartScene(Scene startScene) {
         if(mFlatStart)
@@ -147,7 +138,6 @@ public class Puppeteer extends Controller {
 
 
    /********************* Input Event   **********************************************************/
-
     @Override
     public boolean onTouch(ObservableInput.Event event) {
         return mSceneManager.onTouch(event);
@@ -157,7 +147,6 @@ public class Puppeteer extends Controller {
     public boolean onKey(int keyEvent) {
         return mSceneManager.onKey(keyEvent);
     }
-
 
     /************************Life Cycle **********************************************************/
 
@@ -180,11 +169,10 @@ public class Puppeteer extends Controller {
     }
 
 
-
     /**********************    Helper  ************************************************************/
 
     @Override
-    public void showFPS(boolean mShowFPS) {
+    synchronized public void showFPS(boolean mShowFPS) {
         this.mShowFPS = mShowFPS;
     }
 

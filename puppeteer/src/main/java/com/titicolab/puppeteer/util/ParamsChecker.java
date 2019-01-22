@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.titicolab.puppeteer.util;
 
-package com.titicolab.mock.tools;
-
-import com.titicolab.nanux.objects.base.Animated;
-
-/**
- * Created by campino on 12/12/2017.
- *
- */
-
-public class TestDigit  extends Animated{
-
-
+public class ParamsChecker {
+    public static void checkNull(Object object,String name){
+        if(object==null){
+            throw new IllegalArgumentException("The parameter " + name + " can not be null");
+        }
+    }
 }

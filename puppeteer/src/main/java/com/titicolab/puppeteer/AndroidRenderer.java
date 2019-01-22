@@ -20,6 +20,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import androidx.annotation.NonNull;
 
+import com.titicolab.puppeteer.util.ParamsChecker;
 import com.titicolab.puppeteer.view.GLGameView;
 import com.titicolab.nanux.core.GameContext;
 import com.titicolab.nanux.core.ObservableRenderer;
@@ -42,20 +43,18 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
         implements GLSurfaceView.Renderer,
         ObservableRenderer {
 
-
-   // private String mThreadName;
     private final GameContext mGameContext;
     private final GLGameView mGLGameView;
     private boolean mFlagNotify;
 
     AndroidRenderer(@NonNull GameContext game, @NonNull GLGameView gLGameView) {
         super(1);
+        ParamsChecker.checkNull(game,"GameContext game");
+        ParamsChecker.checkNull(gLGameView,"GLGameView gLGameView");
         mFlagNotify = true;
         mGameContext=game;
         mGLGameView = gLGameView;
-       // mGLGameView.setUpConfiguration();
     }
-
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
@@ -63,7 +62,6 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
         glClearColor(0, 0, 0, 1f);
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-
         //mThreadName =  Thread.currentThread().getName();
         notifySurfaceCreated(mGameContext,new AndroidGPUInfo(eglConfig));
     }

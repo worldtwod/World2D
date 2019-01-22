@@ -37,7 +37,6 @@ import org.junit.runner.RunWith;
  * Created by campino on 11/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
 public class World2DTestCase extends GraphicsTestCase {
 
     private Puppeteer mController;
