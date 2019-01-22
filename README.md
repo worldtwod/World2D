@@ -25,9 +25,17 @@ Consequently, this project seeks develop and refine a library that allows quickl
 # Design Philosophy
 World-2D should be easy to use and its applications are expected to be easy to maintain as well, easy for update according to changes and Android.  The architecture must be compatible and take advantage of native development environment, such as Android Studio. Also allow easy integration with  G ecosystem: Google Play Games API, Google Cloud, Firebase ... Etc. If the enemy can not join them.
 
+# Upload 
+`gradlew bintrayUpload`
+
 # Changelog
  
  `compile 'com.titicolab.world-2d:core:0.1.1-beta'`
-  The buffer sizes can be set from GameActivity, else the default value is set
+    The buffer sizes can be set from GameActivity, else the default value is set
+   
  `compile 'com.titicolab.world-2d:core:0.1.1-beta'`
-  Migrated to androidX
+    Migrated to androidX
+    
+  `compile 'com.titicolab.world-2d:core:0.1.4-beta'`
+    Nao the size of render buffer can be customized
+    
