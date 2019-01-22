@@ -17,6 +17,8 @@
 package com.titicolab.puppet.objects;
 
 
+import com.titicolab.nanux.graphics.draw.DrawTools;
+import com.titicolab.nanux.graphics.draw.Rectangle;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.nanux.objects.base.CameraUi;
 import com.titicolab.nanux.objects.base.Scene;
@@ -29,19 +31,18 @@ import com.titicolab.puppet.map.MapWorld;
 
 public abstract class World2D extends Scene {
 
+    /** Size of rectangle line **/
+    private static final float SIZE_BOUNDARY = 10;
 
-    //private Rectangle worldBondary;
-    // setLayer
-
+    /** Rectangle for limit the world **/
+    private Rectangle mWorldBoundary;
 
     protected abstract MapWorld onDefineMapWorld(MapWorld.Builder builder);
-
 
     @Override
     protected MapWorld onDefineMapGroupLayers() {
         return onDefineMapWorld(new MapWorld.Builder());
     }
-
 
     @Override
     protected void onDefineCameras(DisplayInfo displayInfo) {
@@ -56,13 +57,42 @@ public abstract class World2D extends Scene {
 
     }
 
+    @Override
+    public CameraWorld2D getCamera2D() {
+        return (CameraWorld2D) super.getCamera2D();
+    }
+
+    @Override
+    protected void onDraw(DrawTools drawer) {
+        super.onDraw(drawer);
+        onDrawBoundary(drawer);
+    }
 
     public MapWorld getMapWorld(){
         return (MapWorld) getMapGroupLayers();
     }
 
-    @Override
-    public CameraWorld2D getCamera2D() {
-        return (CameraWorld2D) super.getCamera2D();
+    /** This option will draw the limit of world
+     *  as rectangle
+     * @param boundary tru to show
+     */
+    synchronized public void setDrawBoundary(boolean boundary){
+        if(boundary){
+            float width = getMapWorld().getWidth();
+            float height = getMapWorld().getHeight();
+            mWorldBoundary = new Rectangle(width, height,getDisplayInfo().getScalePixel());
+            mWorldBoundary.setPosition(width / 2, height / 2);
+        }else
+            mWorldBoundary=null;
+    }
+
+    synchronized protected void onDrawBoundary(DrawTools drawTools) {
+        if(mWorldBoundary!=null) {
+            mWorldBoundary.updateRender();
+            drawTools.geometry.setBrushSize(SIZE_BOUNDARY);
+            drawTools.geometry.begin(getCamera2D().getMatrix());
+            drawTools.geometry.add(mWorldBoundary);
+            drawTools.geometry.end();
+        }
     }
 }

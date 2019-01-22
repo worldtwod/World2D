@@ -67,11 +67,13 @@ public class SolveCollisionFunctionalTest extends World2DTestCase {
     }
 
 
+
+
     @Test
     public void collisionLeft(){
         World world = new World();
         syncPlay(world);
-        setWorldBoundary(true);
+
         // TOP
         final MockGround tile = world.layer.findTile(1001);
         final TestActor actor = (TestActor) world.layer.findById(2000);

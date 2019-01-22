@@ -17,15 +17,9 @@
 
 package com.titicolab.puppeteer;
 
-import android.app.Activity;
-
 import com.titicolab.nanux.core.BaseGame;
 import com.titicolab.nanux.core.ObservableLifeCycle;
-import com.titicolab.nanux.core.Puppeteer;
-import com.titicolab.nanux.core.RunnerTask;
 import com.titicolab.nanux.core.SceneLauncher;
-import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
-import com.titicolab.opengl.shader.AndroidTextureManager;
 import com.titicolab.puppeteer.view.GLGameView;
 
 

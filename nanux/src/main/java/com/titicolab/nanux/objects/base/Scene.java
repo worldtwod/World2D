@@ -35,26 +35,15 @@ import com.titicolab.nanux.util.FlagSync;
  */
 public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
 
-
-
     private SceneManager    mSceneManager;
-
-
-
     private DisplayInfo     mDisplayInfo;
-
-
-
     private MapGroupLayers  mMapGroupLayers;
-
-
     private GameObjectList mLayerList;
-
-
 
     private CameraUi mCameraUi;
     private Camera2D mCamera2D;
     private final FlagSync mFlagOnCreated;
+    private boolean mDrawCamera;
 
     public Scene() {
         mFlagOnCreated = new FlagSync();
@@ -63,7 +52,6 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
         setTouchable(true);
     }
 
-
     /*** Instantiation ***************************************************************************/
 
     @Override
@@ -71,11 +59,9 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
         mMapGroupLayers = onDefineMapGroupLayers();
     }
 
-
     protected MapGroupLayers onDefineMapGroupLayers(){
         return getParameters()!=null ?  getParameters().mapObjects : new MapGroupLayers.Builder().build();
     }
-
 
     void onAttachSceneManager(SceneManager sceneManager){
         mSceneManager = sceneManager;
@@ -91,11 +77,9 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
         mCamera2D = new Camera2D(displayInfo);
     }
 
-
     public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
         return null;
     }
-
 
     /*** Factory ********************************************************************************/
     @Override
@@ -113,8 +97,6 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
     protected void onGroupLayersCreated(){
 
     }
-
-
 
     @Override
     protected void onStart() {
@@ -151,8 +133,14 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
     @Override
     protected void onDraw(DrawTools drawer) {
         HelperObjects.onDrawLayers(mLayerList,drawer);
+        onDrawCamera(drawer);
     }
 
+
+    @Override
+    protected ParamsScene getParameters() {
+        return super.getParameters();
+    }
 
     public BaseLayer findLayer(int id) {
         return (BaseLayer) mLayerList.findById(id);
@@ -183,11 +171,9 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
         return HelperObjects.notifyInputEvent(event,mLayerList);
     }
 
-
     public boolean onKey(int keyEvent) {
         return false;
     }
-
 
     public static class ParamsScene extends Parameters {
         final MapGroupLayers mapObjects;
@@ -195,7 +181,6 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
             this.mapObjects = mapObjects;
         }
     }
-
 
     /**
      * User for synchronization to the onCreate event. it is block until the scene is full created
@@ -206,13 +191,33 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
         return mFlagOnCreated.waitSyncSeconds(seconds);
     }
 
-
-
     protected void setCameraUi(CameraUi cameraUi) {
         this.mCameraUi = cameraUi;
     }
 
     protected void setCamera2D(Camera2D camera2D) {
         this.mCamera2D = camera2D;
+    }
+
+
+    /**
+     * Show the data of 2d camera in front with the ui coordinates
+     * @param showCamera true to show
+     */
+    public void setDrawCamera(boolean showCamera) {
+        this.mDrawCamera = showCamera;
+    }
+
+    protected void onDrawCamera(DrawTools drawer) {
+        if(mDrawCamera){
+            drawer.text.setMatrix(getCameraUi().getMatrix());
+            float left = 20;   float size = 20;
+            float top = getCameraUi().getHeight() - 20;
+            drawer.text.print("camera2D:", left, top, size);
+            drawer.text.print("x:" + getCamera2D().getX(), left, top - size, size);
+            drawer.text.print("y:" + getCamera2D().getY(), left, top - size * 2, size);
+            drawer.text.print("portViewW:" + getCamera2D().getViewPortWidth(), left, top - size * 3, size);
+            drawer.text.print("portViewH:" + getCamera2D().getViewPortHeight(), left, top - size * 4, size);
+        }
     }
 }

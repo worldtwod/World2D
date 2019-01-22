@@ -44,7 +44,6 @@ public class SetUpCollisionsFunctionalTest extends World2DTestCase {
 
         World world = new World();
         syncPlay(world);
-        setWorldBoundary(true);
         waitTouchSeconds(60*60);
     }
 

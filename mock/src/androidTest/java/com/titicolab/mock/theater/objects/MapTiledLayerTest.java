@@ -47,9 +47,9 @@ public class MapTiledLayerTest extends World2DTestCase {
     @Test
     public void mapLayer(){
 
-
         syncPlay(new World());
-        setWorldBoundary(true);
+        getWorld2D().setDrawBoundary(true);
+        getWorld2D().setDrawCamera(true);
 
         for (int i =0; i <32; i++) {
             showInfo();

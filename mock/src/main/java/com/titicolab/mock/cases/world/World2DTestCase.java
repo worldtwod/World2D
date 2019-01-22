@@ -22,8 +22,6 @@ import com.titicolab.mock.cases.GraphicsTestCase;
 import com.titicolab.nanux.core.GameContext;
 import com.titicolab.nanux.core.Puppeteer;
 import com.titicolab.nanux.core.RunnableTask;
-import com.titicolab.nanux.graphics.draw.DrawTools;
-import com.titicolab.nanux.graphics.draw.Rectangle;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
@@ -39,7 +37,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 public class World2DTestCase extends GraphicsTestCase {
 
     private Puppeteer mController;
-    private Rectangle mWorldBoundary;
 
     protected Puppeteer onAttachController(Context appContext){
         return  new Puppeteer(new AndroidDrawToolsBuilder(appContext));
@@ -63,16 +60,6 @@ public class World2DTestCase extends GraphicsTestCase {
     public void onDrawFrame() {
         super.onDrawFrame();
         mController.onDrawFrame();
-        onDraw(mController.getDrawTools());
-    }
-
-    private void onDraw(DrawTools drawTools) {
-        if(mWorldBoundary!=null) {
-            mWorldBoundary.updateRender();
-            drawTools.geometry.begin(getWorld2D().getCamera2D().getMatrix());
-            drawTools.geometry.add(mWorldBoundary);
-            drawTools.geometry.end();
-        }
     }
 
     @Override
@@ -80,7 +67,6 @@ public class World2DTestCase extends GraphicsTestCase {
         super.onTouch(event);
         return  mController.onTouch(event);
     }
-
 
     protected void syncPlay(World2D world2D) {
         mController.getSceneManager().play(world2D);
@@ -96,26 +82,8 @@ public class World2DTestCase extends GraphicsTestCase {
                 .getSceneManager().getScene();
     }
 
-
-    public void setWorldBoundary(final boolean set){
-       mController.getRunnerTask().queueTask(new RunnableTask() {
-           @Override
-           public void run() {
-               mController.getDrawTools()
-                       .geometry.setBrushSize(10);
-               setupBoundary(set);
-           }
-       });
+    public void setWorldBoundary(boolean b) {
+        getWorld2D().setDrawBoundary(b);
     }
 
-    private void setupBoundary(boolean set){
-        if(set) {
-            World2D world2D = getWorld2D();
-            float width = world2D.getMapWorld().getWidth();
-            float height = world2D.getMapWorld().getHeight();
-            mWorldBoundary = new Rectangle(width, height,getDisplayInfo().getScalePixel());
-            mWorldBoundary.setPosition(width / 2, height / 2);
-        }else
-            mWorldBoundary=null;
-    }
 }

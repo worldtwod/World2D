@@ -57,8 +57,6 @@ public class AndroidDisplayMetrics implements DisplayInfo {
         setFixPort();
     }
 
-
-
     private void setReferenceSize(float width, float height){
         mReferenceWidth=width;
         mReferenceHeight=height;

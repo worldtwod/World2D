@@ -17,6 +17,7 @@
 package com.titicolab.nanux.objects.base;
 
 
+import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.graphics.math.Projection;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 
@@ -40,8 +41,6 @@ public class Camera  extends GameObject {
     }
 
 
-
-
     public Projection getProjection() {
         return mProjection;
     }
@@ -62,7 +61,6 @@ public class Camera  extends GameObject {
     public float getHeight() {
         return getViewPortHeight();
     }
-
 
 
     public float getX() {
@@ -102,4 +100,5 @@ public class Camera  extends GameObject {
     public float[] getMatrix() {
         return mProjection.getMatrix();
     }
+
 }
