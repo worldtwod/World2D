@@ -24,6 +24,7 @@ import android.view.View;
 
 import com.titicolab.nanux.core.SceneLauncher;
 import com.titicolab.nanux.objects.base.Scene;
+import com.titicolab.puppeteer.util.LogHelper;
 import com.titicolab.puppeteer.view.GLGameView;
 import com.titicolab.nanux.test.Monitor;
 
@@ -54,15 +55,26 @@ public class GameActivity extends AppCompatActivity {
     /** This flat is for test settings, do no touch **/
     static Monitor.OnEngineCreated monitor=null;
 
+    /** Flat to active logs **/
+    public static boolean sFlatEnableLogs = false;
+
+
     /** flat to check if the on-create was executed **/
     private boolean mFlatOnCreate = false;
 
+    /** logs ***/
+    private LogHelper log;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        log = new LogHelper(this,"LogsWord2D");
+        log.setEnableDebug(sFlatEnableLogs);
+        log.debug("onCreate");
+
         if(sFlagFullScreen)
             hideNavigation();
-
         super.onCreate(savedInstanceState);
+
         if(sFlagSensorLandscape)
             setRequestedOrientation(ActivityInfo.
                     SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
@@ -84,6 +96,15 @@ public class GameActivity extends AppCompatActivity {
     public void setShowFPS(boolean showFPS) {
         checkOnCreate("setShowFPS");
         mAndroidGame.setShowFPS(showFPS);
+    }
+
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideNavigation();
+        }
     }
 
     /**
@@ -119,33 +140,39 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        log.debug("onStart()");
         mAndroidGame.onStart();
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
+        log.debug("onRestart()");
         mAndroidGame.onRestart();
     }
     @Override
     public void onResume() {
         super.onResume();
+        log.debug("onResume()");
         mAndroidGame.onResume();
     }
     @Override
     public void onPause() {
+        log.debug("onPause() ");
         mAndroidGame.onPause();
         super.onPause();
     }
 
     @Override
     public void onStop() {
+        log.debug("onStop()");
         mAndroidGame.onStop();
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
+        log.debug("onDestroy()");
         mAndroidGame.onDestroy();
         super.onDestroy();
     }

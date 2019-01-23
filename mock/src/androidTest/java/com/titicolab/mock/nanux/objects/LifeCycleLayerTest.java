@@ -30,8 +30,7 @@ import com.titicolab.nanux.objects.map.MapGroupLayers;
 import com.titicolab.nanux.objects.map.MapItem;
 import com.titicolab.nanux.objects.map.MapObjects;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**

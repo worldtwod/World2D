@@ -16,8 +16,6 @@
 
 package com.titicolab.mock.theater.objects;
 
-import androidx.test.runner.AndroidJUnit4;
-
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.world.World2DTestCase;
 import com.titicolab.nanux.animation.AnimationSheet;
@@ -30,19 +28,12 @@ import com.titicolab.puppet.objects.TiledLayer;
 import com.titicolab.puppet.objects.World2D;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Created by campino on 24/01/2017.
  *
  */
-
-
-@RunWith(AndroidJUnit4.class)
 public class MapTiledLayerTest extends World2DTestCase {
-
-
-
 
     @Test
     public void mapLayer(){
@@ -62,10 +53,6 @@ public class MapTiledLayerTest extends World2DTestCase {
             moveCamera(32,j);
             waitTouchSeconds(1);
         }
-
-
-
-
         waitTouchSeconds(60*60);
     }
 

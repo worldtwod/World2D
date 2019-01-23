@@ -11,6 +11,7 @@ public class MockActivity extends GameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         sFlagFullScreen=true;
         sFlagSensorLandscape=true;
+        sFlatEnableLogs=true;
         super.onCreate(savedInstanceState);
         setContentView(getGLGameView());
     }

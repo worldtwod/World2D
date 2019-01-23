@@ -121,7 +121,7 @@ public class Puppeteer extends Controller {
         if(mShowFPS) {
             mDrawTools.text.setMatrix(mProjectionUi.getMatrix());
             mDrawTools.text.print(mPerformance.getAverageFPS() + " FPS",
-                    120, 700, 20);
+                    200, 700, 20);
         }
     }
 
@@ -175,11 +175,4 @@ public class Puppeteer extends Controller {
     synchronized public void showFPS(boolean mShowFPS) {
         this.mShowFPS = mShowFPS;
     }
-
-
-
-
-
-
-
 }
