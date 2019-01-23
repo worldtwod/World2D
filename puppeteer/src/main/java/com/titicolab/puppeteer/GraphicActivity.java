@@ -25,7 +25,7 @@ import android.view.View;
 import com.titicolab.nanux.core.SceneLauncher;
 import com.titicolab.nanux.objects.base.Scene;
 import com.titicolab.puppeteer.util.LogHelper;
-import com.titicolab.puppeteer.view.GLGameView;
+import com.titicolab.puppeteer.view.GLGraphicView;
 import com.titicolab.nanux.test.Monitor;
 
 
@@ -98,7 +98,6 @@ public class GraphicActivity extends AppCompatActivity {
         mAndroidGame.setShowFPS(showFPS);
     }
 
-
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -128,7 +127,7 @@ public class GraphicActivity extends AppCompatActivity {
      * Return the GLSurfaceView when the action will live
      * @return  GLGameView
      */
-    public GLGameView getGLGameView() {
+    public GLGraphicView getGLGameView() {
         return mAndroidGame.getGLGameView();
     }
 

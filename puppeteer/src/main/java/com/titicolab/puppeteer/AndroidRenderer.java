@@ -22,7 +22,7 @@ import androidx.annotation.NonNull;
 
 import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.puppeteer.util.ParamsChecker;
-import com.titicolab.puppeteer.view.GLGameView;
+import com.titicolab.puppeteer.view.GLGraphicView;
 import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.list.FlexibleList;
 import com.titicolab.nanux.util.GPUInfo;
@@ -44,16 +44,16 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
         ObservableRenderer {
 
     private final GraphicContext mGraphicContext;
-    private final GLGameView mGLGameView;
+    private final GLGraphicView mGLGraphicView;
     private boolean mFlagNotify;
 
-    AndroidRenderer(@NonNull GraphicContext game, @NonNull GLGameView gLGameView) {
+    AndroidRenderer(@NonNull GraphicContext game, @NonNull GLGraphicView gLGraphicView) {
         super(1);
         ParamsChecker.checkNull(game,"GraphicContext game");
-        ParamsChecker.checkNull(gLGameView,"GLGameView gLGameView");
+        ParamsChecker.checkNull(gLGraphicView,"GLGameView gLGameView");
         mFlagNotify = true;
         mGraphicContext =game;
-        mGLGameView = gLGameView;
+        mGLGraphicView = gLGraphicView;
     }
 
     @Override
@@ -107,7 +107,7 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
     @Override
     public void start() {
         mFlagNotify=true;
-        mGLGameView.setRenderer(this);
+        mGLGraphicView.setRenderer(this);
     }
 
     @Override

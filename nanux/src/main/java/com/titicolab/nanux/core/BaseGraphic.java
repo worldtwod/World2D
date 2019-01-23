@@ -23,47 +23,59 @@ import com.titicolab.nanux.test.Monitor;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.DisplayInfo;
 
-
 public abstract class BaseGraphic implements GraphicContext {
 
-	private Controller mController;
+	/** This control the graphics loop */
+	private final Controller mController;
 
-	private ObservableRenderer mObservableRenderer;
+	/** this observable will notify about render events */
+	private  final ObservableRenderer mObservableRenderer;
 
-	private ObservableLifeCycle mObservableLifeCycle;
+	/** this observable will notify about  life cycle events: onPause() onStart().. */
+	private  final ObservableLifeCycle mObservableLifeCycle;
 
-	private ObservableInput mObservableInput;
+	/** this observable will notify about input events, touch, click etc */
+	private  final ObservableInput mObservableInput;
 
-	private DisplayInfo mDisplayInfo;
+	private  final DisplayInfo mDisplayInfo;
 
-	private Monitor.OnEngineCreated mMonitorEngineCreated;
+	private  final Monitor.OnEngineCreated mMonitorEngineCreated;
 
-	private TextureManager mTextureManager;
+	private  final TextureManager mTextureManager;
 
-	public void connectObserver(Controller controller) {
-		if(mMonitorEngineCreated!=null){
-			//Add the external observer
-			//The controller will be unconnected
-			mMonitorEngineCreated.onEngineCreated(this);
-		}else{
-			//Add the controller just observer
-			startController(controller);
-		}
+	protected BaseGraphic(Controller controller,
+						  DisplayInfo displayInfo,
+						  TextureManager textureManager,
+						  ObservableRenderer observableRenderer,
+						  ObservableLifeCycle observableLifeCycle,
+						  ObservableInput observableInput,
+						  Monitor.OnEngineCreated monitorEngineCreated) {
 
-		mObservableLifeCycle.start();
+		this.mController = controller;
+		this.mDisplayInfo = displayInfo;
+		this.mTextureManager = textureManager;
+		this.mObservableRenderer = observableRenderer;
+		this.mObservableLifeCycle = observableLifeCycle;
+		this.mObservableInput = observableInput;
+		this.mMonitorEngineCreated = monitorEngineCreated;
 	}
 
-	private void startController(Controller controller){
-		mController = controller;
-		mObservableLifeCycle.add(mController);
-		mObservableInput.add(mController);
-		mObservableRenderer.add(mController);
+	public void start(){
+		setupController();
+		mObservableLifeCycle.start();
 	}
 
 	public void setStartScene(Scene scene) {
 		if(mMonitorEngineCreated==null)
 			mController.setStartScene(scene);
 	}
+
+	private void setupController(){
+		mObservableLifeCycle.add(mController);
+		mObservableInput.add(mController);
+		mObservableRenderer.add(mController);
+	}
+
 
 	@Override
 	public ObservableRenderer getObservableRenderer() {
@@ -88,36 +100,4 @@ public abstract class BaseGraphic implements GraphicContext {
 		return mTextureManager;
 	}
 
-	/********* Setters ********************************************/
-
-	public void setObservableRenderer(ObservableRenderer observableRenderer) {
-		this.mObservableRenderer = observableRenderer;
-	}
-
-	public void setObservableLifeCycle(ObservableLifeCycle observableLifeCycle) {
-		this.mObservableLifeCycle = observableLifeCycle;
-	}
-
-	public void setObservableInput(ObservableInput observableInput) {
-		this.mObservableInput =observableInput;
-	}
-
-	public void setDisplayInfo(DisplayInfo displayInfo) {
-		this.mDisplayInfo = displayInfo;
-	}
-
-
-	public void setMonitorEngineCreated(Monitor.OnEngineCreated onEngineCreated) {
-		this.mMonitorEngineCreated = onEngineCreated;
-	}
-
-	public void setTextureManager(TextureManager textureManager) {
-		mTextureManager = textureManager;
-	}
-
-	public void setShowFPS(boolean showFPS) {
-		if(mController!=null) {
-			this.mController.showFPS(showFPS);
-		}
-	}
 }

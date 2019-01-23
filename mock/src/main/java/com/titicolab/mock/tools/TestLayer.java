@@ -132,8 +132,6 @@ public class TestLayer extends SceneLayer {
     }
 
 
-
-
     @Override
     protected  void updateLogic() {
         super.updateLogic();

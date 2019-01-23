@@ -20,19 +20,19 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
-import com.titicolab.nanux.screen.GameView;
+import com.titicolab.nanux.screen.GraphicView;
 
 /**
  * Created by campino on 27/05/2016.
  *
  */
-public class GLGameView extends GLSurfaceView implements GameView {
+public class GLGraphicView extends GLSurfaceView implements GraphicView {
 
-    public GLGameView(Context context) {
+    public GLGraphicView(Context context) {
         super(context);
     }
 
-    public GLGameView(Context context, AttributeSet attrs) {
+    public GLGraphicView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -58,7 +58,6 @@ public class GLGameView extends GLSurfaceView implements GameView {
             setDebugFlags(GLSurfaceView.DEBUG_CHECK_GL_ERROR |
                     GLSurfaceView.DEBUG_LOG_GL_CALLS);
     }
-
 
     @Override
     public boolean performClick() {

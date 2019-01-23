@@ -21,12 +21,9 @@ package com.titicolab.nanux.screen;
  *
  */
 
-public interface GameView {
-    public void onPause();
-    public void onResume();
-
-    public void setUpConfiguration();
-
-    public void setDebug(boolean flagDebug);
-
+public interface GraphicView {
+    void onPause();
+    void onResume();
+    void setUpConfiguration();
+    void setDebug(boolean flagDebug);
 }

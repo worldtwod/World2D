@@ -18,9 +18,14 @@
 package com.titicolab.puppeteer;
 
 import com.titicolab.nanux.core.BaseGraphic;
+import com.titicolab.nanux.core.Controller;
 import com.titicolab.nanux.core.ObservableLifeCycle;
-import com.titicolab.nanux.core.SceneLauncher;
-import com.titicolab.puppeteer.view.GLGameView;
+import com.titicolab.nanux.core.ObservableRenderer;
+import com.titicolab.nanux.graphics.texture.TextureManager;
+import com.titicolab.nanux.test.Monitor;
+import com.titicolab.nanux.touch.ObservableInput;
+import com.titicolab.nanux.util.DisplayInfo;
+import com.titicolab.puppeteer.view.GLGraphicView;
 
 
 /**
@@ -33,19 +38,33 @@ import com.titicolab.puppeteer.view.GLGameView;
 public class AndroidGraphic extends BaseGraphic implements ObservableLifeCycle.LifeCycle{
 
 	/** GLSurfaceView needed for GL Context  **/
-	private GLGameView mGLGameView;
-	private SceneLauncher sceneLauncher;
+	private GLGraphicView mGLGraphicView;
 
-	AndroidGraphic() {
-		mGLGameView = null;
+	AndroidGraphic(Controller controller,
+				   DisplayInfo displayInfo,
+				   TextureManager textureManager,
+				   ObservableRenderer observableRenderer,
+				   ObservableLifeCycle observableLifeCycle,
+				   ObservableInput observableInput,
+				   Monitor.OnEngineCreated monitorEngineCreated,
+				   GLGraphicView glGraphicView){
+		super(controller,
+				displayInfo,
+				textureManager,
+				observableRenderer,
+				observableLifeCycle,
+				observableInput,
+				monitorEngineCreated);
+
+		mGLGraphicView = glGraphicView;
 	}
 
 	/**
 	 * Provide the ContentView for the GraphicActivity
 	 * @return A GLGameView
 	 */
-	GLGameView getGLGameView() {
-		return mGLGameView;
+	GLGraphicView getGLGameView() {
+		return mGLGraphicView;
 	}
 
 	@Override
@@ -63,12 +82,12 @@ public class AndroidGraphic extends BaseGraphic implements ObservableLifeCycle.L
 	public void onResume() {
 		getObservableInput().start();
 		getObservableLifeCycle().onResume();
-		mGLGameView.onResume();
+		mGLGraphicView.onResume();
 	}
 
 	@Override
 	public void onPause() {
-		mGLGameView.onPause();
+		mGLGraphicView.onPause();
 		getObservableLifeCycle().onPause();
 		getObservableInput().start();
 	}
@@ -89,7 +108,4 @@ public class AndroidGraphic extends BaseGraphic implements ObservableLifeCycle.L
 		return (AndroidLifeCycle) super.getObservableLifeCycle();
 	}
 
-	void setGLGameView(GLGameView glGameView) {
-		mGLGameView=glGameView;
-	}
 }

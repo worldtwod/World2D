@@ -34,7 +34,7 @@ import com.titicolab.nanux.util.GPUInfo;
 public class Puppeteer extends Controller {
 
 
-    private GraphicContext mGraphicContext;
+    private GraphicContext        mGraphicContext;
     private DisplayInfo           mDisplayInfo;
     private GamePerformance       mPerformance;
     private RunnerTask            mRunnerTask;

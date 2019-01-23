@@ -19,6 +19,7 @@ package com.titicolab.mock.cases.world;
 import android.content.Context;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
+import com.titicolab.nanux.core.Controller;
 import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.Puppeteer;
 import com.titicolab.nanux.core.RunnableTask;
@@ -36,9 +37,9 @@ import androidx.test.platform.app.InstrumentationRegistry;
  */
 public class World2DTestCase extends GraphicsTestCase {
 
-    private Puppeteer mController;
+    private Controller mController;
 
-    protected Puppeteer onAttachController(Context appContext){
+    protected Controller onAttachController(Context appContext){
         return  new Puppeteer(new AndroidDrawToolsBuilder(appContext));
     }
 
