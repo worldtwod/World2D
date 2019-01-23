@@ -77,7 +77,7 @@ public abstract class Controller implements ObservableLifeCycle.LifeCycle,
     }
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
 
     }
 

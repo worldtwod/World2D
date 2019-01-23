@@ -24,7 +24,7 @@ import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.DisplayInfo;
 
 
-public abstract class BaseGame implements GameContext {
+public abstract class BaseGraphic implements GraphicContext {
 
 	private Controller mController;
 

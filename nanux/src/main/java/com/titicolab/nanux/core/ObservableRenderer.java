@@ -25,7 +25,7 @@ import com.titicolab.nanux.util.GPUInfo;
 public interface ObservableRenderer {
 
     interface Renderer {
-        void onSurfaceCreated(GameContext game, GPUInfo eglConfig);
+        void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig);
         void onSurfaceChanged(int width, int height);
         void onDrawFrame();
     }

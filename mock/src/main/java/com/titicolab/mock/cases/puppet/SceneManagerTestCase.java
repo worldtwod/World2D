@@ -19,18 +19,15 @@ package com.titicolab.mock.cases.puppet;
 import android.content.Context;
 import androidx.annotation.CallSuper;
 import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnerTask;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
 import com.titicolab.opengl.shader.AndroidTextureManager;
 import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.objects.base.SceneManager;
-
-import org.junit.runner.RunWith;
 
 /**
  * Created by campino on 15/11/2016.
@@ -45,7 +42,7 @@ public class SceneManagerTestCase extends GraphicsTestCase{
 
     @CallSuper
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
 
         Context appContext = InstrumentationRegistry.getTargetContext();

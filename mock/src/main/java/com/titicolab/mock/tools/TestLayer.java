@@ -17,7 +17,7 @@
 package com.titicolab.mock.tools;
 
 
-import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.puppeteer.GraphicActivity;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.list.GameObjectCollection;
@@ -49,7 +49,7 @@ public class TestLayer extends SceneLayer {
 
     private int counter;
     public TestLayer() {
-        log = new LogHelper(this, GameActivity.class.getSimpleName());
+        log = new LogHelper(this, GraphicActivity.class.getSimpleName());
         counter=1;
         onAttachParameters = new ObjectSync<>();
         onDefineMapObjects= new ObjectSync<>();

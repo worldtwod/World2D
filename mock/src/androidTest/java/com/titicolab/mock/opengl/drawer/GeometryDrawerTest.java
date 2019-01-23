@@ -22,7 +22,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.puppeteer.AndroidDisplayMetrics;
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.graphics.draw.Geometry;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.graphics.model.RectModel;
@@ -56,7 +56,7 @@ public class GeometryDrawerTest extends GraphicsTestCase{
 
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game,eglConfig);
 
         Context appContext = InstrumentationRegistry.getTargetContext();

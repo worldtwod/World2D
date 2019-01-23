@@ -2,10 +2,10 @@ package com.titicolab.mock;
 
 import android.os.Bundle;
 
-import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.puppeteer.GraphicActivity;
 
 
-public class MockActivity extends GameActivity {
+public class MockActivity extends GraphicActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

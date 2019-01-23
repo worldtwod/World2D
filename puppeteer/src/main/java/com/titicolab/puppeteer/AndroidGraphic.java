@@ -17,7 +17,7 @@
 
 package com.titicolab.puppeteer;
 
-import com.titicolab.nanux.core.BaseGame;
+import com.titicolab.nanux.core.BaseGraphic;
 import com.titicolab.nanux.core.ObservableLifeCycle;
 import com.titicolab.nanux.core.SceneLauncher;
 import com.titicolab.puppeteer.view.GLGameView;
@@ -30,18 +30,18 @@ import com.titicolab.puppeteer.view.GLGameView;
  *
  * Created by campino on 10/11/2016.
  */
-public class AndroidGame  extends BaseGame implements ObservableLifeCycle.LifeCycle{
+public class AndroidGraphic extends BaseGraphic implements ObservableLifeCycle.LifeCycle{
 
 	/** GLSurfaceView needed for GL Context  **/
 	private GLGameView mGLGameView;
 	private SceneLauncher sceneLauncher;
 
-	AndroidGame() {
+	AndroidGraphic() {
 		mGLGameView = null;
 	}
 
 	/**
-	 * Provide the ContentView for the GameActivity
+	 * Provide the ContentView for the GraphicActivity
 	 * @return A GLGameView
 	 */
 	GLGameView getGLGameView() {

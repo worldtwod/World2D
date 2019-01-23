@@ -18,10 +18,10 @@ package com.titicolab.mock.opengl.projection;
 
 import androidx.test.runner.AndroidJUnit4;
 
-import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.puppeteer.GraphicActivity;
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.graphics.draw.Image;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.GPUInfo;
@@ -47,7 +47,7 @@ public class FixViewTest extends ImageDrawerTestCase {
 
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
     }
 
@@ -82,7 +82,7 @@ public class FixViewTest extends ImageDrawerTestCase {
                 720/2);
 
 
-        final GameActivity activity = (GameActivity) mRenderRule.getActivity();
+        final GraphicActivity activity = (GraphicActivity) mRenderRule.getActivity();
 
 
         activity.runOnUiThread(new Runnable() {
@@ -90,13 +90,13 @@ public class FixViewTest extends ImageDrawerTestCase {
             public void run() {
                 activity.getGLGameView().getHolder()
                         .setFixedSize(
-                                mGameContext.getDisplayInfo().getFixWidth(),
-                                mGameContext.getDisplayInfo().getFixHeight());
+                                mGraphicContext.getDisplayInfo().getFixWidth(),
+                                mGraphicContext.getDisplayInfo().getFixHeight());
             }
         });
 
 
-        ProjectionUi projection = new ProjectionUi(mGameContext.getDisplayInfo());
+        ProjectionUi projection = new ProjectionUi(mGraphicContext.getDisplayInfo());
         //projection.setViewport(1280,720,ProjectionUi.SCALE_HEIGHT);
 
         projectionCircle = projection;

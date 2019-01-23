@@ -19,7 +19,7 @@ package com.titicolab.mock.cases.puppet;
 import androidx.annotation.CallSuper;
 
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnableTask;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.list.FlexibleList;
@@ -39,7 +39,7 @@ public class AnimationTestCase extends ImageDrawerTestCase{
 
     @CallSuper
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
         mAnimatedObjects = new FlexibleList<>(100);
         projection= new ProjectionUi(getDisplayInfo());

@@ -19,7 +19,7 @@ package com.titicolab.mock.cases.world;
 import android.content.Context;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.Puppeteer;
 import com.titicolab.nanux.core.RunnableTask;
 import com.titicolab.nanux.touch.ObservableInput;
@@ -43,7 +43,7 @@ public class World2DTestCase extends GraphicsTestCase {
     }
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         mController  = onAttachController(appContext);

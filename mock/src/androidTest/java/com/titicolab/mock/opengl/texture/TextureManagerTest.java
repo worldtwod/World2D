@@ -20,10 +20,10 @@ import android.content.Context;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.puppeteer.AndroidDisplayMetrics;
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.core.GameContext;
 import com.titicolab.nanux.core.RunnerTask;
 import com.titicolab.nanux.list.FixList;
 import com.titicolab.nanux.util.GPUInfo;
@@ -53,7 +53,7 @@ public class TextureManagerTest extends GraphicsTestCase {
 
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
         Context appContext = InstrumentationRegistry.getTargetContext();
         mTextureManager = new AndroidTextureManager(appContext,

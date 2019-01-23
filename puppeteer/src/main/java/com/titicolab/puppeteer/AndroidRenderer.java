@@ -20,9 +20,9 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import androidx.annotation.NonNull;
 
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.puppeteer.util.ParamsChecker;
 import com.titicolab.puppeteer.view.GLGameView;
-import com.titicolab.nanux.core.GameContext;
 import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.list.FlexibleList;
 import com.titicolab.nanux.util.GPUInfo;
@@ -43,16 +43,16 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
         implements GLSurfaceView.Renderer,
         ObservableRenderer {
 
-    private final GameContext mGameContext;
+    private final GraphicContext mGraphicContext;
     private final GLGameView mGLGameView;
     private boolean mFlagNotify;
 
-    AndroidRenderer(@NonNull GameContext game, @NonNull GLGameView gLGameView) {
+    AndroidRenderer(@NonNull GraphicContext game, @NonNull GLGameView gLGameView) {
         super(1);
-        ParamsChecker.checkNull(game,"GameContext game");
+        ParamsChecker.checkNull(game,"GraphicContext game");
         ParamsChecker.checkNull(gLGameView,"GLGameView gLGameView");
         mFlagNotify = true;
-        mGameContext=game;
+        mGraphicContext =game;
         mGLGameView = gLGameView;
     }
 
@@ -63,7 +63,7 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
         //mThreadName =  Thread.currentThread().getName();
-        notifySurfaceCreated(mGameContext,new AndroidGPUInfo(eglConfig));
+        notifySurfaceCreated(mGraphicContext,new AndroidGPUInfo(eglConfig));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
 
     /** Notify ***********************************************************************************/
 
-    private void notifySurfaceCreated(GameContext gameView, GPUInfo config){
+    private void notifySurfaceCreated(GraphicContext gameView, GPUInfo config){
         if(mFlagNotify)
         for (int i = 0; i < size(); i++) {
             get(i).onSurfaceCreated(gameView,config);

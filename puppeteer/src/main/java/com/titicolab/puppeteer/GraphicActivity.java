@@ -35,7 +35,7 @@ import com.titicolab.nanux.test.Monitor;
  *
  * Created by campino on 10/11/2016.
  */
-public class GameActivity extends AppCompatActivity {
+public class GraphicActivity extends AppCompatActivity {
 
     /** Maximum size of sprite buffer  **/
     public static int sMaximumSizeSprites = 1000;
@@ -49,8 +49,8 @@ public class GameActivity extends AppCompatActivity {
     /** This flag make that screen go full screen  **/
     public boolean sFlagFullScreen = false;
 
-    /** AndroidGame */
-    private AndroidGame mAndroidGame;
+    /** AndroidGraphic */
+    private AndroidGraphic mAndroidGame;
 
     /** This flat is for test settings, do no touch **/
     static Monitor.OnEngineCreated monitor=null;
@@ -79,7 +79,7 @@ public class GameActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.
                     SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 
-        mAndroidGame = new AndroidGameBuilder(getApplicationContext())
+        mAndroidGame = new AndroidGraphicBuilder(getApplicationContext())
                 .setSizeGeometries(sMaximumSizeGeometries)
                 .setSizeSprites(sMaximumSizeSprites)
                 .build();

@@ -20,7 +20,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnableTask;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.GPUInfo;
@@ -52,7 +52,7 @@ public class RatioProjectionTest extends ImageDrawerTestCase {
 
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
         injectMocks();
     }
@@ -106,8 +106,8 @@ public class RatioProjectionTest extends ImageDrawerTestCase {
     }
 
     private void injectMocks() {
-        projectionCircle = new ProjectionUi(mGameContext.getDisplayInfo());
-        projectionRectangle = new ProjectionUi(mGameContext.getDisplayInfo());
+        projectionCircle = new ProjectionUi(mGraphicContext.getDisplayInfo());
+        projectionRectangle = new ProjectionUi(mGraphicContext.getDisplayInfo());
         imageCircle = new Image(mTextureManager
                 .getTexture(R.drawable.test_cricle_720));
 

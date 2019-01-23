@@ -20,7 +20,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnableTask;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.GPUInfo;
@@ -51,7 +51,7 @@ public class ProjectionOthTest extends ImageDrawerTestCase {
 
 
     @Override
-    public void onSurfaceCreated(final GameContext game,GPUInfo eglConfig) {
+    public void onSurfaceCreated(final GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
        injectImages();
     }

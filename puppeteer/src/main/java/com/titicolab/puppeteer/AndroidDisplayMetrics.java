@@ -114,7 +114,7 @@ public class AndroidDisplayMetrics implements DisplayInfo {
         buffer.append("\nDpi:           " +     mDensityDpi);
         buffer.append("\nNavBar:        " +  mNavigationBarCorrection);
 
-        buffer.append("\n\n--- BaseGame Screen Metrics -------------");
+        buffer.append("\n\n--- BaseGraphic Screen Metrics -------------");
         buffer.append("\nFix Width:       " + getFixWidth());
         buffer.append("\nFix Height:      " + getFixHeight());
         buffer.append("\nReferenceWidth:  " + getReferenceWidth());

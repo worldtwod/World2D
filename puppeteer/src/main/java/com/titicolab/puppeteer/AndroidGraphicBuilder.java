@@ -1,7 +1,7 @@
 package com.titicolab.puppeteer;
 
 import android.content.Context;
-import com.titicolab.nanux.core.BaseGame;
+import com.titicolab.nanux.core.BaseGraphic;
 import com.titicolab.nanux.core.Puppeteer;
 import com.titicolab.nanux.core.RunnerTask;
 import com.titicolab.nanux.core.SceneLauncher;
@@ -9,7 +9,7 @@ import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
 import com.titicolab.opengl.shader.AndroidTextureManager;
 import com.titicolab.puppeteer.view.GLGameView;
 
-public class AndroidGameBuilder {
+public class AndroidGraphicBuilder {
 
     private static final int DEFAULT_MAX_SIZE_SPRITES = 1000;
     private static final int DEFAULT_MAX_SIZE_GEOMETRIES = 200;
@@ -25,7 +25,7 @@ public class AndroidGameBuilder {
     private boolean debug;
     private boolean showFPS;
 
-    public AndroidGameBuilder(Context context) {
+    public AndroidGraphicBuilder(Context context) {
         this.context = context;
         this.sizeGeometries = DEFAULT_MAX_SIZE_GEOMETRIES;
         this.sizeSprites    = DEFAULT_MAX_SIZE_SPRITES;
@@ -34,38 +34,38 @@ public class AndroidGameBuilder {
     }
 
 
-    public AndroidGameBuilder setGLGameViewDebug(boolean debug) {
+    public AndroidGraphicBuilder setGLGameViewDebug(boolean debug) {
         this.debug = debug;
         return this;
     }
 
-    public AndroidGameBuilder setGLGameView(GLGameView mGLGameView){
+    public AndroidGraphicBuilder setGLGameView(GLGameView mGLGameView){
         this.mGLGameView    = mGLGameView;
         return this;
     }
 
-    public AndroidGameBuilder setSceneLauncher(SceneLauncher sceneLauncher) {
+    public AndroidGraphicBuilder setSceneLauncher(SceneLauncher sceneLauncher) {
         this.sceneLauncher = sceneLauncher;
         return this;
     }
 
-    public AndroidGameBuilder setSizeSprites(int sizeSprites) {
+    public AndroidGraphicBuilder setSizeSprites(int sizeSprites) {
         this.sizeSprites = sizeSprites;
         return this;
     }
 
-    public AndroidGameBuilder setSizeGeometries(int sizeGeometries) {
+    public AndroidGraphicBuilder setSizeGeometries(int sizeGeometries) {
         this.sizeGeometries = sizeGeometries;
         return this;
     }
 
     /**
-     * Build the AndroidGame
+     * Build the AndroidGraphic
      */
-    public AndroidGame build(){
+    public AndroidGraphic build(){
 
         // Create a instance
-        AndroidGame androidGame = new AndroidGame();
+        AndroidGraphic androidGame = new AndroidGraphic();
 
         setupDisplayInfo(androidGame);
 
@@ -90,20 +90,20 @@ public class AndroidGameBuilder {
         return  androidGame;
     }
 
-    private void setupDisplayInfo(AndroidGame androidGame) {
+    private void setupDisplayInfo(AndroidGraphic androidGame) {
         androidGame.setDisplayInfo(new AndroidDisplayMetrics(context));
     }
 
-    private void setupMonitorEngine(BaseGame androidGame) {
+    private void setupMonitorEngine(BaseGraphic androidGame) {
         androidGame.setMonitorEngineCreated(GameActivityTestTools.getMonitor());
     }
 
-    private void setupTextureManager(BaseGame androidGame) {
+    private void setupTextureManager(BaseGraphic androidGame) {
         androidGame.setTextureManager(new AndroidTextureManager(
                 context, new RunnerTask(), androidGame.getDisplayInfo()));
     }
 
-    private void setupGLGameView(AndroidGame androidGame, boolean debug){
+    private void setupGLGameView(AndroidGraphic androidGame, boolean debug){
         GLGameView glGameView = mGLGameView!= null? mGLGameView: new GLGameView(context);
         androidGame.setGLGameView(glGameView);
 
@@ -114,13 +114,13 @@ public class AndroidGameBuilder {
                 androidGame.getDisplayInfo().getFixHeight());
     }
 
-    private void setupObservables(AndroidGame androidGame, GLGameView glGameView){
+    private void setupObservables(AndroidGraphic androidGame, GLGameView glGameView){
         androidGame.setObservableInput(new AndroidInput(glGameView));
         androidGame.setObservableLifeCycle(new AndroidLifeCycle());
         androidGame.setObservableRenderer(new AndroidRenderer(androidGame,glGameView));
     }
 
-    private void setupController(BaseGame androidGame) {
+    private void setupController(BaseGraphic androidGame) {
         Puppeteer controller = new Puppeteer(
                 new AndroidDrawToolsBuilder(context, sizeSprites, sizeGeometries));
         androidGame.connectObserver(controller);

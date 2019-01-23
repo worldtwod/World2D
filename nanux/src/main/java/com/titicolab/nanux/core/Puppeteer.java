@@ -34,7 +34,7 @@ import com.titicolab.nanux.util.GPUInfo;
 public class Puppeteer extends Controller {
 
 
-    private GameContext           mGameContext;
+    private GraphicContext mGraphicContext;
     private DisplayInfo           mDisplayInfo;
     private GamePerformance       mPerformance;
     private RunnerTask            mRunnerTask;
@@ -54,27 +54,25 @@ public class Puppeteer extends Controller {
 
     private ProjectionUi mProjectionUi;
 
+
     public Puppeteer(DrawTools.Builder drawToolsBuilder) {
         mDrawToolsBuilder = drawToolsBuilder;
     }
 
-
-
-
     /************************* Render    *******************************************************/
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
 
         /*if(mTextureManager!=null) { //TODO
             onRecoveryContext();
             return;
         }*/
 
-        mGameContext =     game;
-        mDisplayInfo =     mGameContext.getDisplayInfo();
+        mGraphicContext =     game;
+        mDisplayInfo =     mGraphicContext.getDisplayInfo();
         mPerformance =     new GamePerformance();
-        mRunnerTask =      mGameContext.getTextureManager().getRunnerTask();
-        mTextureManager =  mGameContext.getTextureManager();
+        mRunnerTask =      mGraphicContext.getTextureManager().getRunnerTask();
+        mTextureManager =  mGraphicContext.getTextureManager();
 
         mRunnerTask.setRunnerThread(Thread.currentThread());
         mGPUInfo =eglConfig;
@@ -97,7 +95,6 @@ public class Puppeteer extends Controller {
 
         mProjectionUi= new ProjectionUi(game.getDisplayInfo());
     }
-
 
     @Override
     public void onSurfaceChanged(int width, int height) {

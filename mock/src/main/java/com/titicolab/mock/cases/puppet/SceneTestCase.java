@@ -18,7 +18,7 @@ package com.titicolab.mock.cases.puppet;
 
 import android.content.Context;
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnableTask;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.GPUInfo;
@@ -42,7 +42,7 @@ public class SceneTestCase extends GraphicsTestCase {
     private Puppeteer mController;
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
         Context appContext =InstrumentationRegistry.getInstrumentation().getTargetContext();
         mController = onAttachController(appContext);

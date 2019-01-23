@@ -6,13 +6,13 @@ import android.view.MotionEvent;
 
 import com.titicolab.mock.MockActivity;
 import com.titicolab.mock.rule.RenderTestRule;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.nanux.util.GPUInfo;
-import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.puppeteer.GraphicActivity;
 import com.titicolab.puppeteer.util.LogHelper;
 import org.junit.Rule;
 
@@ -24,7 +24,7 @@ import org.junit.Rule;
 public class GraphicsTestCase implements ObservableRenderer.Renderer, ObservableInput.InputListener {
 
     @Rule
-    public RenderTestRule<GameActivity> mRenderRule =
+    public RenderTestRule<GraphicActivity> mRenderRule =
             RenderTestRule.getBuilder()
                     .setLaunchActivity(MockActivity.class)
                     .setObserverRender(this)
@@ -33,18 +33,18 @@ public class GraphicsTestCase implements ObservableRenderer.Renderer, Observable
 
     private FlagSync mFlagTouch = new FlagSync();
 
-    final protected LogHelper log = new LogHelper(this,"GameActivity");
+    final protected LogHelper log = new LogHelper(this,"GraphicActivity");
 
-    protected GameContext mGameContext;
+    protected GraphicContext mGraphicContext;
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
-            mGameContext=game;
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
+            mGraphicContext =game;
     }
 
     @Override
     public void onSurfaceChanged(int width, int height) {
-        //log.debug(mGameContext.getDisplayInfo().toString());
+        //log.debug(mGraphicContext.getDisplayInfo().toString());
     }
 
     @Override
@@ -73,12 +73,12 @@ public class GraphicsTestCase implements ObservableRenderer.Renderer, Observable
     }
 
 
-    public GameContext getGameContext() {
-        return mGameContext;
+    public GraphicContext getGameContext() {
+        return mGraphicContext;
     }
 
     public DisplayInfo getDisplayInfo(){
-        return mGameContext.getDisplayInfo();
+        return mGraphicContext.getDisplayInfo();
     }
 
     public Activity getActivity(){

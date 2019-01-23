@@ -25,7 +25,7 @@ import com.titicolab.nanux.util.DisplayInfo;
  *
  */
 
-public interface GameContext {
+public interface GraphicContext {
 
     ObservableRenderer  getObservableRenderer();
 

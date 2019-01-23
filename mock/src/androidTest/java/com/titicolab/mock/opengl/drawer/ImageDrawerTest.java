@@ -22,7 +22,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.opengl.TextureManagerTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.graphics.texture.Texture;
 import com.titicolab.nanux.list.FixList;
@@ -52,7 +52,7 @@ public class ImageDrawerTest  extends TextureManagerTestCase {
 
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game,eglConfig);
 
 

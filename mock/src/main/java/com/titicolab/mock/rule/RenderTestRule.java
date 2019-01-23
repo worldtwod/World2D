@@ -22,10 +22,10 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.test.rule.ActivityTestRule;
 
-import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.nanux.core.GraphicContext;
+import com.titicolab.puppeteer.GraphicActivity;
 import com.titicolab.puppeteer.GameActivityTestTools;
 import com.titicolab.puppeteer.util.LogHelper;
-import com.titicolab.nanux.core.GameContext;
 import com.titicolab.nanux.core.ObservableLifeCycle;
 import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.test.Monitor;
@@ -60,7 +60,7 @@ public class RenderTestRule <M>
         private ObservableRenderer.Renderer render;
         private ObservableInput.InputListener event;
 
-        public Builder setLaunchActivity(Class<? extends GameActivity> clazz) {
+        public Builder setLaunchActivity(Class<? extends GraphicActivity> clazz) {
             this.clazz = clazz;
             return this;
         }
@@ -74,9 +74,9 @@ public class RenderTestRule <M>
             return this;
         }
 
-        public RenderTestRule<GameActivity> build(){
+        public RenderTestRule<GraphicActivity> build(){
             if(clazz==null) throw new IllegalArgumentException("It need setLaunchActivity");
-            return new RenderTestRule<GameActivity>(clazz,render,event);
+            return new RenderTestRule<GraphicActivity>(clazz,render,event);
         }
     }
 
@@ -114,7 +114,7 @@ public class RenderTestRule <M>
 
     @CallSuper
     @Override
-    public void onEngineCreated(GameContext game) {
+    public void onEngineCreated(GraphicContext game) {
         log.debug("\tonEngineCreated");
         game.getObservableRenderer().add(this);
         game.getObservableInput().add(this);
@@ -151,7 +151,7 @@ public class RenderTestRule <M>
 
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         log.debug("\tonSurfaceCreated");
     }
 

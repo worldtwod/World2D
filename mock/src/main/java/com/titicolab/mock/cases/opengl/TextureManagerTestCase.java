@@ -21,7 +21,7 @@ import androidx.annotation.CallSuper;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnerTask;
 import com.titicolab.nanux.graphics.texture.TextureManager;
 import com.titicolab.nanux.util.GPUInfo;
@@ -41,7 +41,7 @@ public class TextureManagerTestCase extends GraphicsTestCase {
 
     @CallSuper
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
         Context appContext =InstrumentationRegistry.getInstrumentation().getTargetContext();
         mTextureManager = new AndroidTextureManager(appContext,

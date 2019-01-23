@@ -17,10 +17,9 @@
 package com.titicolab.mock.cases.puppet;
 
 import androidx.annotation.CallSuper;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnableTask;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.list.FlexibleList;
@@ -29,8 +28,6 @@ import com.titicolab.opengl.shader.DrawerImage;
 import com.titicolab.nanux.animation.Clip;
 import com.titicolab.nanux.animation.Frame;
 import com.titicolab.nanux.graphics.draw.Image;
-
-import org.junit.runner.RunWith;
 
 /**
  * Created by campino on 15/11/2016.
@@ -45,7 +42,7 @@ public class ClipTestCase extends ImageDrawerTestCase{
 
     @CallSuper
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         super.onSurfaceCreated(game, eglConfig);
         mImagesTest = new FlexibleList<>(100);
         projection= new ProjectionUi(getDisplayInfo());

@@ -21,7 +21,7 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.R;
 import com.titicolab.opengl.shader.GeometryShaderProgram;
@@ -44,7 +44,7 @@ public class CompileGeometryShaderTest extends GraphicsTestCase{
     private GeometryShaderProgram shader;
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         Context appContext = InstrumentationRegistry.getTargetContext();
         String vertexSh =  TextResourceReader.readTextFileFromResource(
                 appContext, R.raw.geometry_vertex_shader);
