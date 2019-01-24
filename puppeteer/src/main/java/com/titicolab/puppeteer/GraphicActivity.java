@@ -50,7 +50,7 @@ public class GraphicActivity extends AppCompatActivity {
     protected boolean sFlagFullScreen = false;
 
     /** This flat enable the visibility of FPS in the screen **/
-    protected static boolean sDisplayFPS = false;
+    protected static boolean sFlatDisplayFPS = false;
 
     /** AndroidGraphic */
     private AndroidGraphic mAndroidGame;
@@ -86,7 +86,7 @@ public class GraphicActivity extends AppCompatActivity {
         mAndroidGame = new AndroidGraphicBuilder(getApplicationContext())
                 .setSizeGeometries(sMaximumSizeGeometries)
                 .setSizeSprites(sMaximumSizeSprites)
-                .setDisplayFPS(sDisplayFPS)
+                .setDisplayFPS(sFlatDisplayFPS)
                 .build();
 
         mAndroidGame.start();

@@ -112,12 +112,12 @@ public class Puppeteer extends Controller {
         mSceneManager.onDrawScene(mDrawTools);
 
         if(mShowFPS) {
+            float left = mProjectionUi.getViewPortWidth()-200;
             mDrawTools.text.setMatrix(mProjectionUi.getMatrix());
-            mDrawTools.text.print(mPerformance.getAverageFPS() + " FPS",
-                    200, 700, 20);
+            mDrawTools.text.print("FPS:" + mPerformance.getAverageFPS(),
+                    left, 700, 20);
         }
     }
-
 
     /************************   Scene play ********************************************************/
 

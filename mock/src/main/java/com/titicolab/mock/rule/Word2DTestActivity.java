@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.titicolab.nanux.core.SceneLauncher;
 import com.titicolab.nanux.objects.base.Scene;
-import com.titicolab.puppet.objects.World2D;
 import com.titicolab.puppeteer.GraphicActivity;
 
 
@@ -15,6 +14,7 @@ public class Word2DTestActivity extends GraphicActivity implements SceneLauncher
         sFlagFullScreen=true;
         sFlagSensorLandscape=true;
         sFlatEnableLogs=true;
+        sFlatDisplayFPS = true;
         super.onCreate(savedInstanceState);
         setContentView(getGLGameView());
     }
