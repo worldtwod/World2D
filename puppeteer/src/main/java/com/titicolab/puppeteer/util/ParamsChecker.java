@@ -21,4 +21,9 @@ public class ParamsChecker {
             throw new IllegalArgumentException("The parameter " + name + " can not be null");
         }
     }
+    public static void checkNullMessage(Object object,String message){
+        if(object==null){
+            throw new RuntimeException(message);
+        }
+    }
 }

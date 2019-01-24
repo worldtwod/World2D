@@ -58,11 +58,24 @@ public abstract class BaseGraphic implements GraphicContext {
 		this.mObservableLifeCycle = observableLifeCycle;
 		this.mObservableInput = observableInput;
 		this.mMonitorEngineCreated = monitorEngineCreated;
+
+		//Setup controller
+		mObservableLifeCycle.add(mController);
+		mObservableInput.add(mController);
+		mObservableRenderer.add(mController);
+
+		mObservableLifeCycle.start();
 	}
 
+	/**
+	 * Start to render
+	 */
 	public void start(){
-		setupController();
-		mObservableLifeCycle.start();
+		mObservableRenderer.start();
+	}
+
+	public void syncPlay(Scene scene) {
+		mController.getSceneManager().play(scene);
 	}
 
 	public void setStartScene(Scene scene) {
@@ -70,11 +83,7 @@ public abstract class BaseGraphic implements GraphicContext {
 			mController.setStartScene(scene);
 	}
 
-	private void setupController(){
-		mObservableLifeCycle.add(mController);
-		mObservableInput.add(mController);
-		mObservableRenderer.add(mController);
-	}
+
 
 
 	@Override
@@ -99,5 +108,6 @@ public abstract class BaseGraphic implements GraphicContext {
 	public TextureManager getTextureManager() {
 		return mTextureManager;
 	}
+
 
 }

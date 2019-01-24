@@ -38,32 +38,36 @@ import com.titicolab.nanux.test.Monitor;
 public class GraphicActivity extends AppCompatActivity {
 
     /** Maximum size of sprite buffer  **/
-    public static int sMaximumSizeSprites = 1000;
+    protected static int sMaximumSizeSprites = 1000;
 
     /** Maximum size of geometries buffer  **/
-    public static int sMaximumSizeGeometries = 2500;
+    protected static int sMaximumSizeGeometries = 2500;
 
     /** This flag let that screen rote in horizontal axis  **/
-    public static boolean sFlagSensorLandscape = false;
+    protected static boolean sFlagSensorLandscape = false;
 
     /** This flag make that screen go full screen  **/
-    public boolean sFlagFullScreen = false;
+    protected boolean sFlagFullScreen = false;
+
+    /** This flat enable the visibility of FPS in the screen **/
+    protected static boolean sDisplayFPS = false;
 
     /** AndroidGraphic */
     private AndroidGraphic mAndroidGame;
 
-    /** This flat is for test settings, do no touch **/
-    static Monitor.OnEngineCreated monitor=null;
-
     /** Flat to active logs **/
     public static boolean sFlatEnableLogs = false;
 
+
+    /** This flat is for test settings, do no touch **/
+    static Monitor.OnEngineCreated monitor=null;
 
     /** flat to check if the on-create was executed **/
     private boolean mFlatOnCreate = false;
 
     /** logs ***/
     private LogHelper log;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +86,15 @@ public class GraphicActivity extends AppCompatActivity {
         mAndroidGame = new AndroidGraphicBuilder(getApplicationContext())
                 .setSizeGeometries(sMaximumSizeGeometries)
                 .setSizeSprites(sMaximumSizeSprites)
+                .setDisplayFPS(sDisplayFPS)
                 .build();
 
+        mAndroidGame.start();
         mFlatOnCreate = true;
+    }
+
+    public void syncPlay(Scene scene){
+        mAndroidGame.syncPlay(scene);
     }
 
     public void setSceneLauncher(SceneLauncher sceneLauncher) {
@@ -93,10 +103,6 @@ public class GraphicActivity extends AppCompatActivity {
         mAndroidGame.setStartScene(scene);
     }
 
-    public void setShowFPS(boolean showFPS) {
-        checkOnCreate("setShowFPS");
-        mAndroidGame.setShowFPS(showFPS);
-    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -129,11 +135,6 @@ public class GraphicActivity extends AppCompatActivity {
      */
     public GLGraphicView getGLGameView() {
         return mAndroidGame.getGLGameView();
-    }
-
-    private void checkOnCreate(String method) {
-        if(!mFlatOnCreate)
-          throw new RuntimeException("The method "+ method +"needs be called after super.onCreate()");
     }
 
     @Override
@@ -175,4 +176,10 @@ public class GraphicActivity extends AppCompatActivity {
         mAndroidGame.onDestroy();
         super.onDestroy();
     }
+
+    private void checkOnCreate(String method) {
+        if(!mFlatOnCreate)
+            throw new RuntimeException("The method "+ method +"needs be called after super.onCreate()");
+    }
+
 }

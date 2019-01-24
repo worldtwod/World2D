@@ -43,10 +43,14 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
         implements GLSurfaceView.Renderer,
         ObservableRenderer {
 
-    private final GraphicContext mGraphicContext;
+
+
+    private GraphicContext mGraphicContext;
     private final GLGraphicView mGLGraphicView;
     private boolean mFlagNotify;
+    private float clearColor[];
 
+    @Deprecated
     AndroidRenderer(@NonNull GraphicContext game, @NonNull GLGraphicView gLGraphicView) {
         super(1);
         ParamsChecker.checkNull(game,"GraphicContext game");
@@ -54,15 +58,26 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
         mFlagNotify = true;
         mGraphicContext =game;
         mGLGraphicView = gLGraphicView;
+        clearColor= new float[]{0,0,0,1};
     }
+
+    AndroidRenderer(@NonNull GLGraphicView gLGraphicView) {
+        super(1);
+        ParamsChecker.checkNull(gLGraphicView,"GLGameView gLGameView");
+        mFlagNotify = true;
+        mGraphicContext =null;
+        mGLGraphicView = gLGraphicView;
+        clearColor= new float[]{0,0,0,1};
+    }
+
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
-        //glClearColor(83f/255, 93f/255, 108f/255, 1f);
-        glClearColor(0, 0, 0, 1f);
+        ParamsChecker.checkNullMessage(mGraphicContext,"Before of You onSurfaceCreated(), " +
+                "you must be to set a GraphicContext, use the setter ");
+        glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        //mThreadName =  Thread.currentThread().getName();
         notifySurfaceCreated(mGraphicContext,new AndroidGPUInfo(eglConfig));
     }
 
@@ -103,7 +118,6 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
         }
     }
 
-
     @Override
     public void start() {
         mFlagNotify=true;
@@ -120,5 +134,22 @@ public class AndroidRenderer extends FlexibleList<ObservableRenderer.Renderer>
         mFlagNotify=false;
     }
 
+    /**
+     *  Specify the red, green, blue, and alpha values used when the color buffers are cleared.
+     *  The initial values are all 0.
+     * @param red   r
+     * @param green g
+     * @param blue  b
+     * @param alpha a
+     */
+    public void setClearColor(float red, float green, float blue, float alpha) {
+             clearColor[0] = red;
+             clearColor[1] = green;
+             clearColor[2] = blue;
+             clearColor[2] = alpha;
+    }
 
+    public void setGraphicContext(GraphicContext mGraphicContext) {
+        this.mGraphicContext = mGraphicContext;
+    }
 }

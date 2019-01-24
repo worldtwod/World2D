@@ -33,19 +33,10 @@ public class Word2DTestRule<M>  extends  BaseTestRule{
         MapWorld onDefineMapWorld(MapWorld.Builder builder);
     }
 
-    public Word2DTestRule(MapWordGenerator generator) {
-        super(TestRuleActivity.class,true,true);
-    }
-
-
-    public Word2DTestRule(Class activityClass, boolean initialTouchMode, boolean launchActivity) {
-        super(activityClass, initialTouchMode, launchActivity);
-    }
 
     public Word2DTestRule() {
+        super(Word2DTestActivity.class, false, false);
     }
-
-
 
     public static class  World extends World2D {
         MapWordGenerator mapper;

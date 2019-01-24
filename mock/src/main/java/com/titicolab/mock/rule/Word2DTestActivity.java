@@ -8,7 +8,7 @@ import com.titicolab.puppet.objects.World2D;
 import com.titicolab.puppeteer.GraphicActivity;
 
 
-public class TestRuleActivity extends GraphicActivity implements SceneLauncher {
+public class Word2DTestActivity extends GraphicActivity implements SceneLauncher {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,6 @@ public class TestRuleActivity extends GraphicActivity implements SceneLauncher {
         sFlagSensorLandscape=true;
         sFlatEnableLogs=true;
         super.onCreate(savedInstanceState);
-        setSceneLauncher(this);
         setContentView(getGLGameView());
     }
 
@@ -25,11 +24,5 @@ public class TestRuleActivity extends GraphicActivity implements SceneLauncher {
         return null; //instance here
     }
 
-
-    protected void syncPlay(World2D world2D) {
-        get
-        mController.getSceneManager().play(world2D);
-        world2D.waitOnCreated(60 * 10);
-    }
 
 }

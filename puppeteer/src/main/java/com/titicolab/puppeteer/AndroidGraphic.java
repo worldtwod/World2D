@@ -89,7 +89,7 @@ public class AndroidGraphic extends BaseGraphic implements ObservableLifeCycle.L
 	public void onPause() {
 		mGLGraphicView.onPause();
 		getObservableLifeCycle().onPause();
-		getObservableInput().start();
+		getObservableInput().stop();
 	}
 
 	@Override

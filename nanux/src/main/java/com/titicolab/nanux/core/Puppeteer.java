@@ -77,12 +77,9 @@ public class Puppeteer extends Controller {
         mRunnerTask.setRunnerThread(Thread.currentThread());
         mGPUInfo =eglConfig;
 
-        mSceneManager = new SceneManager(mRunnerTask,
-                mTextureManager,
-               mDisplayInfo);
+        mSceneManager = new SceneManager(mRunnerTask, mTextureManager, mDisplayInfo);
         mSceneManager.setAsyncLaunch(true);
         mSceneManager.setTransitionsEnable(false);
-        //mSceneManager.setTransition(new Transition());
 
         mDrawTools = mDrawToolsBuilder.build(mTextureManager);
         DrawTools.setScalePixel(mDisplayInfo.getScalePixel());
@@ -92,7 +89,6 @@ public class Puppeteer extends Controller {
         }
 
         mFlatStart=true;
-
         mProjectionUi= new ProjectionUi(game.getDisplayInfo());
     }
 
@@ -164,7 +160,6 @@ public class Puppeteer extends Controller {
     public DrawTools getDrawTools() {
         return mDrawTools;
     }
-
 
     /**********************    Helper  ************************************************************/
 

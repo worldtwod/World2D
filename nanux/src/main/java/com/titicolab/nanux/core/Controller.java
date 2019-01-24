@@ -20,7 +20,6 @@ package com.titicolab.nanux.core;
 import com.titicolab.nanux.objects.base.Scene;
 import com.titicolab.nanux.objects.base.SceneManager;
 import com.titicolab.nanux.touch.ObservableInput;
-import com.titicolab.nanux.util.GPUInfo;
 
 /**
  * Created by campino on 11/12/2017.

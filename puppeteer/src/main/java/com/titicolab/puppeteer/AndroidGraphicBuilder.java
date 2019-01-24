@@ -2,16 +2,12 @@ package com.titicolab.puppeteer;
 
 import android.content.Context;
 
-import com.titicolab.nanux.core.BaseGraphic;
 import com.titicolab.nanux.core.Controller;
-import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.ObservableLifeCycle;
-import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.core.Puppeteer;
 import com.titicolab.nanux.core.RunnerTask;
-import com.titicolab.nanux.core.SceneLauncher;
 import com.titicolab.nanux.graphics.draw.DrawTools;
-import com.titicolab.nanux.screen.GraphicView;
+import com.titicolab.nanux.graphics.texture.TextureManager;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
@@ -25,40 +21,37 @@ public class AndroidGraphicBuilder {
     
     private final Context context;
 
-    private GLGraphicView mGLGraphicView;
-    private SceneLauncher sceneLauncher;
-    private Controller    controller;
-
     private int sizeSprites;
     private int sizeGeometries;
+    private boolean debugGlView;
 
-    private boolean debug;
-    private boolean showFPS;
+    private DisplayInfo         mDisplayInfo;
+    private DrawTools.Builder   mDrawToolsBuilder;
+    private Controller          mController;
+    private GLGraphicView       mGLGraphicView;
+    private TextureManager      mTextureManager;
+    private ObservableInput     mObservableInput;
+    private ObservableLifeCycle mObservableLifeCycle;
+    private AndroidRenderer     mObservableRenderer;
+
+    private boolean mDisplayFPS = false;
 
 
-    private DisplayInfo mDisplayInfo;
-
-
-    public AndroidGraphicBuilder(Context context) {
+    AndroidGraphicBuilder(Context context) {
         this.context = context;
         this.sizeGeometries = DEFAULT_MAX_SIZE_GEOMETRIES;
         this.sizeSprites    = DEFAULT_MAX_SIZE_SPRITES;
-        this.debug = false;
-        this.showFPS = false;
+        this.debugGlView = false;
+
     }
 
     public AndroidGraphicBuilder setGLGameViewDebug(boolean debug) {
-        this.debug = debug;
+        this.debugGlView = debug;
         return this;
     }
 
     public AndroidGraphicBuilder setGLGameView(GLGraphicView mGLGraphicView){
         this.mGLGraphicView = mGLGraphicView;
-        return this;
-    }
-
-    public AndroidGraphicBuilder setSceneLauncher(SceneLauncher sceneLauncher) {
-        this.sceneLauncher = sceneLauncher;
         return this;
     }
 
@@ -73,8 +66,13 @@ public class AndroidGraphicBuilder {
     }
 
     public AndroidGraphicBuilder setController(Controller controller) {
-        this.controller = controller;
+        mController = controller;
         return this;
+    }
+
+    public AndroidGraphicBuilder setDisplayFPS(boolean displayFPS) {
+        mDisplayFPS = displayFPS;
+        return this ;
     }
 
     /**
@@ -82,35 +80,49 @@ public class AndroidGraphicBuilder {
      */
     public AndroidGraphic build(){
 
-        // Create a instance
-        //setupDisplayInfo(androidGame);
+        DisplayInfo displayInfo = mDisplayInfo!=null?mDisplayInfo:
+                providerDisplayInfo(context);
 
-        DisplayInfo displayInfo = mDisplayInfo!=null?mDisplayInfo:providerDisplayInfo(context);
+        GLGraphicView glGraphicView  =  mGLGraphicView!=null?mGLGraphicView:
+                providerGraphicView(context,displayInfo,debugGlView);
 
-        GraphicView graphicView = mGLGraphicView!=null?mGLGraphicView:
-                providerGraphicView(context,displayInfo,debug);
+        TextureManager textureManager = mTextureManager!=null?mTextureManager:
+                providerTextureManager(context,displayInfo);
+
+        DrawTools.Builder drawToolsBuilder = mDrawToolsBuilder !=null?mDrawToolsBuilder:
+                providerDrawTools(context,sizeSprites,sizeGeometries);
+
+        Controller controller =  mController!=null? mController:
+                providerController(drawToolsBuilder);
+
+        ObservableInput observableInput = mObservableInput!=null? mObservableInput:
+                providerObservableInput(glGraphicView);
+
+        ObservableLifeCycle observableLifeCycle = mObservableLifeCycle!=null? mObservableLifeCycle:
+                providerObservableLifeCycle();
+
+        AndroidRenderer observableRenderer = mObservableRenderer!=null?mObservableRenderer:
+                providerObservableRenderer(glGraphicView);
 
 
+        AndroidGraphic androidGame = new AndroidGraphic(
+                controller,
+                displayInfo,
+                textureManager,
+                observableRenderer,
+                observableLifeCycle,
+                observableInput,
+                null,
+                glGraphicView);
 
-        //setupObservables(androidGame,androidGame.getGLGameView());
-
-        //setupTextureManager(androidGame);
-
-        //setupMonitorEngine(androidGame);
-
-        //Set controller an buffer sizes
-        //setupController(androidGame);
-
-        AndroidGraphic androidGame = new AndroidGraphic();
-
-       //
-        androidGame.getObservableRenderer().start();
-
-        /*if(sceneLauncher!=null)
-            androidGame.setStartScene(sceneLauncher.onLaunchScene())*/
+        observableRenderer.setGraphicContext(androidGame);
+        controller.showFPS(mDisplayFPS);
 
         return  androidGame;
     }
+
+
+    /**  Providers to inject instances in Graphic context implementation *******************/
 
     private DisplayInfo providerDisplayInfo(Context context) {
         return new AndroidDisplayMetrics(context);
@@ -129,9 +141,9 @@ public class AndroidGraphicBuilder {
      * This provides a default GLGameView
      * @param context     app context
      * @param displayInfo display info
-     * @param debug       GL debug
+     * @param debug       GL debugGlView
      */
-    private GraphicView providerGraphicView(Context context, DisplayInfo displayInfo, boolean debug){
+    private GLGraphicView providerGraphicView(Context context, DisplayInfo displayInfo, boolean debug){
         GLGraphicView glGraphicView =  new GLGraphicView(context);
         glGraphicView.setUpConfiguration();
         glGraphicView.setDebug(debug);
@@ -153,9 +165,10 @@ public class AndroidGraphicBuilder {
     private ObservableLifeCycle providerObservableLifeCycle(){
         return new AndroidLifeCycle();
     }
-    private ObservableRenderer providerObservableRenderer(GraphicContext graphicContext,
-                                                          GLGraphicView glGraphicView){
-        return new AndroidRenderer(graphicContext, glGraphicView);
+
+    private AndroidRenderer providerObservableRenderer(GLGraphicView glGraphicView){
+        return new AndroidRenderer(glGraphicView);
     }
+
 
 }
