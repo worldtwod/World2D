@@ -1,5 +1,3 @@
-
-
 /*
  * Copyright  2017   Fredy Campiño
  *
@@ -33,26 +31,24 @@ import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.nanux.util.GPUInfo;
 
-
 /**
  * Created by campino on 10/11/2016.
  *
  */
 
-public class RenderTestRule <M>
-                extends ActivityTestRule implements
-        Monitor.OnEngineCreated,
+@Deprecated
+public class RenderTestRule <M>  extends ActivityTestRule implements
+        Monitor.OnGraphicContextCreated,
         ObservableRenderer.Renderer,
         ObservableInput.InputListener{
 
-    public static final String TEST_LOG_LABEL = "SceneTestCase";
+    private static final String TEST_LOG_LABEL = "SceneTestCase";
     private LogHelper log;
     private FlagSync mFlagStartDraw;
     private long mFrames;
 
     private ObservableRenderer.Renderer mObserverRender;
     private ObservableInput.InputListener mObserverInput;
-
 
     /************************** Builder Constructors  *****************************************************/
     public static  class Builder{
@@ -84,7 +80,10 @@ public class RenderTestRule <M>
         return new Builder();
     }
 
+
+
     /************************** Constructors  *****************************************************/
+
 
     public RenderTestRule(@NonNull Class<M> activityClass) {
         super(activityClass,true,true);
@@ -98,7 +97,6 @@ public class RenderTestRule <M>
         iniRule(observerRender,event);
     }
 
-
     private void iniRule(ObservableRenderer.Renderer observerRender, ObservableInput.InputListener event){
         log = new LogHelper(this,TEST_LOG_LABEL);
         mFlagStartDraw = new FlagSync();
@@ -106,16 +104,14 @@ public class RenderTestRule <M>
         mObserverInput = event;
     }
 
-
-
     public void log(String string){
         log.debug(string);
     }
 
     @CallSuper
     @Override
-    public void onEngineCreated(GraphicContext game) {
-        log.debug("\tonEngineCreated");
+    public void onGraphicContextCreated(GraphicContext game) {
+        log.debug("\tonGraphicContextCreated");
         game.getObservableRenderer().add(this);
         game.getObservableInput().add(this);
         game.getObservableLifeCycle().add(lifeCycle);

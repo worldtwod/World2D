@@ -30,6 +30,9 @@ public class AndroidGraphicBuilder {
     private Controller          mController;
     private GLGraphicView       mGLGraphicView;
     private TextureManager      mTextureManager;
+
+
+
     private ObservableInput     mObservableInput;
     private ObservableLifeCycle mObservableLifeCycle;
     private AndroidRenderer     mObservableRenderer;
@@ -37,7 +40,7 @@ public class AndroidGraphicBuilder {
     private boolean mDisplayFPS = false;
 
 
-    AndroidGraphicBuilder(Context context) {
+    public AndroidGraphicBuilder(Context context) {
         this.context = context;
         this.sizeGeometries = DEFAULT_MAX_SIZE_GEOMETRIES;
         this.sizeSprites    = DEFAULT_MAX_SIZE_SPRITES;
@@ -104,7 +107,6 @@ public class AndroidGraphicBuilder {
         AndroidRenderer observableRenderer = mObservableRenderer!=null?mObservableRenderer:
                 providerObservableRenderer(glGraphicView);
 
-
         AndroidGraphic androidGame = new AndroidGraphic(
                 controller,
                 displayInfo,
@@ -118,6 +120,10 @@ public class AndroidGraphicBuilder {
         observableRenderer.setGraphicContext(androidGame);
         controller.showFPS(mDisplayFPS);
 
+        mObservableInput = observableInput;
+        mObservableLifeCycle = observableLifeCycle;
+        mObservableRenderer = observableRenderer;
+        mController = controller;
         return  androidGame;
     }
 
@@ -170,5 +176,20 @@ public class AndroidGraphicBuilder {
         return new AndroidRenderer(glGraphicView);
     }
 
+    public ObservableInput getObservableInput() {
+        return mObservableInput;
+    }
 
+    public ObservableLifeCycle getObservableLifeCycle() {
+        return mObservableLifeCycle;
+    }
+
+    public AndroidRenderer getObservableRenderer() {
+        return mObservableRenderer;
+    }
+
+
+    public Controller getController() {
+        return mController;
+    }
 }

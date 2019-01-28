@@ -20,40 +20,48 @@ import android.content.Context;
 import androidx.annotation.CallSuper;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.titicolab.mock.cases.GraphicsTestCase;
+import com.titicolab.mock.rule.GraphicTestRule;
+import com.titicolab.mock.rule.ObserverGraphicContext;
 import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnerTask;
+import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.graphics.texture.TextureManager;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.AndroidTextureManager;
 
+import org.junit.Rule;
 
 
 /**
  * Created by campino on 11/11/2016.
  *
  */
-public class TextureManagerTestCase extends GraphicsTestCase {
+@Deprecated
+public class TextureManagerTestCase implements ObserverGraphicContext.SurfaceCreated,
+                                                    ObserverGraphicContext.DrawFrame {
 
     protected  TextureManager mTextureManager;
 
-
+    @Rule
+    public GraphicTestRule rule = new GraphicTestRule.Builder()
+            .setStartActivity(true)
+            .setObserverSurfaceCreated(this)
+            .setObserverDrawFrame(this)
+            .build();
 
     @CallSuper
     @Override
     public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
-        super.onSurfaceCreated(game, eglConfig);
         Context appContext =InstrumentationRegistry.getInstrumentation().getTargetContext();
         mTextureManager = new AndroidTextureManager(appContext,
                 new RunnerTask(Thread.currentThread()),
                 game.getDisplayInfo());
     }
 
-
     @CallSuper
     @Override
-    public void onDrawFrame() {
-        super.onDrawFrame();
+    public void onDrawFrame(DrawTools drawTools) {
         mTextureManager.getRunnerTask().update();
     }
+
 }

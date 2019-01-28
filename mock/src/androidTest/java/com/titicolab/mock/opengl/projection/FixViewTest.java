@@ -16,92 +16,71 @@
 
 package com.titicolab.mock.opengl.projection;
 
-import androidx.test.runner.AndroidJUnit4;
-
-import com.titicolab.puppeteer.GraphicActivity;
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
-import com.titicolab.nanux.core.GraphicContext;
+import com.titicolab.mock.rule.GraphicTestRule;
+import com.titicolab.mock.rule.ObserverGraphicContext;
+import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.graphics.draw.Image;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
-import com.titicolab.nanux.util.GPUInfo;
-import com.titicolab.opengl.shader.DrawerImage;
+import com.titicolab.puppeteer.GraphicActivity;
 
-import org.junit.FixMethodOrder;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 
 /**
  * Created by campino on 15/11/2016.
  *
  */
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(AndroidJUnit4.class)
-public class FixViewTest extends ImageDrawerTestCase {
+public class FixViewTest implements ObserverGraphicContext.DrawFrame { //} extends ImageDrawerTestCase {
 
+    @Rule
+    public GraphicTestRule graphicRule = new GraphicTestRule.Builder()
+            .setObserverDrawFrame(this)
+            .build();
 
     private Image imageCircle;
     private ProjectionUi projectionCircle;
 
 
     @Override
-    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
-        super.onSurfaceCreated(game, eglConfig);
-    }
-
-    @Override
-    public void onSurfaceChanged(int width, int height) {
-        super.onSurfaceChanged(width,height);
-    }
-
-
-
-    @Override
-    protected void onDrawImage(DrawerImage imageDrawer) {
+    public void onDrawFrame(DrawTools drawTools) {
 
         if(projectionCircle==null)return;
 
         imageCircle.updateRender();
-        imageDrawer.begin(projectionCircle.getMatrix());
-        imageDrawer.add(imageCircle);
-        imageDrawer.end();
+        drawTools.images.begin(projectionCircle.getMatrix());
+        drawTools.images.add(imageCircle);
+        drawTools.images.end();
     }
+
 
 
     @Test
     public void aTestRatio(){
-        log.debug("projectionCircle expands to reference view port");
+        graphicRule.log.debug("projectionCircle expands to reference view port");
 
-        imageCircle = new Image(mTextureManager
+        imageCircle = new Image(graphicRule.getTextureManager()
                 .getTexture(R.drawable.test_cricle_720));
 
-        imageCircle.setPosition(
-                1280/2,
-                720/2);
+        imageCircle.setPosition(1280/2,720/2);
 
-
-        final GraphicActivity activity = (GraphicActivity) mRenderRule.getActivity();
-
-
-        activity.runOnUiThread(new Runnable() {
+        final GraphicActivity activity = graphicRule.getActivity();
+        /*activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 activity.getGLGameView().getHolder()
                         .setFixedSize(
-                                mGraphicContext.getDisplayInfo().getFixWidth(),
-                                mGraphicContext.getDisplayInfo().getFixHeight());
+                                graphicRule.getDisplayInfo().getFixWidth(),
+                                graphicRule.getDisplayInfo().getFixHeight());
             }
-        });
+        });*/
 
-
-        ProjectionUi projection = new ProjectionUi(mGraphicContext.getDisplayInfo());
-        //projection.setViewport(1280,720,ProjectionUi.SCALE_HEIGHT);
-
+        ProjectionUi projection = new ProjectionUi(graphicRule.getDisplayInfo());
+        projection.setViewport(1280,720,ProjectionUi.SCALE_WIDTH);
         projectionCircle = projection;
 
-       waitTouchSeconds(60*5);
+        graphicRule.waitTouchSeconds(20);
 
     }
 

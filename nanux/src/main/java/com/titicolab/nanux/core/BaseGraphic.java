@@ -39,7 +39,7 @@ public abstract class BaseGraphic implements GraphicContext {
 
 	private  final DisplayInfo mDisplayInfo;
 
-	private  final Monitor.OnEngineCreated mMonitorEngineCreated;
+	private  final Monitor.OnGraphicContextCreated mMonitorEngineCreated;
 
 	private  final TextureManager mTextureManager;
 
@@ -49,7 +49,7 @@ public abstract class BaseGraphic implements GraphicContext {
 						  ObservableRenderer observableRenderer,
 						  ObservableLifeCycle observableLifeCycle,
 						  ObservableInput observableInput,
-						  Monitor.OnEngineCreated monitorEngineCreated) {
+						  Monitor.OnGraphicContextCreated monitorEngineCreated) {
 
 		this.mController = controller;
 		this.mDisplayInfo = displayInfo;
@@ -70,20 +70,18 @@ public abstract class BaseGraphic implements GraphicContext {
 	/**
 	 * Start to render
 	 */
-	public void start(){
+	synchronized public void start(){
 		mObservableRenderer.start();
 	}
 
-	public void syncPlay(Scene scene) {
+	synchronized public void syncPlay(Scene scene) {
 		mController.getSceneManager().play(scene);
 	}
 
-	public void setStartScene(Scene scene) {
+	synchronized public void setStartScene(Scene scene) {
 		if(mMonitorEngineCreated==null)
 			mController.setStartScene(scene);
 	}
-
-
 
 
 	@Override

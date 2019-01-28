@@ -1,5 +1,3 @@
-
-
 /*
  * Copyright  2017   Fredy Campiño
  *
@@ -18,31 +16,30 @@
 
 package com.titicolab.mock.rule;
 
-import com.titicolab.puppet.map.MapWorld;
-import com.titicolab.puppet.objects.World2D;
 
+import android.annotation.SuppressLint;
+import com.titicolab.nanux.objects.base.Scene;
+import androidx.test.rule.ActivityTestRule;
 
 /**
  * Created by campino on 10/11/2016.
  *
  */
 
-public class Word2DTestRule<M>  extends  BaseTestRule{
+@SuppressWarnings("WeakerAccess")
+public class SceneTestRule  extends ActivityTestRule<SceneTestActivity>{
 
-    interface MapWordGenerator {
-        MapWorld onDefineMapWorld(MapWorld.Builder builder);
+
+    public SceneTestRule() {
+        super(SceneTestActivity.class, false, true);
     }
 
-
-    public Word2DTestRule() {
-        super(Word2DTestActivity.class, false, false);
+    @SuppressLint("VisibleForTests")
+    protected Scene syncPlay(Scene scene) {
+        SceneTestActivity activity =  getActivity();
+        activity.syncPlay(scene);
+        scene.waitOnCreated(60);
+        return scene;
     }
 
-    public static class  World extends World2D {
-        MapWordGenerator mapper;
-        @Override
-        protected MapWorld onDefineMapWorld(MapWorld.Builder builder) {
-            return mapper.onDefineMapWorld(builder);
-        }
-    }
 }

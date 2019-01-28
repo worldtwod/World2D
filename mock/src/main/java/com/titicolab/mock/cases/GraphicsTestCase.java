@@ -4,15 +4,13 @@ import android.app.Activity;
 import androidx.annotation.CallSuper;
 import android.view.MotionEvent;
 
-import com.titicolab.mock.MockActivity;
-import com.titicolab.mock.rule.RenderTestRule;
+import com.titicolab.mock.rule.GraphicTestRule;
 import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.nanux.util.GPUInfo;
-import com.titicolab.puppeteer.GraphicActivity;
 import com.titicolab.puppeteer.util.LogHelper;
 import org.junit.Rule;
 
@@ -21,15 +19,22 @@ import org.junit.Rule;
  *
  */
 
+@Deprecated
 public class GraphicsTestCase implements ObservableRenderer.Renderer, ObservableInput.InputListener {
 
-    @Rule
+    /*@Rule
     public RenderTestRule<GraphicActivity> mRenderRule =
             RenderTestRule.getBuilder()
-                    .setLaunchActivity(MockActivity.class)
+                    .setLaunchActivity(GraphicTestActivity.class)
                     .setObserverRender(this)
                     .setObserverInput(this)
-                    .build();
+                    .build();*/
+    @Rule
+    public GraphicTestRule rule = new GraphicTestRule.Builder()
+            .setStartActivity(true)
+            .setObserverRender(this)
+            .setObserverInput(this)
+            .build();
 
     private FlagSync mFlagTouch = new FlagSync();
 
@@ -65,7 +70,6 @@ public class GraphicsTestCase implements ObservableRenderer.Renderer, Observable
         return false;
     }
 
-
     public boolean waitTouchSeconds(int seconds){
         boolean result = mFlagTouch.waitSyncSeconds(seconds);
         mFlagTouch = new FlagSync();
@@ -73,15 +77,11 @@ public class GraphicsTestCase implements ObservableRenderer.Renderer, Observable
     }
 
 
-    public GraphicContext getGameContext() {
-        return mGraphicContext;
-    }
-
     public DisplayInfo getDisplayInfo(){
-        return mGraphicContext.getDisplayInfo();
+        return rule.getGraphicContext().getDisplayInfo();
     }
 
     public Activity getActivity(){
-        return mRenderRule.getActivity();
+        return rule.getActivity();
     }
 }

@@ -24,7 +24,7 @@ import com.titicolab.nanux.core.GraphicContext;
 
 public class Monitor {
 
-    public interface OnEngineCreated{
-         void onEngineCreated(GraphicContext game);
+    public interface OnGraphicContextCreated {
+         void onGraphicContextCreated(GraphicContext game);
     }
 }

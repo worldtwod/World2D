@@ -17,6 +17,7 @@
 package com.titicolab.nanux.core;
 
 
+import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.objects.base.Scene;
 import com.titicolab.nanux.objects.base.SceneManager;
 import com.titicolab.nanux.touch.ObservableInput;
@@ -39,6 +40,7 @@ public abstract class Controller implements ObservableLifeCycle.LifeCycle,
 
     public abstract RunnerTask getRunnerTask();
 
+    public abstract DrawTools getDrawTools();
 
     /** ObservableLifeCycle.LifeCycle **/
 

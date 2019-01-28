@@ -21,14 +21,16 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.cases.GraphicsTestCase;
+import com.titicolab.mock.rule.GraphicTestRule;
+import com.titicolab.mock.rule.ObserverGraphicContext;
 import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.R;
 import com.titicolab.opengl.shader.GeometryShaderProgram;
 import com.titicolab.opengl.util.TextResourceReader;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -37,9 +39,13 @@ import static org.junit.Assert.assertNotNull;
  * Created by campino on 11/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
-public class CompileGeometryShaderTest extends GraphicsTestCase{
+public class CompileGeometryShaderTest implements ObserverGraphicContext.SurfaceCreated {
 
+
+    @Rule
+    public GraphicTestRule rule = new GraphicTestRule.Builder()
+            .setObserverSurfaceCreated(this)
+            .build();
 
     private GeometryShaderProgram shader;
 
@@ -57,13 +63,8 @@ public class CompileGeometryShaderTest extends GraphicsTestCase{
 
     @Test
     public void testRunAndWait(){
-
         assertNotNull(shader);
         assertNotEquals(0,shader.getProgramId());
-
     }
-
-
-
 
 }

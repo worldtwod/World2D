@@ -46,7 +46,7 @@ public class AndroidGraphic extends BaseGraphic implements ObservableLifeCycle.L
 				   ObservableRenderer observableRenderer,
 				   ObservableLifeCycle observableLifeCycle,
 				   ObservableInput observableInput,
-				   Monitor.OnEngineCreated monitorEngineCreated,
+				   Monitor.OnGraphicContextCreated monitorEngineCreated,
 				   GLGraphicView glGraphicView){
 		super(controller,
 				displayInfo,

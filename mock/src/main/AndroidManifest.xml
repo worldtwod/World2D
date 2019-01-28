@@ -3,10 +3,14 @@
     package="com.titicolab.mock">
 
     <application   android:theme="@style/Theme.AppCompat.NoActionBar">
+
         <activity android:name="com.titicolab.mock.MockActivity">
         </activity>
-        <activity android:name="com.titicolab.mock.rule.Word2DTestActivity">
+        <activity android:name="com.titicolab.mock.rule.SceneTestActivity">
         </activity>
+        <activity android:name="com.titicolab.mock.rule.GraphicTestActivity">
+        </activity>
+
     </application>
 
 </manifest>
