@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  */
 
-public class FixViewTest implements ObserverGraphicContext.DrawFrame { //} extends ImageDrawerTestCase {
+public class FixViewTest implements ObserverGraphicContext.DrawFrame {
 
     @Rule
     public GraphicTestRule graphicRule = new GraphicTestRule.Builder()
@@ -59,14 +59,13 @@ public class FixViewTest implements ObserverGraphicContext.DrawFrame { //} exten
     @Test
     public void aTestRatio(){
         graphicRule.log.debug("projectionCircle expands to reference view port");
-
         imageCircle = new Image(graphicRule.getTextureManager()
                 .getTexture(R.drawable.test_cricle_720));
 
         imageCircle.setPosition(1280/2,720/2);
 
         final GraphicActivity activity = graphicRule.getActivity();
-        /*activity.runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 activity.getGLGameView().getHolder()
@@ -74,14 +73,10 @@ public class FixViewTest implements ObserverGraphicContext.DrawFrame { //} exten
                                 graphicRule.getDisplayInfo().getFixWidth(),
                                 graphicRule.getDisplayInfo().getFixHeight());
             }
-        });*/
+        });
 
-        ProjectionUi projection = new ProjectionUi(graphicRule.getDisplayInfo());
-        projection.setViewport(1280,720,ProjectionUi.SCALE_WIDTH);
-        projectionCircle = projection;
-
+        projectionCircle = new ProjectionUi(graphicRule.getDisplayInfo());
         graphicRule.waitTouchSeconds(20);
-
     }
 
 }

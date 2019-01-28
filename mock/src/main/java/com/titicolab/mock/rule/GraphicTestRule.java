@@ -18,6 +18,7 @@ package com.titicolab.mock.rule;
 
 import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.ObservableRenderer;
+import com.titicolab.nanux.core.RunnerTask;
 import com.titicolab.nanux.graphics.texture.TextureManager;
 import com.titicolab.nanux.touch.ObservableInput;
 import com.titicolab.nanux.util.DisplayInfo;
@@ -78,6 +79,9 @@ public class GraphicTestRule extends ActivityTestRule<GraphicTestActivity> {
         graphicObserverEvents.waitTouchSeconds(seconds);
     }
 
+    public RunnerTask getRunnerTask(){
+        return getTextureManager().getRunnerTask();
+    }
 
 
     public static  class Builder{
