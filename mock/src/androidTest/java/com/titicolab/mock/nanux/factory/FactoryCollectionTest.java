@@ -31,6 +31,7 @@ import com.titicolab.nanux.objects.map.MapObjects;
 import junit.framework.Assert;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -38,11 +39,11 @@ import org.junit.Test;
  *
  */
 
+@Deprecated
 public class FactoryCollectionTest extends AnimationTestCase {
     private AnimationSheet sheet;
     private MapObjects map;
     private AnimationBuilder builder;
-
 
     @Before
     public void before(){
@@ -68,9 +69,10 @@ public class FactoryCollectionTest extends AnimationTestCase {
 
     }
 
+
+    @Ignore
     @Test
     public void test_factoryAnimatedList(){
-
 
         RequestCollection requestCollection = new RequestObjectBuilder()
                 .object(map.getList())
@@ -100,13 +102,10 @@ public class FactoryCollectionTest extends AnimationTestCase {
         waitTouchSeconds(60);
     }
 
-
-
     public static class Digit extends Animated {
 
 
     }
-
 
     public static class Button extends Animated {
 

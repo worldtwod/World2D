@@ -18,7 +18,13 @@ package com.titicolab.mock.rule;
 
 
 import android.annotation.SuppressLint;
+
+import com.titicolab.nanux.objects.base.BaseLayer;
 import com.titicolab.nanux.objects.base.Scene;
+import com.titicolab.nanux.objects.factory.RequestCollection;
+import com.titicolab.nanux.objects.factory.RequestLayersBuilder;
+import com.titicolab.nanux.objects.map.MapItem;
+
 import androidx.test.rule.ActivityTestRule;
 
 /**
@@ -35,11 +41,49 @@ public class SceneTestRule  extends ActivityTestRule<SceneTestActivity>{
     }
 
     @SuppressLint("VisibleForTests")
-    protected Scene syncPlay(Scene scene) {
+    public Scene syncPlay(Scene scene) {
         SceneTestActivity activity =  getActivity();
         activity.syncPlay(scene);
         scene.waitOnCreated(60);
         return scene;
     }
 
+    public BaseLayer syncPlay(Class<? extends BaseLayer> clazz){
+        DefaultScene scene = new DefaultScene(clazz);
+        syncPlay(scene);
+        return scene.findLayer(1);
+    }
+
+
+    /**
+     * DefaultFade scene for hold the layer, it is useful when you only want test a layer
+     */
+    public class DefaultScene extends Scene{
+        final Class<? extends BaseLayer> clazz;
+        DefaultScene(Class<? extends BaseLayer> clazz) {
+            this.clazz = clazz;
+        }
+
+        @Override
+        protected RequestCollection.RequestList onLayersRequest(RequestLayersBuilder builder) {
+            return builder
+                    .objects(new MapItem(clazz,1,null))
+                    .build();
+        }
+
+        @Override
+        protected void onGroupLayersCreated() {
+            super.onGroupLayersCreated();
+        }
+
+        @Override
+        protected void updateLogic() {
+            super.updateLogic();
+        }
+
+        @Override
+        public void updateRender() {
+            super.updateRender();
+        }
+    }
 }

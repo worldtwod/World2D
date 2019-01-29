@@ -75,7 +75,6 @@ public class TextDrawerTest implements ObserverGraphicContext.SurfaceCreated,
         imageDrawer.setMatrix(projection.getMatrix());
     }
 
-
     @Override
     public void onDrawFrame(DrawTools drawTools) {
         float left = projection.getViewPortWidth()/3;
@@ -93,7 +92,6 @@ public class TextDrawerTest implements ObserverGraphicContext.SurfaceCreated,
                 appContext, R.raw.image_fragment);
         return  new ImageShaderProgram(vertexSh,fragmentSh);
     }
-
 
     /**
      * This is a assisted test, check in the screen that appear Hello World2D and End

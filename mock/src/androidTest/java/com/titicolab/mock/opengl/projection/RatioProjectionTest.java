@@ -16,34 +16,33 @@
 
 package com.titicolab.mock.opengl.projection;
 
-import androidx.test.runner.AndroidJUnit4;
-
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
+import com.titicolab.mock.rule.GraphicTestRule;
+import com.titicolab.mock.rule.ObserverGraphicContext;
 import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnableTask;
+import com.titicolab.nanux.graphics.draw.DrawTools;
+import com.titicolab.nanux.graphics.draw.Image;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.DrawerImage;
-import com.titicolab.nanux.graphics.draw.Image;
 
-import org.junit.FixMethodOrder;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 /**
  * Created by campino on 15/11/2016.
  *
  */
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(AndroidJUnit4.class)
-public class RatioProjectionTest extends ImageDrawerTestCase {
+public class RatioProjectionTest  implements ObserverGraphicContext.DrawFrame,
+        ObserverGraphicContext.SurfaceCreated {
 
+    @Rule
+    public GraphicTestRule graphicRule = new GraphicTestRule.Builder()
+            .setObserverDrawFrame(this)
+            .setObserverSurfaceCreated(this)
+            .build();
 
     private ProjectionUi projectionCircle;
     private ProjectionUi projectionRectangle;
@@ -53,17 +52,18 @@ public class RatioProjectionTest extends ImageDrawerTestCase {
 
     @Override
     public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
-        super.onSurfaceCreated(game, eglConfig);
         injectMocks();
     }
 
     @Override
-    protected void onDrawImage(DrawerImage imageDrawer) {
+    public void onDrawFrame(DrawTools drawTools) {
+
 
         imageCircle.updateRender();
         imageViewPort.updateRender();
 
         //imageDrawer.setProjection(projectionCircle);
+        DrawerImage imageDrawer = (DrawerImage) drawTools.images;
         imageDrawer.begin(projectionCircle.getMatrix());
         imageDrawer.add(imageCircle);
         imageDrawer.end();
@@ -76,13 +76,13 @@ public class RatioProjectionTest extends ImageDrawerTestCase {
 
 
     @Test
-    public void aTestRatio(){
+    public void projectionCircleRatioTest(){
 
-        log.debug("projectionCircle expands to reference view port");
+        graphicRule.log.debug("projectionCircle expands to reference view port");
 
-        assertThat(waitTouchSeconds(60*10),is(true));
+        graphicRule.waitTouchSeconds(20);
 
-        getRunnerTask().runAndWait(new RunnableTask() {
+        graphicRule.getRunnerTask().runAndWait(new RunnableTask() {
             @Override
             public void run() {
                 imageCircle.setColor(1,0,0,1);
@@ -90,10 +90,10 @@ public class RatioProjectionTest extends ImageDrawerTestCase {
             }
         });
 
-        log.debug("projectionCircle match to width reference view port");
-        assertThat(waitTouchSeconds(60*10),is(true));
+        graphicRule.log.debug("projectionCircle match to width reference view port");
+        graphicRule.waitTouchSeconds(20);
 
-        getRunnerTask().runAndWait(new RunnableTask() {
+        graphicRule.getRunnerTask().runAndWait(new RunnableTask() {
             @Override
             public void run() {
                 imageCircle.setColor(0,1,0,1);
@@ -101,22 +101,24 @@ public class RatioProjectionTest extends ImageDrawerTestCase {
             }
         });
 
-        log.debug("projectionCircle match to height reference view port");
-        assertThat(waitTouchSeconds(60*10),is(true));
+        graphicRule.log.debug("projectionCircle match to height reference view port");
+        graphicRule.waitTouchSeconds(20);
+
     }
 
     private void injectMocks() {
-        projectionCircle = new ProjectionUi(mGraphicContext.getDisplayInfo());
-        projectionRectangle = new ProjectionUi(mGraphicContext.getDisplayInfo());
-        imageCircle = new Image(mTextureManager
+        projectionCircle = new ProjectionUi(graphicRule.getDisplayInfo());
+        projectionRectangle = new ProjectionUi(graphicRule.getDisplayInfo());
+        imageCircle = new Image(graphicRule.getTextureManager()
                 .getTexture(R.drawable.test_cricle_720));
 
         imageCircle.setPosition(
-                getDisplayInfo().getReferenceWidth()/2,
-                getDisplayInfo().getReferenceHeight()/2);
-        imageViewPort = new Image(getTextureManager().
+                graphicRule.getDisplayInfo().getReferenceWidth()/2,
+                graphicRule.getDisplayInfo().getReferenceHeight()/2);
+        imageViewPort = new Image(graphicRule.getTextureManager().
                 getTexture(R.drawable.test_bg_1280x720));
-        imageViewPort.setPositionLeftTop(0,getDisplayInfo().getReferenceHeight());
+        imageViewPort.setPositionLeftTop(0,graphicRule.getDisplayInfo().getReferenceHeight());
     }
+
 
 }

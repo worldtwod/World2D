@@ -39,10 +39,6 @@ import org.junit.Test;
 public class SceneManagerFactoryTest extends SceneManagerTestCase{
 
 
-
-
-
-
     @Test
     public void test_factoryObjects(){
 

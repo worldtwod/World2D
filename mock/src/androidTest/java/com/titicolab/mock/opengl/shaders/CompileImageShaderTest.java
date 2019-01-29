@@ -29,7 +29,7 @@ import com.titicolab.opengl.util.TextResourceReader;
 import org.junit.Rule;
 import org.junit.Test;
 
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -50,7 +50,7 @@ public class CompileImageShaderTest implements ObserverGraphicContext.SurfaceCre
 
     @Override
     public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         String vertexSh =  TextResourceReader.readTextFileFromResource(
                 appContext, R.raw.image_vertex);
         String fragmentSh = TextResourceReader.readTextFileFromResource(

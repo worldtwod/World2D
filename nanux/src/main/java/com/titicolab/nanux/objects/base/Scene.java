@@ -129,13 +129,11 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
         HelperObjects.updateRenderLayers(mLayerList);
     }
 
-
     @Override
     protected void onDraw(DrawTools drawer) {
         HelperObjects.onDrawLayers(mLayerList,drawer);
         onDrawCamera(drawer);
     }
-
 
     @Override
     protected ParamsScene getParameters() {

@@ -389,12 +389,10 @@ public class SceneManager  implements ObservableInput.InputListener{
         }
     }
 
-
-
-
-
     @Override
     public boolean onTouch(ObservableInput.Event event) {
+        if(mCurrentScene==null) return false;
+
         boolean r = false;
         float uiX = mCurrentScene.getCameraUi().pxToCameraX(event.getPixelX());
         float uiY = mCurrentScene.getCameraUi().pxToCameraY(event.getPixelY());

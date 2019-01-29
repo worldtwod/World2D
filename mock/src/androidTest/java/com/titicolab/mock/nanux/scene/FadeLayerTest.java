@@ -16,25 +16,27 @@
 
 package com.titicolab.mock.nanux.scene;
 
-import com.titicolab.mock.cases.puppet.SceneTestCase;
-import com.titicolab.nanux.util.FlagSync;
+import com.titicolab.mock.rule.SceneTestRule;
 import com.titicolab.nanux.objects.base.Transition;
 import com.titicolab.nanux.objects.base.TransitionLayer;
+import com.titicolab.nanux.util.FlagSync;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * Created by campino on 20/12/2017.
- *
+ * Example for test a new transitions implementation.
  */
 
-public class FadeLayerTest extends SceneTestCase implements Transition.OnFullIn, Transition.OnFullOut {
+public class FadeLayerTest implements Transition.OnFullIn, Transition.OnFullOut{
 
-
+    @Rule
+    public SceneTestRule ruleScene = new SceneTestRule();
     private FlagSync mFadeIn;
     private FlagSync mFadeOut;
-
 
     @Before
     public void before(){
@@ -44,23 +46,13 @@ public class FadeLayerTest extends SceneTestCase implements Transition.OnFullIn,
 
     @Test
     public void fadeLayerTest(){
-
-
-        syncPlay(MockLayerFade.class);
-
-        MockLayerFade fade= (MockLayerFade) getScene().findLayer(1);
-
+        MockLayerFade fade = (MockLayerFade) ruleScene.syncPlay(MockLayerFade.class);
         fade.setColor(1,1,0,1);
-
         fade.in(this);
-
-        waitTouchSeconds(60*10);
-
+        Assert.assertTrue(mFadeIn.waitSyncSeconds(20));
         fade.out(this);
-
-        waitTouchSeconds(60*10);
+        Assert.assertTrue(mFadeOut.waitSyncSeconds(20));
     }
-
 
     @Override
     public void onFullIn() {
@@ -72,8 +64,7 @@ public class FadeLayerTest extends SceneTestCase implements Transition.OnFullIn,
         mFadeOut.assertFlag();
     }
 
-
-
+    @SuppressWarnings("WeakerAccess")
     public  static class MockLayerFade extends TransitionLayer.Sliding {
 
     }

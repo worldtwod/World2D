@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.titicolab.puppeteer.GraphicActivity;
 
 
+@Deprecated
 public class MockActivity extends GraphicActivity {
 
     @Override

@@ -38,7 +38,7 @@ import org.junit.runner.RunWith;
  * Created by campino on 11/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
+@Deprecated
 public abstract class ImageDrawerTestCase extends GraphicsTestCase {
 
     private static final int  IMAGE_LENGTH = 1000;

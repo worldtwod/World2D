@@ -58,7 +58,6 @@ public class ProjectionOthTest implements ObserverGraphicContext.DrawFrame,
         imagePoint0 = new Image(graphicRule.getTextureManager()
                 .getTexture(R.drawable.test_cricle_720));
         imagePoint0.setColor(1,0,0,1);
-
         imagePoint1 = new Image(graphicRule.getTextureManager().
                 getTexture(R.drawable.test_cricle_720));
     }
@@ -83,9 +82,6 @@ public class ProjectionOthTest implements ObserverGraphicContext.DrawFrame,
         graphicRule.getRunnerTask().runAndWait(new RunnableTask() {
             @Override
             public void run() {
-                //projectionCircle.setViewport(ProjectionUi.SCALE_HEIGHT);
-                //projectionCircle.setViewport(ProjectionUi.SCALE_WIDTH);
-                //projectionCircle.setScale(1.5f);
                 projectionCircle.setViewport(1280,720,ProjectionUi.SCALE_WIDTH);
                 projectionCircle.setPosition(
                         projectionCircle.getViewPortWidth()/2,
@@ -100,6 +96,4 @@ public class ProjectionOthTest implements ObserverGraphicContext.DrawFrame,
         });
        graphicRule.waitTouchSeconds(20);
     }
-
-
 }

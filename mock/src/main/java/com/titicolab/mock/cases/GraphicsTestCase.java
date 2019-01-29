@@ -22,13 +22,7 @@ import org.junit.Rule;
 @Deprecated
 public class GraphicsTestCase implements ObservableRenderer.Renderer, ObservableInput.InputListener {
 
-    /*@Rule
-    public RenderTestRule<GraphicActivity> mRenderRule =
-            RenderTestRule.getBuilder()
-                    .setLaunchActivity(GraphicTestActivity.class)
-                    .setObserverRender(this)
-                    .setObserverInput(this)
-                    .build();*/
+
     @Rule
     public GraphicTestRule rule = new GraphicTestRule.Builder()
             .setStartActivity(true)

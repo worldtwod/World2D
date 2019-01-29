@@ -18,6 +18,7 @@ package com.titicolab.mock.nanux.factory;
 
 import com.titicolab.mock.R;
 import com.titicolab.mock.cases.puppet.AnimationTestCase;
+import com.titicolab.mock.rule.GraphicTestRule;
 import com.titicolab.nanux.animation.AnimationBuilder;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.list.GameObjectList;
@@ -31,19 +32,26 @@ import com.titicolab.nanux.objects.map.MapObjects;
 import junit.framework.Assert;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * Created by campino on 04/12/2017.
  *
  */
+@Deprecated
+public class FactoryListTest {
 
-public class FactoryListTest extends AnimationTestCase {
+    @Rule
+    public GraphicTestRule graphicRule = new GraphicTestRule.Builder()
+            .build();
+
     private AnimationSheet sheet;
     private MapObjects map;
     private AnimationBuilder builder;
 
-
+    @Ignore
     @Before
     public void before(){
         sheet = new AnimationSheet.Builder()
@@ -62,10 +70,11 @@ public class FactoryListTest extends AnimationTestCase {
                 .item(new MapItem(Digit.class, 100, new Animated.ParamsAnimation("digits",1)))
                 .item(new MapItem(Digit.class, 101, new Animated.ParamsAnimation("digits",2)))
                 .build();
-       builder = new AnimationBuilder(getTextureManager(),sheet);
+       builder = new AnimationBuilder(graphicRule.getTextureManager(),sheet);
 
     }
 
+    @Ignore
     @Test
     public void test_factoryAnimatedList(){
 
@@ -74,7 +83,7 @@ public class FactoryListTest extends AnimationTestCase {
                 .object(map.getList())
                 .build();
 
-        ObjectFactory factory = new ObjectFactory(null, getTextureManager());
+        ObjectFactory factory = new ObjectFactory(null, graphicRule.getTextureManager());
 
         GameObjectList results = factory.factoryAnimatedList(requestCollection.get(0), builder);
 
@@ -87,12 +96,12 @@ public class FactoryListTest extends AnimationTestCase {
         digits.setLeftTop(100,500);
         digits.getAnimator().playAndStop(1);
         digits.getAnimator().setSpeed(1);
-        addAnimated(digits);
+        //addAnimated(digits);
         numbers.setLeftTop(600,500);
         numbers.getAnimator().playAndRepeat(2);
         numbers.getAnimator().setSpeed(1);
-        addAnimated(numbers);
-        waitTouchSeconds(60);
+        //addAnimated(numbers);
+        //waitTouchSeconds(60);
 
 
     }
