@@ -42,14 +42,14 @@ public class JoystickLayer extends SceneLayer implements  TouchManager.ClickList
     private Button top;
     private Button bottom;
 
-    interface OnClickJoystic{
+    public interface OnClickJoystick {
         void onLeft();
         void onRight();
         void onTop();
         void onBottom();
     }
 
-    private OnClickJoystic onClickJoysticListener;
+    private OnClickJoystick onClickJoystickListener;
 
     @Override
     public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
@@ -93,25 +93,25 @@ public class JoystickLayer extends SceneLayer implements  TouchManager.ClickList
         top.touchManager.setClickListener(this);
     }
 
-    public void setOnClickJoysticListener(OnClickJoystic onClickJoystickListener){
-        this.onClickJoysticListener = onClickJoystickListener;
+    public void setOnClickJoystickListener(OnClickJoystick onClickJoystickListener){
+        this.onClickJoystickListener = onClickJoystickListener;
     }
 
     @Override
     public void onClickObject(Touchable object) {
         Button button= (Button) object;
         if(button.getId()==BUTTON_LEFT){
-            if(onClickJoysticListener!=null)
-                onClickJoysticListener.onLeft();
+            if(onClickJoystickListener !=null)
+                onClickJoystickListener.onLeft();
         }else if(button.getId()==BUTTON_RIGHT){
-            if(onClickJoysticListener!=null)
-                onClickJoysticListener.onRight();
+            if(onClickJoystickListener !=null)
+                onClickJoystickListener.onRight();
         }else if(button.getId()==BUTTON_TOP){
-            if(onClickJoysticListener!=null)
-                onClickJoysticListener.onTop();
+            if(onClickJoystickListener !=null)
+                onClickJoystickListener.onTop();
         }else if (button.getId()==BUTTON_BOTTOM){
-            if(onClickJoysticListener!=null)
-                onClickJoysticListener.onBottom();
+            if(onClickJoystickListener !=null)
+                onClickJoystickListener.onBottom();
         }
     }
 
