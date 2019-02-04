@@ -50,7 +50,6 @@ public class CameraUi extends Camera{
         getProjection().setViewport(refWidth,refHeight,screenExpand);
     }
 
-
     @Override
     public ProjectionUi getProjection() {
         return (ProjectionUi) super.getProjection();

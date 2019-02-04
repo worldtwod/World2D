@@ -33,7 +33,6 @@ public interface ObservableInput {
          boolean onKey(int keyEvent);
     }
 
-
     /**
      * Adapter between generics nanux.Events and Android MotionEvent
      */
@@ -45,13 +44,10 @@ public interface ObservableInput {
 
         void setPointerId(int pointerId);
 
+        float getPixelX();
+        float getPixelY();
 
-         float getPixelX();
-         float getPixelY();
-
-
-
-         int getAction();
+        int getAction();
 
         /**
          * @return  X coordinate from ui
@@ -63,7 +59,6 @@ public interface ObservableInput {
          */
         float getUiY();
 
-
          /**
           * @return  X coordinate from ui
           */
@@ -74,18 +69,13 @@ public interface ObservableInput {
           */
          float get2dY();
 
-
          boolean isActionUp();
          boolean isActionDown();
          boolean isActionMove();
-
          int getPointerId();
 
+         String getActionName();
 
      }
-
-
-
-
 
 }

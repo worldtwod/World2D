@@ -23,31 +23,40 @@ import com.titicolab.nanux.objects.factory.RequestObject;
 
 /**
  * Created by campino on 02/06/2016.
- *
+ * Every thing that live in World2D is GameObject
  */
 public  abstract class GameObject<T extends Parameters> {
 
+    /** The object observe the update event, the updateds methods will be called  **/
     private  boolean mUpdatable;
+    /** The object will be drawled, it is updated  **/
     private  boolean mDrawable;
+    /** The object can be touched for this object  **/
     private  boolean mTouchable;
-
 
     private RequestObject mRequest;
 
 
-    protected void onAttachParameters(RequestObject request) {
-        mRequest = request;
-    }
-
     public int getId(){
         return mRequest.getId();
+    }
+
+
+    public void setUpdatable(boolean updatable) {
+        mUpdatable = updatable;
+    }
+    public void setDrawable(boolean drawable) {
+        mDrawable = drawable;
+    }
+
+    protected void onAttachParameters(RequestObject request) {
+        mRequest = request;
     }
 
     @SuppressWarnings("unchecked")
     protected T getParameters(){
         return  mRequest!=null ? (T) mRequest.getParameters() : null;
     }
-
 
     protected void onStart() {
 
@@ -61,34 +70,40 @@ public  abstract class GameObject<T extends Parameters> {
 
     }
 
-
-    protected abstract void updateLogic();
-    protected abstract void updateRender();
-
-
-    protected boolean onTouch(ObservableInput.Event input) {
-        return false;
-    }
-
-
-    public boolean isUpdatable() {
-        return mUpdatable;
-    }
-    public boolean isTouchable(){
-        return mTouchable;
-    }
     public boolean isDrawable() {
         return mDrawable;
     }
 
+
+    /** Input and touching observer and flags **/
+
     protected void setTouchable(boolean touchable) {
         mTouchable = touchable;
     }
-    public void setUpdatable(boolean updatable) {
-        mUpdatable = updatable;
+    public boolean isTouchable(){
+        return mTouchable;
     }
-    public void setDrawable(boolean drawable) {
-        mDrawable = drawable;
+    public boolean  checkIsTouching(ObservableInput.Event input){
+        return false;
     }
+    protected boolean onTouch(ObservableInput.Event input) {
+        return false;
+    }
+
+    public interface Touchable{
+        boolean  checkIsTouching(ObservableInput.Event input);
+        //boolean  onTouch(ObservableInput.Event input);
+    }
+
+
+    /** Update listeners and update flags **/
+    public boolean isUpdatable() {
+        return mUpdatable;
+    }
+    protected abstract void updateLogic();
+    protected abstract void updateRender();
+
+
+
 
 }

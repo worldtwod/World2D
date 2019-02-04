@@ -28,6 +28,8 @@ import com.titicolab.nanux.screen.GraphicView;
  */
 public class GLGraphicView extends GLSurfaceView implements GraphicView {
 
+    public static final CharSequence DEFAULT_DESCRIPTION = "graphic_surface";
+
     public GLGraphicView(Context context) {
         super(context);
     }
@@ -50,7 +52,7 @@ public class GLGraphicView extends GLSurfaceView implements GraphicView {
     @Override public void setUpConfiguration(){
         setEGLContextClientVersion(2);
         setPreserveEGLContextOnPause(true);
-        setContentDescription("game_surface");
+        setContentDescription(DEFAULT_DESCRIPTION);
     }
 
     @Override public void setDebug(boolean flagDebug){

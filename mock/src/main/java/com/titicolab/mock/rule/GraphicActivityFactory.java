@@ -29,8 +29,11 @@ public class GraphicActivityFactory extends
     private  final ObserverGraphicContext.DrawFrame      mObserverDrawFrame;
 
     private final LogHelper log;
+
     private FlagSync mFlagTouch;
     private final FlagSync mFlagStartDraw;
+    private boolean mFlagIsDrawing;
+
     private long mFrames;
     private GraphicContext mGraphicContext;
     private GraphicTestActivity mGraphicTestActivity;
@@ -53,6 +56,7 @@ public class GraphicActivityFactory extends
         log = new LogHelper(this,GraphicTestRule.TEST_LOG_LABEL);
         log.debug("GraphicActivityFactory()");
         mFlagTouch = new FlagSync();
+        mFlagIsDrawing = false;
 
     }
 
@@ -108,13 +112,17 @@ public class GraphicActivityFactory extends
 
     @Override
     public void onDrawFrame() {
+
+        if(!mFlagIsDrawing) {
+            mFlagIsDrawing = true;
+            log.debug("Now is drawing frames");
+        }
+
         if(mFrames%60==0) {
-            log.debug("Frame 60");
             mFlagStartDraw.assertFlag();
         }
         if(mObserverDrawFrame!=null)
             mObserverDrawFrame.onDrawFrame(mGraphicTestActivity.getController().getDrawTools());
-
         mFrames++;
     }
 
@@ -122,14 +130,21 @@ public class GraphicActivityFactory extends
 
     @Override
     public boolean onKey(int keyEvent) {
+        if(mObserverInput!=null)
+            mObserverInput.onKey(keyEvent);
         return false;
     }
 
     @CallSuper
     @Override
     public boolean onTouch(ObservableInput.Event event) {
+        //log.debug("onTouch " + event.isActionUp());
+        if(mObserverInput!=null)
+            mObserverInput.onTouch(event);
+
         if(event.getAction()== MotionEvent.ACTION_UP)
             mFlagTouch.assertFlag();
+
         return false;
     }
 

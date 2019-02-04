@@ -30,6 +30,9 @@ World-2D should be easy to use and its applications are expected to be easy to m
 
 # Changelog
  
+  `compile 'com.titicolab.world-2d:core:0.2.0-beta'`
+   The new test Rules were add.
+   
  `compile 'com.titicolab.world-2d:core:0.1.7-beta'`
   The bug about status bar was solved
  

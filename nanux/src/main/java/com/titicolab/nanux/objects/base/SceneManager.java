@@ -367,20 +367,15 @@ public class SceneManager  implements ObservableInput.InputListener{
         mRunnerTask.queueTask(task);
     }
 
-
-
     private class SceneCommand {
         static final int TYPE_PLAY_SCENE = 1;
         static final int TYPE_LOAD_TRANSITION = 2;
-
         final int type;
         final Scene scene;
-
         SceneCommand(int type, Scene scene) {
             this.type = type;
             this.scene = scene;
         }
-
         boolean isPlayScene(){
             return type== TYPE_PLAY_SCENE;
         }

@@ -15,9 +15,6 @@
  */
 
 package com.titicolab.nanux.objects.base;
-
-
-import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.graphics.math.Projection;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 
@@ -29,49 +26,36 @@ public class Camera  extends GameObject {
 
     private Projection mProjection;
 
-
-
-    public Camera(ProjectionUi projection) {
+    Camera(ProjectionUi projection) {
         mProjection = projection;
     }
-
 
     public void setPosition(float x, float y){
 
     }
 
-
     public Projection getProjection() {
         return mProjection;
     }
-
     public int  getViewPortWidth() {
         return (int) mProjection.getViewPortWidth();
     }
-
     public int getViewPortHeight() {
         return (int) mProjection.getViewPortHeight();
     }
-
-
     public float getWidth() {
         return getViewPortWidth();
     }
-
     public float getHeight() {
         return getViewPortHeight();
     }
 
-
     public float getX() {
         return 0;
     }
-
     public float getY() {
         return 0;
     }
-
-
 
     public  float pxToCameraX(float xPixels){
         return 0.0f;
@@ -85,7 +69,6 @@ public class Camera  extends GameObject {
     public float cameraYToPy(float y){
         return 0.0f;
     }
-
 
     @Override
     protected void updateLogic() {

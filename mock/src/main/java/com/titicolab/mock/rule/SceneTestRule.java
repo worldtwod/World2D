@@ -19,11 +19,14 @@ package com.titicolab.mock.rule;
 
 import android.annotation.SuppressLint;
 
+import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.objects.base.BaseLayer;
+import com.titicolab.nanux.objects.base.Camera;
 import com.titicolab.nanux.objects.base.Scene;
 import com.titicolab.nanux.objects.factory.RequestCollection;
 import com.titicolab.nanux.objects.factory.RequestLayersBuilder;
 import com.titicolab.nanux.objects.map.MapItem;
+import com.titicolab.nanux.util.DisplayInfo;
 
 import androidx.test.rule.ActivityTestRule;
 
@@ -59,9 +62,17 @@ public class SceneTestRule  extends ActivityTestRule<SceneTestActivity>{
      * DefaultFade scene for hold the layer, it is useful when you only want test a layer
      */
     public class DefaultScene extends Scene{
+        private static final int VIEW_PORT_W = DisplayInfo.REFERENCE_WIDTH_DEFAULT;
+        private static final int VIEW_PORT_H = DisplayInfo.REFERENCE_HEIGHT_DEFAULT;
         final Class<? extends BaseLayer> clazz;
         DefaultScene(Class<? extends BaseLayer> clazz) {
             this.clazz = clazz;
+        }
+
+        @Override
+        protected void onDefineCameras(DisplayInfo displayInfo) {
+            super.onDefineCameras(displayInfo);
+            getCameraUi().setViewport(VIEW_PORT_W,VIEW_PORT_H,ProjectionUi.SCALE_HEIGHT);
         }
 
         @Override

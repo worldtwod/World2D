@@ -107,17 +107,17 @@ public class AndroidDisplayMetrics implements DisplayInfo {
     public String toString() {
         StringBuffer buffer  = new StringBuffer();
         buffer.append("\n--- Android Screen Metrics ---------");
-        buffer.append("\nScreen Width:  "  + mScreenWidth +"px\t"+ px2dp(mScreenWidth) + "dp");
-        buffer.append("\nScreen Height: " + mScreenHeight+"px\t" + px2dp(mScreenHeight) + "dp");
-        buffer.append("\nRatio:         " +   mAspectRatio);
-        buffer.append("\nDensity:       " + mDensity);
-        buffer.append("\nDpi:           " +     mDensityDpi);
-        buffer.append("\nNavBar:        " +  mNavigationBarCorrection);
+        buffer.append("\nScreen Width:  ").append(mScreenWidth).append("px\t").append(px2dp(mScreenWidth)).append("dp");
+        buffer.append("\nScreen Height: ").append(mScreenHeight).append("px\t").append(px2dp(mScreenHeight)).append("dp");
+        buffer.append("\nRatio:         ").append(mAspectRatio);
+        buffer.append("\nDensity:       ").append(mDensity);
+        buffer.append("\nDpi:           ").append(mDensityDpi);
+        buffer.append("\nNavBar:        ").append(mNavigationBarCorrection);
 
         buffer.append("\n\n--- BaseGraphic Screen Metrics -------------");
-        buffer.append("\nFix Width:       " + getFixWidth());
-        buffer.append("\nFix Height:      " + getFixHeight());
-        buffer.append("\nReferenceWidth:  " + getReferenceWidth());
+        buffer.append("\nFix Width:       ").append(getFixWidth());
+        buffer.append("\nFix Height:      ").append(getFixHeight());
+        buffer.append("\nReferenceWidth:  ").append(getReferenceWidth());
         buffer.append("\nReferenceHeight: " + getReferenceHeight());
         buffer.append("\nFactor Density:  " + getScalePixel()+ "\n");
         return buffer.toString();

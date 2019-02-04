@@ -22,8 +22,7 @@ package com.titicolab.nanux.util;
  *
  */
 public interface DisplayInfo {
-        public static float scalePixel = 0;
-
+    public static float scalePixel = 0;
     public static final int REFERENCE_WIDTH_DEFAULT = 1280;
     public static final int REFERENCE_HEIGHT_DEFAULT = 720;
 
