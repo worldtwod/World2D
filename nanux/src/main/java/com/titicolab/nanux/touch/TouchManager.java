@@ -23,17 +23,17 @@ import com.titicolab.nanux.objects.base.GameObject;
  *
  */
 public interface TouchManager  extends ObservableInput.InputListener {
-    void setClickListener(ClickListener clickListener);
-    void setTouchActionListener(TouchActionListener touchActionListener);
+    public void setClickListener(ClickListener clickListener);
+    public void setTouchActionListener(TouchActionListener touchActionListener);
 
-    interface ClickListener {
+    public interface ClickListener {
         void onClickObject(GameObject.Touchable object);
     }
 
-    interface DoubleClickListener {
+    public interface DoubleClickListener {
         void onDoubleClickObject(GameObject.Touchable object);
     }
-    interface TouchActionListener{
+    public interface TouchActionListener{
         void onDown(GameObject.Touchable object);
         void onMove(GameObject.Touchable object, boolean touching);
         void onUp(GameObject.Touchable object, boolean touching);

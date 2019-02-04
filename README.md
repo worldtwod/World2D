@@ -15,7 +15,7 @@ As publisher, independent apps and games developer, I explored and experienced w
 * ...
 
 After several years of work and maintenance of such app, I have concluded that these alternatives are not the most suitable for an independent study with a small working team. Heresome of the difficulties listed: 
-* Publish a multiplatform game can be a truly Herculean effort, open many battlefronts can be overwhelming. At end you get a worse user experience.
+* Publish a multi-platform game can be a truly Herculean effort, open many battlefronts can be overwhelming. At end you get a worse user experience.
 * The apps that are monetizable and moderately successful on the platform android may not result in IOS.
 * Simple games can result in ridiculously large sizes of apk files.
 * When you use a no Android native engine, likely you needs first to learn another programming language. 
@@ -32,6 +32,7 @@ World-2D should be easy to use and its applications are expected to be easy to m
  
   `compile 'com.titicolab.world-2d:core:0.2.0-beta'`
    The new test Rules were add.
+   TouchableObject and JoystickLayer add
    
  `compile 'com.titicolab.world-2d:core:0.1.7-beta'`
   The bug about status bar was solved
