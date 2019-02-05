@@ -17,7 +17,6 @@
 package com.titicolab.mock.nanux.scene;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.SceneManagerTestCase;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.objects.base.Animated;
 import com.titicolab.nanux.objects.base.Scene;
@@ -36,7 +35,8 @@ import org.junit.Test;
  *
  */
 
-public class SceneManagerFactoryTest extends SceneManagerTestCase{
+@Deprecated
+public class SceneManagerFactoryTest {
 
 
     @Test
@@ -56,6 +56,10 @@ public class SceneManagerFactoryTest extends SceneManagerTestCase{
         Assert.assertNotNull(scene.layer.getScene());
     }
 
+    private SceneManager getSceneManager() {
+        return null;  //TODO
+    }
+
     @Test
     public void test_UpdateObjects(){
 
@@ -71,7 +75,9 @@ public class SceneManagerFactoryTest extends SceneManagerTestCase{
         Assert.assertEquals(h/2,scene.layer.digit.getY(),0.1);
     }
 
-
+    private void waitTouchSeconds(int i) {
+        //TODO
+    }
 
 
     public static class MockScene extends Scene{

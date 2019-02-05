@@ -17,7 +17,6 @@
 package com.titicolab.mock.nanux.objects;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.SceneTestCase;
 import com.titicolab.mock.rule.SceneTestRule;
 import com.titicolab.mock.tools.TestButton;
 import com.titicolab.mock.tools.TestDigit;

@@ -16,40 +16,35 @@
 
 package com.titicolab.mock.theater.objects;
 
-import androidx.test.runner.AndroidJUnit4;
-
-import com.titicolab.mock.cases.world.World2DTestCase;
+import com.titicolab.mock.rule.SceneTestRule;
 import com.titicolab.mock.tools.TestMap;
 import com.titicolab.nanux.animation.AnimationSheet;
+import com.titicolab.nanux.util.FlagSync;
 import com.titicolab.puppet.map.MapLayer;
 import com.titicolab.puppet.map.MapWorld;
 import com.titicolab.puppet.objects.TiledLayer;
 import com.titicolab.puppet.objects.World2D;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Created by campino on 24/01/2017.
  *
  */
+@Deprecated
+public class TileWindowsFunctionalTest{
 
-
-@RunWith(AndroidJUnit4.class)
-public class TileWindowsFunctionalTest extends World2DTestCase {
-
-
+    @Rule
+    public SceneTestRule sceneTestRule = new SceneTestRule();
     static MapWorld.Builder builderWorld;
-
-
+    private World2D world;
 
     @Before
     public void before(){
 
     }
-
-
 
     @Test
     public void windowsFromWorld(){
@@ -62,9 +57,9 @@ public class TileWindowsFunctionalTest extends World2DTestCase {
                 .layer(GroundTiledLayer.class,1,null)
                 .layer(WorldTiledLayer.class,2,null);
 
-        World world = new World();
-        syncPlay(world);
-        setWorldBoundary(true);
+        world = new World();
+        sceneTestRule.syncPlay(world);
+        world.setDrawBoundary(true);
 
         for (int i =0; i <40; i++) {
             moveCamera(i,3);
@@ -74,17 +69,21 @@ public class TileWindowsFunctionalTest extends World2DTestCase {
         waitTouchSeconds(60);
     }
 
+    private void waitTouchSeconds(int i) {
+        new FlagSync().waitSyncSeconds(i);
+    }
+
 
     private void moveCamera(int i, int j){
-       getWorld2D().getCamera2D().setPositionIj(i,j);
+        world.getCamera2D().setPositionIj(i,j);
     }
 
 
     private void showInfo(){
-        log.debug("Camera i: " + (int)(getWorld2D().getCamera2D().getX()/128));
-        log.debug("Camera j: " + (int)(getWorld2D().getCamera2D().getY()/128));
-        log.debug("Camera width: " + getWorld2D().getCamera2D().getViewPortWidth()/128);
-        log.debug("Camera height: " + getWorld2D().getCamera2D().getViewPortHeight()/128);
+        /*log.debug("Camera i: " + (int)(world.getCamera2D().getX()/128));
+        log.debug("Camera j: " + (int)(world.getCamera2D().getY()/128));
+        log.debug("Camera width: " + world.getCamera2D().getViewPortWidth()/128);
+        log.debug("Camera height: " + world.getCamera2D().getViewPortHeight()/128);*/
     }
 
 
@@ -154,7 +153,4 @@ public class TileWindowsFunctionalTest extends World2DTestCase {
 
         return builder.build();
     }
-
-
-
 }

@@ -8,10 +8,10 @@ import org.junit.Test;
 public class SceneTestRuleTest {
 
     @Rule
-    public SceneTestRule rule = new SceneTestRule();
+    public SceneTestRule sceneTestRule = new SceneTestRule();
 
     @Test
     public void testStart(){
-        rule.syncPlay(new SampleWorld2D());
+        sceneTestRule.syncPlay(new SampleWorld2D());
     }
 }

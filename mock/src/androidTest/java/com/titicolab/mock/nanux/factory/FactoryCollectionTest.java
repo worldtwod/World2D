@@ -17,9 +17,9 @@
 package com.titicolab.mock.nanux.factory;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.AnimationTestCase;
 import com.titicolab.nanux.animation.AnimationBuilder;
 import com.titicolab.nanux.animation.AnimationSheet;
+import com.titicolab.nanux.graphics.texture.TextureManager;
 import com.titicolab.nanux.list.GameObjectCollection;
 import com.titicolab.nanux.objects.base.Animated;
 import com.titicolab.nanux.objects.base.ObjectFactory;
@@ -40,7 +40,7 @@ import org.junit.Test;
  */
 
 @Deprecated
-public class FactoryCollectionTest extends AnimationTestCase {
+public class FactoryCollectionTest {
     private AnimationSheet sheet;
     private MapObjects map;
     private AnimationBuilder builder;
@@ -69,6 +69,10 @@ public class FactoryCollectionTest extends AnimationTestCase {
 
     }
 
+    private TextureManager getTextureManager() {
+        return null; //TODO it was removed from version testcase
+    }
+
 
     @Ignore
     @Test
@@ -79,10 +83,8 @@ public class FactoryCollectionTest extends AnimationTestCase {
                 .build();
 
         ObjectFactory factory = new ObjectFactory(null, getTextureManager());
-
         GameObjectCollection results = factory
                 .factoryAnimatedCollection(requestCollection, builder);
-
 
         Assert.assertEquals(2,results.size());
         Assert.assertEquals(2,results.getObjectsAvailable(Digit.class));
@@ -102,13 +104,19 @@ public class FactoryCollectionTest extends AnimationTestCase {
         waitTouchSeconds(60);
     }
 
-    public static class Digit extends Animated {
+    private void waitTouchSeconds(int i) {
+         //TODO it was removed from version testcase
+    }
 
+    private void addAnimated(Animated digits) {
+        //TODO it was removed from version testcase
+    }
+
+    public static class Digit extends Animated {
 
     }
 
     public static class Button extends Animated {
-
 
     }
 }

@@ -21,7 +21,6 @@ import android.annotation.SuppressLint;
 
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.objects.base.BaseLayer;
-import com.titicolab.nanux.objects.base.Camera;
 import com.titicolab.nanux.objects.base.Scene;
 import com.titicolab.nanux.objects.factory.RequestCollection;
 import com.titicolab.nanux.objects.factory.RequestLayersBuilder;
@@ -57,7 +56,6 @@ public class SceneTestRule  extends ActivityTestRule<SceneTestActivity>{
         return scene.findLayer(1);
     }
 
-
     /**
      * DefaultFade scene for hold the layer, it is useful when you only want test a layer
      */
@@ -65,6 +63,7 @@ public class SceneTestRule  extends ActivityTestRule<SceneTestActivity>{
         private static final int VIEW_PORT_W = DisplayInfo.REFERENCE_WIDTH_DEFAULT;
         private static final int VIEW_PORT_H = DisplayInfo.REFERENCE_HEIGHT_DEFAULT;
         final Class<? extends BaseLayer> clazz;
+
         DefaultScene(Class<? extends BaseLayer> clazz) {
             this.clazz = clazz;
         }

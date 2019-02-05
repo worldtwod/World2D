@@ -19,7 +19,6 @@ package com.titicolab.mock.nanux;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.ClipTestCase;
 import com.titicolab.nanux.animation.Animation;
 import com.titicolab.nanux.animation.AnimationBuilder;
 import com.titicolab.nanux.animation.AnimationSheet;
@@ -32,10 +31,10 @@ import org.junit.runner.RunWith;
  * Created by campino on 15/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
-public class AnimationFunctionalTest extends ClipTestCase {
+@Deprecated
+public class AnimationFunctionalTest{ //} extends ClipTestCase {
 
-
+/*
     private static final int CLIP_ALL_TEXTURE = 1;
     private static final int CLIP_CELL_DIGITS = 2;
     private static final int CLIP_ID = 120;
@@ -80,8 +79,6 @@ public class AnimationFunctionalTest extends ClipTestCase {
         setScale(10);
 
     }
-
-
-
+*/
 
 }

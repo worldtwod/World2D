@@ -17,7 +17,6 @@
 package com.titicolab.mock.nanux.factory;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.AnimationTestCase;
 import com.titicolab.mock.rule.GraphicTestRule;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.list.GameObjectList;

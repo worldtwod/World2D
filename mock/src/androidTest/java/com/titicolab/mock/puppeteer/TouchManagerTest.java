@@ -124,8 +124,6 @@ public class TouchManagerTest implements ObservableInput.InputListener,
         onUpFlag.assertFlag();
     }
 
-
-
     public static class  MockTouchableTrue implements GameObject.Touchable{
         @Override
         public boolean checkIsTouching(ObservableInput.Event input) {

@@ -13,32 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.titicolab.mock.theater.objects;
-
-
-import com.titicolab.mock.cases.world.World2DTestCase;
+import com.titicolab.mock.rule.SceneTestRule;
 import com.titicolab.mock.tools.TestMap;
 import com.titicolab.nanux.animation.AnimationSheet;
+import com.titicolab.nanux.objects.base.BaseLayer;
 import com.titicolab.nanux.objects.factory.RequestObject;
 import com.titicolab.puppet.map.MapLayer;
 import com.titicolab.puppet.map.MapWorld;
 import com.titicolab.puppet.objects.TiledLayer;
 import com.titicolab.puppet.objects.World2D;
-import org.junit.Test;
 
+import org.junit.Rule;
+import org.junit.Test;
 /**
  * Created by campino on 24/01/2017.
  *
  */
-
-public class TiledLayerTest extends World2DTestCase {
+@Deprecated
+public class TiledLayerTest {
+    @Rule
+    public SceneTestRule sceneTestRule = new SceneTestRule();
 
     @Test
     public void mapLayer(){
-        syncPlay(new World());
-        setWorldBoundary(true);
-        getWorld2D().setDrawCamera(true);
+        World world = new World();
+        sceneTestRule.syncPlay(world);
+        world.setDrawBoundary(true);
+        world.setDrawCamera(true);
 
         for (int i =0; i <40; i++) {
             showInfo();
@@ -49,17 +51,21 @@ public class TiledLayerTest extends World2DTestCase {
         waitTouchSeconds(60*60);
     }
 
+    private void waitTouchSeconds(int i) {
+        //todo
+    }
 
     void moveCamera(int i,int j){
         //((World)getWorld2D()).layer.sprite.setPositionIj(i,j);
-       getWorld2D().getCamera2D().setPositionIj(i,j);
+       // todo getWorld2D().getCamera2D().setPositionIj(i,j);
     }
 
     void showInfo(){
-        log.debug("Camera i: " + (int)(getWorld2D().getCamera2D().getX()/128));
+        //todo
+        /*log.debug("Camera i: " + (int)(getWorld2D().getCamera2D().getX()/128));
         log.debug("Camera j: " + (int)(getWorld2D().getCamera2D().getY()/128));
         log.debug("Camera width: " + getWorld2D().getCamera2D().getViewPortWidth()/128);
-        log.debug("Camera height: " + getWorld2D().getCamera2D().getViewPortHeight()/128);
+        log.debug("Camera height: " + getWorld2D().getCamera2D().getViewPortHeight()/128);*/
     }
 
     public static class  World extends World2D{

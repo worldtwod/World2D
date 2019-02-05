@@ -81,9 +81,6 @@ public class Actor extends LayerObject implements CollisionObject {
     }
 
 
-
-
-
     public Physics getBody() {
         return body;
     }

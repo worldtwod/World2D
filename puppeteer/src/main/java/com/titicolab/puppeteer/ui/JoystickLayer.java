@@ -91,6 +91,9 @@ public class JoystickLayer extends SceneLayer implements  TouchManager.ClickList
         bottom.setPosition(leftPosition +sizeButton,sizeButton/2);
 
         top.touchManager.setClickListener(this);
+        left.touchManager.setClickListener(this);
+        right.touchManager.setClickListener(this);
+        bottom.touchManager.setClickListener(this);
     }
 
     public void setOnClickJoystickListener(OnClickJoystick onClickJoystickListener){

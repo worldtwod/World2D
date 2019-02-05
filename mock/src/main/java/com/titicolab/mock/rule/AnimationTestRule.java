@@ -43,8 +43,6 @@ public class AnimationTestRule extends ActivityTestRule<SceneTestActivity>{
     private static String sAnimationName;
     private static int sClipStart;
 
-
-
     private Animator mAnimator;
 
     public AnimationTestRule(Animation.DefineAnimationSheet defineAnimationSheet, String animation, int clipStar) {
