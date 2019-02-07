@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/World2D.iml" filepath="$PROJECT_DIR$/World2D.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/mock/mock.iml" filepath="$PROJECT_DIR$/mock/mock.iml" />
@@ -9,7 +10,6 @@
       <module fileurl="file://$PROJECT_DIR$/opengl/opengl.iml" filepath="$PROJECT_DIR$/opengl/opengl.iml" />
       <module fileurl="file://$PROJECT_DIR$/puppeteer/puppeteer.iml" filepath="$PROJECT_DIR$/puppeteer/puppeteer.iml" />
       <module fileurl="file://$PROJECT_DIR$/theater/theater.iml" filepath="$PROJECT_DIR$/theater/theater.iml" />
-      <module fileurl="file://$PROJECT_DIR$/world2D.iml" filepath="$PROJECT_DIR$/world2D.iml" />
     </modules>
   </component>
 </project>

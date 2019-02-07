@@ -34,63 +34,52 @@ import com.titicolab.nanux.util.GPUInfo;
 public class Puppeteer extends Controller {
 
 
-    private GameContext           mGameContext;
+    private GraphicContext        mGraphicContext;
     private DisplayInfo           mDisplayInfo;
     private GamePerformance       mPerformance;
     private RunnerTask            mRunnerTask;
     private GPUInfo               mGPUInfo;
 
-
     private TextureManager mTextureManager;
     private SceneManager   mSceneManager;
-
 
     private DrawTools         mDrawTools;
     private DrawTools.Builder mDrawToolsBuilder;
 
     private boolean mFlatStart;
 
-
     private Scene   mStartScene;
-
-
 
     private boolean mShowFPS;
 
     private ProjectionUi mProjectionUi;
 
+
     public Puppeteer(DrawTools.Builder drawToolsBuilder) {
         mDrawToolsBuilder = drawToolsBuilder;
     }
 
-
-
-
     /************************* Render    *******************************************************/
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
-
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
 
         /*if(mTextureManager!=null) { //TODO
             onRecoveryContext();
             return;
         }*/
 
-        mGameContext =     game;
-        mDisplayInfo =     mGameContext.getDisplayInfo();
+        mGraphicContext =     game;
+        mDisplayInfo =     mGraphicContext.getDisplayInfo();
         mPerformance =     new GamePerformance();
-        mRunnerTask =      mGameContext.getTextureManager().getRunnerTask();
-        mTextureManager =  mGameContext.getTextureManager();
+        mRunnerTask =      mGraphicContext.getTextureManager().getRunnerTask();
+        mTextureManager =  mGraphicContext.getTextureManager();
 
         mRunnerTask.setRunnerThread(Thread.currentThread());
         mGPUInfo =eglConfig;
 
-        mSceneManager = new SceneManager(mRunnerTask,
-                mTextureManager,
-               mDisplayInfo);
+        mSceneManager = new SceneManager(mRunnerTask, mTextureManager, mDisplayInfo);
         mSceneManager.setAsyncLaunch(true);
         mSceneManager.setTransitionsEnable(false);
-        //mSceneManager.setTransition(new Transition());
 
         mDrawTools = mDrawToolsBuilder.build(mTextureManager);
         DrawTools.setScalePixel(mDisplayInfo.getScalePixel());
@@ -100,10 +89,8 @@ public class Puppeteer extends Controller {
         }
 
         mFlatStart=true;
-
         mProjectionUi= new ProjectionUi(game.getDisplayInfo());
     }
-
 
     @Override
     public void onSurfaceChanged(int width, int height) {
@@ -125,17 +112,14 @@ public class Puppeteer extends Controller {
         mSceneManager.onDrawScene(mDrawTools);
 
         if(mShowFPS) {
+            float left = mProjectionUi.getViewPortWidth()-200;
             mDrawTools.text.setMatrix(mProjectionUi.getMatrix());
-            mDrawTools.text.print(mPerformance.getAverageFPS() + " FPS",
-                    120, 700, 20);
+            mDrawTools.text.print("FPS:" + mPerformance.getAverageFPS(),
+                    left, 700, 20);
         }
     }
 
-
     /************************   Scene play ********************************************************/
-
-
-
 
     @Override
     public synchronized void setStartScene(Scene startScene) {
@@ -147,7 +131,6 @@ public class Puppeteer extends Controller {
 
 
    /********************* Input Event   **********************************************************/
-
     @Override
     public boolean onTouch(ObservableInput.Event event) {
         return mSceneManager.onTouch(event);
@@ -157,7 +140,6 @@ public class Puppeteer extends Controller {
     public boolean onKey(int keyEvent) {
         return mSceneManager.onKey(keyEvent);
     }
-
 
     /************************Life Cycle **********************************************************/
 
@@ -179,19 +161,10 @@ public class Puppeteer extends Controller {
         return mDrawTools;
     }
 
-
-
     /**********************    Helper  ************************************************************/
 
     @Override
-    public void showFPS(boolean mShowFPS) {
+    synchronized public void showFPS(boolean mShowFPS) {
         this.mShowFPS = mShowFPS;
     }
-
-
-
-
-
-
-
 }

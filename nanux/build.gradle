@@ -3,6 +3,7 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:' + rootProject.junitVersion
+    testImplementation 'org.mockito:mockito-core:'  + rootProject.mokitoVersion
 }
 
 sourceCompatibility = "1.7"

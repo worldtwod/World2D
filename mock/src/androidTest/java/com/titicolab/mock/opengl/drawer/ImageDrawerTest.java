@@ -17,12 +17,13 @@
 package com.titicolab.mock.opengl.drawer;
 
 import android.content.Context;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.opengl.TextureManagerTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.mock.rule.GraphicTestRule;
+import com.titicolab.mock.rule.ObserverGraphicContext;
+import com.titicolab.nanux.core.GraphicContext;
+import com.titicolab.nanux.graphics.draw.DrawTools;
+import com.titicolab.nanux.graphics.draw.Image;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.graphics.texture.Texture;
 import com.titicolab.nanux.list.FixList;
@@ -30,19 +31,24 @@ import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.DrawerImage;
 import com.titicolab.opengl.shader.ImageShaderProgram;
 import com.titicolab.opengl.util.TextResourceReader;
-import com.titicolab.nanux.graphics.draw.Image;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import androidx.test.platform.app.InstrumentationRegistry;
 
 /**
  * Created by campino on 15/11/2016.
- *
+ * This test shows how use a DrawerImage
  */
 
-@RunWith(AndroidJUnit4.class)
-public class ImageDrawerTest  extends TextureManagerTestCase {
+public class ImageDrawerTest implements ObserverGraphicContext.SurfaceCreated, ObserverGraphicContext.DrawFrame {
 
+    @Rule
+    public GraphicTestRule graphicRule = new GraphicTestRule.Builder()
+            .setObserverSurfaceCreated(this)
+            .setObserverDrawFrame(this)
+            .build();
 
     private DrawerImage imageDrawer;
     private ProjectionUi projection;
@@ -50,27 +56,17 @@ public class ImageDrawerTest  extends TextureManagerTestCase {
     private ImageShaderProgram shader;
 
 
-
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
-        super.onSurfaceCreated(game,eglConfig);
-
-
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         projection= new ProjectionUi(game.getDisplayInfo());
         projection.setViewport(1280,720,ProjectionUi.SCALE_HEIGHT);
-
-
         shader = getMockProgram();
         shader.buildProgram();
-
     }
 
 
     @Override
-    public void onDrawFrame() {
-        super.onDrawFrame();
-
-
+    public void onDrawFrame(DrawTools drawTools) {
         if(list==null) return;
 
         for (int i = 0; i < list.size(); i++) {
@@ -78,8 +74,8 @@ public class ImageDrawerTest  extends TextureManagerTestCase {
         }
 
         imageDrawer.begin(projection.getMatrix());
-        for (int i = 0; i < list.size(); i++)
-            imageDrawer.add(list.get(i));
+            for (int i = 0; i < list.size(); i++)
+                imageDrawer.add(list.get(i));
         imageDrawer.end();
     }
 
@@ -89,8 +85,7 @@ public class ImageDrawerTest  extends TextureManagerTestCase {
     public void testAnimation(){
         int N=4;
         float size = projection.getViewPortWidth()/N;
-
-        Texture texture = mTextureManager.getTexture(R.drawable.test_square_256);
+        Texture texture = graphicRule.getTextureManager().getTexture(R.drawable.test_square_256);
         FixList<Image> listImages = new FixList<>(N);
 
         for (int i = 0; i < listImages.capacity(); i++) {
@@ -102,13 +97,13 @@ public class ImageDrawerTest  extends TextureManagerTestCase {
 
         imageDrawer = new DrawerImage(N,shader);
         list = listImages;
-        waitTouchSeconds(60*10);
+        graphicRule.waitTouchSeconds(20);
     }
 
 
 
     private ImageShaderProgram getMockProgram() {
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         String vertexSh =  TextResourceReader.readTextFileFromResource(
                 appContext, R.raw.image_vertex);
         String fragmentSh = TextResourceReader.readTextFileFromResource(

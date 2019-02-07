@@ -24,12 +24,8 @@ import com.titicolab.nanux.util.FlagSync;
  */
 
 public class HelperTest {
-
-
     public static void delaySeconds(int seconds){
         FlagSync flag = new FlagSync();
         flag.waitSyncSeconds(seconds);
     }
-
-
 }

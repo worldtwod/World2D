@@ -17,6 +17,7 @@
 package com.titicolab.nanux.objects.base;
 
 
+import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.nanux.objects.Physics;
@@ -33,8 +34,6 @@ public class Camera2D extends Camera {
 
     protected final Physics body;
     private final DisplayInfo mDisplayInfo;
-
-
 
     private float zoom;
     private float ratio;
@@ -144,6 +143,7 @@ public class Camera2D extends Camera {
     public DisplayInfo getDisplayInfo() {
         return mDisplayInfo;
     }
+
 }
 
 

@@ -16,67 +16,57 @@
 
 package com.titicolab.mock.opengl.projection;
 
-import androidx.test.runner.AndroidJUnit4;
-
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.opengl.ImageDrawerTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.mock.rule.GraphicTestRule;
+import com.titicolab.mock.rule.ObserverGraphicContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.core.RunnableTask;
+import com.titicolab.nanux.graphics.draw.DrawTools;
+import com.titicolab.nanux.graphics.draw.Image;
 import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.shader.DrawerImage;
-import com.titicolab.nanux.graphics.draw.Image;
 
-import org.junit.FixMethodOrder;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 /**
  * Created by campino on 15/11/2016.
  *
  */
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(AndroidJUnit4.class)
-public class ProjectionOthTest extends ImageDrawerTestCase {
+public class ProjectionOthTest implements ObserverGraphicContext.DrawFrame,
+        ObserverGraphicContext.SurfaceCreated {
+
+    @Rule
+    public GraphicTestRule graphicRule = new GraphicTestRule.Builder()
+            .setObserverDrawFrame(this)
+            .setObserverSurfaceCreated(this)
+            .build();
 
     private Image imagePoint0;
     private Image imagePoint1;
-
     private ProjectionUi projectionCircle;
 
-
     @Override
-    public void onSurfaceCreated(final GameContext game,GPUInfo eglConfig) {
-        super.onSurfaceCreated(game, eglConfig);
+    public void onSurfaceCreated(final GraphicContext game, GPUInfo eglConfig) {
        injectImages();
     }
 
     private void injectImages() {
-
-        projectionCircle = new ProjectionUi(getDisplayInfo());
-        imagePoint0 = new Image(getTextureManager()
+        projectionCircle = new ProjectionUi(graphicRule.getDisplayInfo());
+        imagePoint0 = new Image(graphicRule.getTextureManager()
                 .getTexture(R.drawable.test_cricle_720));
-        imagePoint0.setScale(0.1f);
         imagePoint0.setColor(1,0,0,1);
-
-        imagePoint1 = new Image(getTextureManager().
+        imagePoint1 = new Image(graphicRule.getTextureManager().
                 getTexture(R.drawable.test_cricle_720));
     }
 
-
-
-
-
     @Override
-    protected void onDrawImage(DrawerImage imageDrawer) {
+    public void onDrawFrame(DrawTools drawer) {
+        DrawerImage imageDrawer = (DrawerImage) drawer.images;
         imagePoint0.updateRender();
         imagePoint1.updateRender();
-
         imageDrawer.begin(projectionCircle.getMatrix());
         imageDrawer.add(imagePoint0);
         imageDrawer.add(imagePoint1);
@@ -86,18 +76,15 @@ public class ProjectionOthTest extends ImageDrawerTestCase {
 
     @Test
     public void aTestRatio(){
-        log.debug("projectionCircle expands to reference view port");
+        graphicRule.log.debug("projectionCircle expands to reference view port, check perfects circles");
+        imagePoint0.setScale(0.5f);
 
-
-        getRunnerTask().runAndWait(new RunnableTask() {
+        graphicRule.getRunnerTask().runAndWait(new RunnableTask() {
             @Override
             public void run() {
-                //projectionCircle.setViewport(ProjectionUi.SCALE_HEIGHT);
-                //projectionCircle.setViewport(ProjectionUi.SCALE_WIDTH);
-                //projectionCircle.setScale(1.5f);
                 projectionCircle.setViewport(1280,720,ProjectionUi.SCALE_WIDTH);
                 projectionCircle.setPosition(
-                        projectionCircle.getViewPortWidth(),
+                        projectionCircle.getViewPortWidth()/2,
                         projectionCircle.getViewPortHeight()/2);
 
                 imagePoint1.setPosition(
@@ -107,10 +94,6 @@ public class ProjectionOthTest extends ImageDrawerTestCase {
 
             }
         });
-
-
-
-        assertThat(waitTouchSeconds(60*10),is(true));
+       graphicRule.waitTouchSeconds(20);
     }
-
 }

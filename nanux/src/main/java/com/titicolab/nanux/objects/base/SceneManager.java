@@ -32,38 +32,26 @@ import com.titicolab.nanux.graphics.draw.DrawTools;
 
 public class SceneManager  implements ObservableInput.InputListener{
 
-
-    final private DisplayInfo    mDisplayInfo;
-
-
-
     private static final int STATUS_IDLE = 0;
-
     private static final int STATUS_LAUNCH_SCENE      = 1;
     private static final int STATUS_TRANSITION_IN     = 3;
     private static final int STATUS_TRANSITION_OUT    = 5;
     private static final int STATUS_LOADING_TRANSITION = 7;
 
+    private final  DisplayInfo    mDisplayInfo;
     private int mStatus;
-
     private boolean mTransitionFlat;
     private boolean isRunningTransition;
-
-
 
     private final RunnerTask mRunnerTask;
     private final TextureManager mTextureManager;
 
-
     //Sub status for loading_transition
     private boolean mLoadingTransition;
-
 
     private boolean mAsyncLaunch;
     private Scene   mCurrentScene;
     private Transition mTransition;
-
-
 
     private final FixList<SceneCommand> mCommandList;
     private SceneCommand mNextCommand;
@@ -360,7 +348,6 @@ public class SceneManager  implements ObservableInput.InputListener{
         stopCurrentScene(mCurrentScene);
     }
 
-
     private void notifyStartScene(final Scene next) {
         mRunnerTask.queueTask(new RunnableTask() {
             @Override
@@ -370,7 +357,6 @@ public class SceneManager  implements ObservableInput.InputListener{
         });
     }
 
-
     public RunnerTask getRunnerTask() {
         return mRunnerTask;
     }
@@ -379,20 +365,15 @@ public class SceneManager  implements ObservableInput.InputListener{
         mRunnerTask.queueTask(task);
     }
 
-
-
     private class SceneCommand {
         static final int TYPE_PLAY_SCENE = 1;
         static final int TYPE_LOAD_TRANSITION = 2;
-
         final int type;
         final Scene scene;
-
         SceneCommand(int type, Scene scene) {
             this.type = type;
             this.scene = scene;
         }
-
         boolean isPlayScene(){
             return type== TYPE_PLAY_SCENE;
         }
@@ -401,12 +382,10 @@ public class SceneManager  implements ObservableInput.InputListener{
         }
     }
 
-
-
-
-
     @Override
     public boolean onTouch(ObservableInput.Event event) {
+        if(mCurrentScene==null) return false;
+
         boolean r = false;
         float uiX = mCurrentScene.getCameraUi().pxToCameraX(event.getPixelX());
         float uiY = mCurrentScene.getCameraUi().pxToCameraY(event.getPixelY());

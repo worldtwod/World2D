@@ -23,16 +23,16 @@ import com.titicolab.nanux.test.Monitor;
  *
  */
 
+@Deprecated
 public class GameActivityTestTools {
 
-
-    public static void setMonitor(Monitor.OnEngineCreated listener) {
-        GameActivity.monitor=listener;
+    public static void setMonitor(Monitor.OnGraphicContextCreated listener) {
+        //GraphicActivity.monitor=listener;
     }
 
-    static Monitor.OnEngineCreated getMonitor() {
-        Monitor.OnEngineCreated monitor = GameActivity.monitor;
-        //GameActivity.monitor=null;
-        return monitor;
+    static Monitor.OnGraphicContextCreated getMonitor() {
+       // Monitor.OnGraphicContextCreated monitor = GraphicActivity.monitor;
+        //GraphicActivity.monitor=null;
+        return null; //monitor;
     }
 }

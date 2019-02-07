@@ -17,7 +17,7 @@
 package com.titicolab.mock.nanux.objects;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.SceneTestCase;
+import com.titicolab.mock.rule.SceneTestRule;
 import com.titicolab.mock.tools.TestButton;
 import com.titicolab.mock.tools.TestDigit;
 import com.titicolab.mock.tools.TestLayer;
@@ -30,8 +30,8 @@ import com.titicolab.nanux.objects.map.MapGroupLayers;
 import com.titicolab.nanux.objects.map.MapItem;
 import com.titicolab.nanux.objects.map.MapObjects;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -39,27 +39,23 @@ import org.junit.Test;
  *
  */
 
-public class LifeCycleLayerTest extends SceneTestCase{
+public class LifeCycleLayerTest {
 
 
-
+    @Rule
+    public SceneTestRule rule = new SceneTestRule();
 
     @Test
     public void sceneTest(){
         MockScene scene = new MockScene();
-        syncPlay(scene);
+        rule.syncPlay(scene);
         Assert.assertEquals(1,scene.onAttachParams.getResults().intValue());
         Assert.assertEquals(2,scene.onDefineMapGroupLayers.getResults().intValue());
         Assert.assertEquals(3,scene.onDefineCameras.getResults().intValue());
         Assert.assertEquals(4,scene.onLayersRequest.getResults().intValue());
         Assert.assertEquals(5,scene.onAttachLayers.getResults().intValue());
         Assert.assertEquals(6,scene.onGroupLayersCreated.getResults().intValue());
-
-
-
-
     }
-
 
     public static class MockScene extends TestScene{
 
@@ -71,6 +67,9 @@ public class LifeCycleLayerTest extends SceneTestCase{
                     .clip(1)
                         .grid(8,4)
                         .cells(new int[]{0,1,2,3,4,5,6,7,8,9})
+                    .clip(2)
+                        .grid(8,4)
+                        .cells(0)
                     .sequence("button")
                     .clip(2)
                         .grid(8,4)
@@ -87,7 +86,7 @@ public class LifeCycleLayerTest extends SceneTestCase{
                     .item(new MapItem(TestDigit.class,  100,
                             new Animated.ParamsAnimation("digits", 1)))
                     .item(new MapItem(TestDigit.class,  101,
-                            new Animated.ParamsAnimation("digits", 1)))
+                            new Animated.ParamsAnimation("digits", 2)))
                     .item(new MapItem(TestButton.class, 100,
                             new Animated.ParamsAnimation("button", 2)))
                     .build();
@@ -121,10 +120,7 @@ public class LifeCycleLayerTest extends SceneTestCase{
             digit0.getAnimator().setSpeed(1);
             digit1.setPosition(850, 300);
             digit1.getAnimator().setSpeed(10);
-
-
         }
-
 
         @Override
         public void updateLogic() {

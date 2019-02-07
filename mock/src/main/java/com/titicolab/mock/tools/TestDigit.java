@@ -26,5 +26,4 @@ import com.titicolab.nanux.objects.base.Animated;
 public class TestDigit  extends Animated{
 
 
-
 }

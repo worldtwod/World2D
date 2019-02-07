@@ -57,25 +57,23 @@ public class HelperObjects {
         }
     }
 
-
-
     public static boolean notifyInputEvent(ObservableInput.Event input,
                                     FlexibleList<? extends GameObject> list) {
-        boolean r = false;
+        boolean isProcessed = false;
         int sizeObject = list.size();
         for (int item = 0; item < sizeObject; item++) {
             if(list.get(item).isTouchable()) {
-                    r=notifyToGuiObject(list.get(item), input);
+                isProcessed =  notifyToGuiObject(list.get(item), input);
+                if(isProcessed)break;
             }
         }
-        return r;
+        return isProcessed;
     }
 
     private static boolean notifyToGuiObject(GameObject listener,
                                              ObservableInput.Event input) {
         return listener.onTouch(input);
     }
-
 
     static void updateLogicLayers(GameObjectList list){
         int layers = list.size();

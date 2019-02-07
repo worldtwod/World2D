@@ -17,7 +17,7 @@
 package com.titicolab.mock.nanux.factory;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.AnimationTestCase;
+import com.titicolab.mock.rule.GraphicTestRule;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.objects.base.Animated;
 import com.titicolab.nanux.objects.base.GroupLayer;
@@ -34,14 +34,21 @@ import com.titicolab.nanux.objects.map.MapObjects;
 import junit.framework.Assert;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * Created by campino on 04/12/2017.
  *
  */
+@Deprecated
+public class FactoryGroupLayersTest {
 
-public class FactoryGroupLayersTest extends AnimationTestCase {
+    @Rule
+    public GraphicTestRule graphicRule = new GraphicTestRule.Builder()
+            .build();
+
     private AnimationSheet sheet;
     private static MapGroupLayers mapMockGroup;
     private static MapGroupLayers mapMockScene;
@@ -97,15 +104,13 @@ public class FactoryGroupLayersTest extends AnimationTestCase {
                 .layer(MockLayer1.class,2,new Layer.ParamsLayer(mapObjects1))
                 .build();
     }
-
+    @Ignore
     @Test
     public void test_factoryObjects(){
 
-        ObjectFactory factory = new ObjectFactory(null, getTextureManager());
-
+        ObjectFactory factory = new ObjectFactory(null, graphicRule.getTextureManager());
         MockScene mockScene  = new MockScene();
         factory.factoryGroupLayer(mockScene);
-
 
         Assert.assertEquals(2,mockScene.getLayerList().size());
         MockGroup  group = (MockGroup) mockScene.findLayer(1);
@@ -138,7 +143,6 @@ public class FactoryGroupLayersTest extends AnimationTestCase {
                 mockGroup.getLayerObjects().findById(2).getClass().isAssignableFrom(MockLayer1.class));
         Assert.assertEquals(true,
                 mockGroup.getLayerObjects().findById(3).getClass().isAssignableFrom(MockLayer1.class));
-
 
     }
 

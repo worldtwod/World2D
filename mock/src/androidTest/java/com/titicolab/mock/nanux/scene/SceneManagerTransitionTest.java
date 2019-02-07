@@ -17,7 +17,6 @@
 package com.titicolab.mock.nanux.scene;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.SceneManagerTestCase;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.objects.base.Animated;
 import com.titicolab.nanux.objects.base.Scene;
@@ -38,9 +37,11 @@ import org.junit.Test;
  *
  */
 
-public class SceneManagerTransitionTest extends SceneManagerTestCase{
+@Deprecated //TODO
+public class SceneManagerTransitionTest {
 
 
+    /*
     @Test
     public void test_No_transition(){
 
@@ -118,7 +119,7 @@ public class SceneManagerTransitionTest extends SceneManagerTestCase{
         manager.play(sceneButton);
         waitTouchSeconds(10);
 
-    }
+    }*/
 
 
     public static class MockSceneDigit extends Scene{

@@ -31,13 +31,8 @@ import com.titicolab.nanux.touch.ObservableInput;
 
 public  class SceneLayer extends Layer{
 
-
-    private MapObjects mMapObjects;
-
-
     private FlexibleList<UiObject> uiRenderList;
     private FlexibleList<Animated> worldRenderList;
-
 
     public SceneLayer(){
         setUpdatable(true);
@@ -82,7 +77,7 @@ public  class SceneLayer extends Layer{
         }
     }
 
-    private void onDrawGameObjects(Drawer<Image> spriteDrawer) {
+    protected void onDrawGameObjects(Drawer<Image> spriteDrawer) {
         if(worldRenderList.size()>0) {
             spriteDrawer.begin(getCamera2D().getProjection().getMatrix());
             HelperObjects.drawGameObjects(spriteDrawer,worldRenderList);
@@ -90,7 +85,7 @@ public  class SceneLayer extends Layer{
         }
     }
 
-    private void onDrawUiObjects(Drawer<Image> uiDrawer){
+    protected void onDrawUiObjects(Drawer<Image> uiDrawer){
         if(uiRenderList.size()>0){
             uiDrawer.begin(getCameraUi().getProjection().getMatrix());
             HelperObjects.drawGameObjects(uiDrawer,uiRenderList);
@@ -98,10 +93,8 @@ public  class SceneLayer extends Layer{
         }
     }
 
+    protected void onDrawText(Drawer drawerText) {
 
-    private void onDrawText(Drawer drawerText) {
-
-       //TODO
     }
 
     @Override
@@ -110,7 +103,6 @@ public  class SceneLayer extends Layer{
                 && HelperObjects.notifyInputEvent(input, uiRenderList)
                 | HelperObjects.notifyInputEvent(input, worldRenderList);
     }
-
 
     private  void loadListObjects(GameObjectCollection objectCollection) {
         uiRenderList = new FlexibleList<>(100);
@@ -130,15 +122,7 @@ public  class SceneLayer extends Layer{
         }
     }
 
-
-
     public <T>   T findById(Class<T> clazz, int id){
         return getObjectCollection().findById(clazz,id);
     }
-
-
-
-
-
-
 }

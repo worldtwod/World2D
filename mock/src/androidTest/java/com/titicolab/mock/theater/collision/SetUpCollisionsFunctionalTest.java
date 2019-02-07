@@ -16,9 +16,7 @@
 
 package com.titicolab.mock.theater.collision;
 
-import androidx.test.runner.AndroidJUnit4;
-
-import com.titicolab.mock.cases.world.World2DTestCase;
+import com.titicolab.mock.rule.SceneTestRule;
 import com.titicolab.mock.tools.MockActor;
 import com.titicolab.mock.tools.MockGround;
 import com.titicolab.puppet.map.MapLayer;
@@ -26,8 +24,8 @@ import com.titicolab.puppet.map.MapWorld;
 import com.titicolab.puppet.objects.World2D;
 import com.titicolab.puppet.objects.WorldLayer;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Created by campino on 24/01/2017.
@@ -35,17 +33,19 @@ import org.junit.runner.RunWith;
  */
 
 
-@RunWith(AndroidJUnit4.class)
-public class SetUpCollisionsFunctionalTest extends World2DTestCase {
 
+public class SetUpCollisionsFunctionalTest  {
+
+
+    @Rule
+    public SceneTestRule sceneTestRule = new SceneTestRule();
 
     @Test
     public void windowsFromWorld(){
 
         World world = new World();
-        syncPlay(world);
-        setWorldBoundary(true);
-        waitTouchSeconds(60*60);
+        sceneTestRule.syncPlay(world);
+        //waitTouchSeconds(60*60);
     }
 
 

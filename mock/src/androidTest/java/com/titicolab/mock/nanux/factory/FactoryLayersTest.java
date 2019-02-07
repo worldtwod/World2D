@@ -17,7 +17,7 @@
 package com.titicolab.mock.nanux.factory;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.AnimationTestCase;
+import com.titicolab.mock.rule.GraphicTestRule;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.list.GameObjectList;
 import com.titicolab.nanux.objects.base.Animated;
@@ -30,22 +30,27 @@ import com.titicolab.nanux.objects.map.MapObjects;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * Created by campino on 04/12/2017.
  *
  */
+@Deprecated
+public class FactoryLayersTest  {
 
-public class FactoryLayersTest extends AnimationTestCase {
-
-
+    @Rule
+    public GraphicTestRule graphicRule = new GraphicTestRule.Builder()
+            .build();
+    @Ignore
     @Test
     public void test_factoryObjects(){
 
 
         MockScene scene = new MockScene();
-        ObjectFactory factory = new ObjectFactory(scene, getTextureManager());
+        ObjectFactory factory = new ObjectFactory(scene, graphicRule.getTextureManager());
 
 
         GameObjectList results = factory
@@ -116,7 +121,6 @@ public class FactoryLayersTest extends AnimationTestCase {
                     .build();
         }
 
-
         @Override
         public void onGroupObjectsCreated() {
             button = findById(Button.class,100);
@@ -125,14 +129,9 @@ public class FactoryLayersTest extends AnimationTestCase {
         }
     }
 
-
-
     public static class Digit extends Animated {
     }
     public static class Button extends Animated {
     }
-
-
-
 
 }

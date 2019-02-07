@@ -22,15 +22,18 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation "androidx.appcompat:appcompat:$androidXVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
-    //implementation 'com.android.support.constraint:constraint-layout:' + rootProject.constraintLayoutVersion
+    implementation project(path: ':puppeteer')
+    implementation project(path: ':opengl')
+    implementation project(path: ':theater')
+    implementation project(path: ':nanux')
+    androidTestImplementation project(path: ':mock')
 
-    testImplementation 'junit:junit:' + rootProject.junitVersion
-    //androidTestImplementation 'com.android.support.test:runner:' + rootProject.runnerVersion
-    //androidTestImplementation 'com.android.support.test.espresso:espresso-core:'  + rootProject.espressoVersion
-    //androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:' + rootProject.uiautomator
-
+    implementation 'junit:junit:' + rootProject.junitVersion
+    implementation "androidx.test:rules:$rulesVersion"
+    implementation "androidx.test:runner:$runnerVersion"
+    implementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    implementation "androidx.test.uiautomator:uiautomator:$uiautomatorVersion"
 }

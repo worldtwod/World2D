@@ -37,7 +37,7 @@ public class Animator {
     private Clip                mCurrentClip;
 
     private final Animation     mAnimation;
-    private int                 mCurrentPlay=-1;
+    private int                 mCurrentPlay;
     private boolean             mPause;
     private boolean             mFlagPlayAndStop;
 
@@ -61,7 +61,6 @@ public class Animator {
         }
     }
 
-
     public int size(){
         return mAnimation.size();
     }
@@ -69,7 +68,6 @@ public class Animator {
     public int capacity(){
         return mAnimation.capacity();
     }
-
 
     synchronized public void playAndStop(int id){
         mFlagPlayAndStop=true;
@@ -90,11 +88,11 @@ public class Animator {
         playByIndex(index);
     }
 
-    synchronized public void playById(int id){
+    private synchronized void playById(int id){
         playByIndex(mAnimation.indexOf(id));
     }
 
-    synchronized public void playByIndex(int index){
+    private synchronized void playByIndex(int index){
         if(mCurrentPlay==index) return;
 
         if(index >= mAnimation.size()) throw new IllegalArgumentException
@@ -113,10 +111,7 @@ public class Animator {
 
         if(mCurrentFrame ==null)
             mCurrentFrame = mCurrentClip.get(mCurrent);
-
     }
-
-
 
     synchronized public void updateFrame(){
         if(mPause)
@@ -139,7 +134,6 @@ public class Animator {
         }
     }
 
-
     /**
      * Speed of animation, by default it is 60 fps. the minimum is 1 fps
      * @param speed  in frames per second
@@ -160,10 +154,8 @@ public class Animator {
     public void setPause(boolean pause) {
         mPause = pause;
     }
-
     public int getIndexClip() {
         return mCurrentPlay;
     }
-
 
 }

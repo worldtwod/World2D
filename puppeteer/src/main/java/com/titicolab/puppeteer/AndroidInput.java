@@ -24,7 +24,7 @@ import android.view.View;
 
 import com.titicolab.nanux.list.FlexibleList;
 import com.titicolab.nanux.touch.ObservableInput;
-import com.titicolab.puppeteer.view.GLGameView;
+import com.titicolab.puppeteer.view.GLGraphicView;
 
 
 /**
@@ -36,20 +36,20 @@ public class AndroidInput extends FlexibleList<ObservableInput.InputListener>
 
     //private static final int RESIZE_FACTOR = 10;
     private AndroidInputEvent mInputEvent;
-    private final GLGameView mGLGameView;
+    private final GLGraphicView mGLGraphicView;
     private boolean mFlagStart;
 
 
-    public AndroidInput(GLGameView glView) {
+    public AndroidInput(GLGraphicView glView) {
         mInputEvent = new AndroidInputEvent();
-        mGLGameView = glView;
+        mGLGraphicView = glView;
         mFlagStart=false;
     }
 
     @Override
     public void start(){
         mFlagStart=true;
-        mGLGameView.setOnTouchListener(this);
+        mGLGraphicView.setOnTouchListener(this);
     }
 
     public void stop(){

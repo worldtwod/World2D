@@ -26,21 +26,17 @@ import com.titicolab.puppet.map.MapWorld;
  *
  */
 
+@SuppressWarnings("WeakerAccess")
 public class CameraWorld2D extends Camera2D {
 
-    public static final float K_BUILDER = 25.0f;
-    public static final float CITA_BUILDER = 0.8f;
-
+    protected static final float K_BUILDER = 25.0f;
+    protected static final float CITA_BUILDER = 0.8f;
     private Actor mCarrier;
-    private   MapWorld mMapWorld;
-
+    private MapWorld mMapWorld;
     private float setPointX;
     private float setPointY;
-
     private  float d;
     private  float k;
-
-
 
     public CameraWorld2D(DisplayInfo displayInfo) {
         super(displayInfo);
@@ -69,7 +65,6 @@ public class CameraWorld2D extends Camera2D {
     }
 
 
-
     @Override
     public void setPosition(float x, float y) {
         setPointX = correctionBoundariesX(x);
@@ -95,7 +90,6 @@ public class CameraWorld2D extends Camera2D {
         int width =tilesX*mMapWorld.getTileWidth();
         int height = (int) (width/getAspectRatio());
         super.setViewport(width,height,HOLD_WIDTH);
-
     }
 
     private void setViewportTilesY(int tilesY){
@@ -104,7 +98,11 @@ public class CameraWorld2D extends Camera2D {
         super.setViewport(width,height,HOLD_HEIGHT);
     }
 
-
+    /**
+     * Apply the correction to x then it will be inside of X camera boundaries
+     * @param x  value a to do correction
+     * @return corrected value
+     */
     public float correctionBoundariesX(float x){
         float cameraWidthHaft = getViewPortWidth()/2;
         x=x<cameraWidthHaft?cameraWidthHaft:x;
@@ -112,7 +110,11 @@ public class CameraWorld2D extends Camera2D {
                 mMapWorld.getWidth()-cameraWidthHaft:x;
         return x;
     }
-
+    /**
+     * Apply the correction to x then it will be inside of Y camera boundaries
+     * @param y  value a to do correction
+     * @return corrected value
+     */
     public float correctionBoundariesY(float y){
         float cameraHeightHaft = getViewPortHeight()/2;
         y=y<cameraHeightHaft?cameraHeightHaft:y;
@@ -121,32 +123,47 @@ public class CameraWorld2D extends Camera2D {
         return y;
     }
 
+    /**
+     * Set the actor that carry the camera, it is the camera will follow it actor
+     * @param carrier  actor
+     */
     public void setCarrier(Actor carrier) {
         this.mCarrier = carrier;
     }
 
+    /**
+     * Set the position in x, this are world2D camera coordinates
+     * @param x  position
+     */
     public void setSetPointX(float x){
         setPointX = x;
     }
-
+    /**
+     * Set the position in y, this are world2D camera coordinates
+     * @param y  position
+     */
     public void setSetPointY(float y){
         setPointY = y;
     }
 
-    protected void setParameters(float k, float cita) {
+    /**
+     * Set the parameters for camera physics
+     * @param k k
+     * @param cita c
+     */
+    public void setParameters(float k, float cita) {
         this.k = k;
         this.d = (float) (2.0f * Math.sqrt(k) * cita);
     }
 
     /**
-     * set the position of object from parameters  i,j
+     * Set the position of object from parameters  i,j
      * @param i coordinate i  left as zero reference
      * @param j coordinate j  bottom as zero reference
      */
     public void setPositionIj(int i, int j){
         updateXYFromIj(i,j);
     }
-
 
     /**
      * Update the position from i, j coordinates and tile size, it is:
@@ -158,5 +175,16 @@ public class CameraWorld2D extends Camera2D {
         float y = tileHeight*j + tileHeight/ 2;
         setPosition(x,y);
     }
+
+    public int getI(){
+        int tileWidth = mMapWorld.getTileWidth();
+        return (int)getX()/tileWidth;
+    }
+
+    public int getJ(){
+        int tileHeight = mMapWorld.getTileHeight();
+        return (int)getY()/tileHeight;
+    }
+
 }
 
