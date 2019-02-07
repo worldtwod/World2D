@@ -32,12 +32,10 @@ public class CameraUi extends Camera{
         mDisplayInfo = displayInfo;
     }
 
-
+    @Deprecated
     public void setViewport(int refWidth, int refHeight){
         getProjection().setViewport(refWidth,refHeight);
-        getProjection().setPosition(
-                getWidth()/2,
-                getHeight()/2);
+        getProjection().setPosition(getWidth()/2,getHeight()/2);
     }
 
     @Override
@@ -48,8 +46,8 @@ public class CameraUi extends Camera{
 
     public void setViewport(int refWidth, int refHeight, int screenExpand) {
         getProjection().setViewport(refWidth,refHeight,screenExpand);
+        getProjection().setPosition(getWidth()/2,getHeight()/2);
     }
-
 
     @Override
     public ProjectionUi getProjection() {

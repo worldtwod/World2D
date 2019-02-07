@@ -40,7 +40,7 @@ public class Animation extends FlexibleList<Clip> {
         super(1);
     }
 
-    public int indexOf(int id){
+    int indexOf(int id){
         int size = size(), indexClip = -1;
         for (int i = 0; i < size; i++) {
             if(get(i).getId()==id) {

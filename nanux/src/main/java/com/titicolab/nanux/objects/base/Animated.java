@@ -24,24 +24,27 @@ import com.titicolab.nanux.animation.Animator;
 import com.titicolab.nanux.graphics.draw.Image;
 import com.titicolab.nanux.objects.factory.Parameters;
 import com.titicolab.nanux.objects.factory.RequestObject;
+import com.titicolab.nanux.touch.ObservableInput;
 
 /**
  * Created by campino on 15/02/2017.
  *
  */
 
-public  class Animated   extends GameObject implements Animation.DefineAnimationSheet{
+public  class Animated   extends GameObject implements Animation.DefineAnimationSheet, GameObject.Touchable{
 
     private Image               mImage;
     private Animator            mAnimator;
 
-
+    /**
+     * By Default the animate object is drawable and updatable
+     */
     public Animated() {
         setDrawable(true);
         setUpdatable(true);
     }
 
-    /***
+    /**
      * Called after instantiation
      * @param request initialization data
      */
@@ -56,7 +59,6 @@ public  class Animated   extends GameObject implements Animation.DefineAnimation
      * @param builder use for build the animation for this object
      * @return The animation with the clips
      */
-
     protected Animation onBuildClips(AnimationBuilder builder) {
         return builder.build(getParameters().animation);
     }
@@ -65,7 +67,7 @@ public  class Animated   extends GameObject implements Animation.DefineAnimation
      * Use if it is necessaries build a new animation for every instance of this object.
      * @return build a new animation for every instance
      */
-    protected boolean   hasCustomClips(){
+    boolean   hasCustomClips(){
         return false;
     }
 
@@ -79,29 +81,38 @@ public  class Animated   extends GameObject implements Animation.DefineAnimation
         mImage = new Image(mAnimator.getCurrentFrame());
     }
 
+    /**
+     * This object can define a AnimationSheet, when it is instanced this has a priority,
+     * if it is null, then the object will use the AnimationSheet form layer or scene
+     * @param builder the builder
+     * @return the AnimationSheet
+     */
+    @Override
+    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
+        return null;
+    }
 
+    /** Lifecycle onCreated()  **/
     protected void onCreated() {
 
     }
-
+    /** Lifecycle onStart()  **/
     protected void onStart() {
 
     }
-
+    /** Lifecycle onStop()  **/
     protected void onStop() {
 
     }
-
+    /** Lifecycle onDestroy()   **/
     protected void onDestroy() {
 
     }
 
-
+    /**  Update observers to updateLogic and   updateRender**/
     @Override
     protected void updateLogic() {
-
     }
-
     @Override
     protected void updateRender() {
         mImage.setUvCoordinates(mAnimator.getCurrentFrame());
@@ -109,28 +120,27 @@ public  class Animated   extends GameObject implements Animation.DefineAnimation
         mImage.updateRender();
     }
 
+    @Override
+    public boolean checkIsTouching(ObservableInput.Event input){
+      return false;
+    }
 
     /***************************** getters setters ************************************************/
 
     protected  ParamsAnimation getParameters(){
         return (ParamsAnimation) super.getParameters();
     }
-
-
     public Image getImage() {
         return mImage;
     }
-
     public Animator getAnimator() {
         return mAnimator;
     }
-
 
     public float getWidth() {
         checkImageNotNull();
         return mImage.getWidth();
     }
-
     public float getHeight() {
         checkImageNotNull();
         return mImage.getHeight();
@@ -153,23 +163,15 @@ public  class Animated   extends GameObject implements Animation.DefineAnimation
     public float getX() {
         return mImage.getX();
     }
-
     public float getY() {
         return mImage.getY();
     }
-
     public void setColor(float r, float g, float b, float alpha) {
         mImage.setColor(r, g, b, alpha);
     }
 
     public void setSize(float width, float height) {
         mImage.setSize((int)width,(int)height);
-    }
-
-
-    @Override
-    public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
-        return null;
     }
 
 
@@ -185,8 +187,6 @@ public  class Animated   extends GameObject implements Animation.DefineAnimation
             this.clipStart = clipStart;
         }
     }
-
-
 
     private void checkImageNotNull(){
         if(mImage==null)throw  new

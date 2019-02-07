@@ -18,6 +18,7 @@ package com.titicolab.nanux.objects.base;
 
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.graphics.draw.DrawTools;
+import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.list.GameObjectList;
 import com.titicolab.nanux.objects.factory.Parameters;
 import com.titicolab.nanux.objects.factory.RequestCollection;
@@ -74,6 +75,10 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
 
     protected void onDefineCameras(DisplayInfo displayInfo) {
         mCameraUi = new CameraUi(displayInfo);
+        mCameraUi.setViewport(
+                (int)displayInfo.getReferenceWidth(),
+                (int)displayInfo.getReferenceHeight(),
+                ProjectionUi.SCALE_HEIGHT);
         mCamera2D = new Camera2D(displayInfo);
     }
 
@@ -129,13 +134,11 @@ public class Scene extends BaseGroupLayer<Scene.ParamsScene>{
         HelperObjects.updateRenderLayers(mLayerList);
     }
 
-
     @Override
     protected void onDraw(DrawTools drawer) {
         HelperObjects.onDrawLayers(mLayerList,drawer);
         onDrawCamera(drawer);
     }
-
 
     @Override
     protected ParamsScene getParameters() {

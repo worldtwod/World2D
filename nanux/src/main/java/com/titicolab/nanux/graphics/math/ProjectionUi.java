@@ -37,10 +37,9 @@ public class ProjectionUi extends Projection {
     private float mFar;
     private float mRatio;
     
-    private int mTypeScaler;
+    private int mTypeScale;
     //private float mRefWidth;
     //private float mRefHeight;
-
 
     public ProjectionUi(DisplayInfo displayInfo){
         mScalePixel = displayInfo.getScalePixel();
@@ -67,7 +66,7 @@ public class ProjectionUi extends Projection {
 
 
     public void setViewport(int refWidth, int refHeight) {
-        setViewport(refWidth,refHeight,mTypeScaler);
+        setViewport(refWidth,refHeight, mTypeScale);
     }
 
     /**
@@ -81,13 +80,13 @@ public class ProjectionUi extends Projection {
      */
     public void setViewport(float width, float height, int typeScaler){
         checkType(typeScaler);
-        mTypeScaler=typeScaler;
+        mTypeScale =typeScaler;
 
-        if(mTypeScaler == SCREEN_EXPAND) {
+        if(mTypeScale == SCREEN_EXPAND) {
             setViewPortSize(width, height);
-        }else if(mTypeScaler == SCALE_HEIGHT){
+        }else if(mTypeScale == SCALE_HEIGHT){
             setViewPortSize(width, width /mRatio);
-        }else if(mTypeScaler == SCALE_WIDTH){
+        }else if(mTypeScale == SCALE_WIDTH){
             setViewPortSize(height *mRatio, height);
         }
 

@@ -16,7 +16,7 @@
 
 package com.titicolab.nanux.test;
 
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.nanux.core.GraphicContext;
 /**
  * Created by campino on 10/11/2016.
  *
@@ -24,7 +24,7 @@ import com.titicolab.nanux.core.GameContext;
 
 public class Monitor {
 
-    public interface OnEngineCreated{
-         void onEngineCreated(GameContext game);
+    public interface OnGraphicContextCreated {
+         void onGraphicContextCreated(GraphicContext game);
     }
 }

@@ -17,7 +17,7 @@
 package com.titicolab.mock.theater.objects;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.world.World2DTestCase;
+import com.titicolab.mock.rule.SceneTestRule;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.objects.factory.RequestObject;
 import com.titicolab.puppet.map.MapLayer;
@@ -26,55 +26,30 @@ import com.titicolab.puppet.objects.Actor;
 import com.titicolab.puppet.objects.Tile;
 import com.titicolab.puppet.objects.TiledLayer;
 import com.titicolab.puppet.objects.World2D;
+import com.titicolab.puppeteer.ui.JoystickLayer;
 
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * Created by campino on 24/01/2017.
  *
  */
-public class MapTiledLayerTest extends World2DTestCase {
+public class MapTiledLayerTest {
+
+    @Rule
+    public SceneTestRule sceneTestRule = new SceneTestRule();
 
     @Test
     public void mapLayer(){
+        World world2D = new World();
+        sceneTestRule.syncPlay(world2D);
+        world2D.setDrawBoundary(true);
+        world2D.setDrawCamera(true);
 
-        syncPlay(new World());
-        getWorld2D().setDrawBoundary(true);
-        getWorld2D().setDrawCamera(true);
-
-        for (int i =0; i <32; i++) {
-            showInfo();
-            moveCamera(i,3);
-            waitTouchSeconds(1);
-        }
-
-        for (int j =0; j <8; j++) {
-            showInfo();
-            moveCamera(32,j);
-            waitTouchSeconds(1);
-        }
-        waitTouchSeconds(60*60);
     }
 
-
-    void moveCamera(int i,int j){
-        //((World)getWorld2D()).layer.sprite.setPositionIj(i,j);
-       getWorld2D().getCamera2D().setPositionIj(i,j);
-    }
-
-    void moveSprite(int i,int j){
-        ((World)getWorld2D()).layer.sprite.setPositionIj(i,j);
-    }
-
-    void showInfo(){
-        log.debug("Camera i: " + (int)(getWorld2D().getCamera2D().getX()/128));
-        log.debug("Camera j: " + (int)(getWorld2D().getCamera2D().getY()/128));
-        log.debug("Camera width: " + getWorld2D().getCamera2D().getViewPortWidth()/128);
-        log.debug("Camera height: " + getWorld2D().getCamera2D().getViewPortHeight()/128);
-    }
-
-
-    public static class  World extends World2D{
+    public static class  World extends World2D implements JoystickLayer.OnClickJoystick {
         MockTiledLayer layer;
         @Override
         protected MapWorld onDefineMapWorld(MapWorld.Builder builder) {
@@ -85,17 +60,47 @@ public class MapTiledLayerTest extends World2DTestCase {
                     .setCameraSize(7,false)
                     .setFocusedWindowSize(9,false)
                     .layer(MockTiledLayer.class,1,null)
+                    .layer(JoystickLayer.class,2,null)
                     .build();
         }
 
         @Override
         protected void onGroupLayersCreated() {
             layer = (MockTiledLayer) findLayer(1);
-            //getCamera2D().setCarrier(layer.sprite);
+            JoystickLayer joystickLayer = (JoystickLayer) findLayer(2);
+            joystickLayer.setOnClickJoystickListener(this);
+        }
+
+        @Override
+        public void onLeft() {
+            /* int i = getCamera2D().getI();
+            int j = getCamera2D().getJ();
+            getCamera2D().setPositionIj(--i,j); */
+            layer.sprite.goLeft();
+        }
+
+        @Override
+        public void onRight() {
+            /*int i = getCamera2D().getI();
+            int j = getCamera2D().getJ();
+            getCamera2D().setPositionIj(++i,j); */
+            layer.sprite.goRight();
+        }
+
+        @Override
+        public void onTop() {
+             int i = getCamera2D().getI();
+             int j = getCamera2D().getJ();
+             getCamera2D().setPositionIj(i-1,j);
+        }
+
+        @Override
+        public void onBottom(){
+            int i = getCamera2D().getI();
+            int j = getCamera2D().getJ();
+            getCamera2D().setPositionIj(i+1,j);
         }
     }
-
-
 
 
     public static class MockTiledLayer extends TiledLayer {
@@ -122,10 +127,6 @@ public class MapTiledLayerTest extends World2DTestCase {
                         .clip(14).grid(8,5).cells(13)
                         .clip(15).grid(8,5).cells(14)
                         .clip(16).grid(8,5).cells(15)
-
-
-
-
                     .sequence("sprite")
                         .clip(1)
                             .grid(8,5)
@@ -180,24 +181,33 @@ public class MapTiledLayerTest extends World2DTestCase {
         }
     }
 
-
+    @SuppressWarnings("WeakerAccess")
     public static class MockSprite extends Actor {
-
+        private boolean goLeft;
+        private boolean goRight;
         @Override
-        protected void updateLogic() {
-            super.updateLogic();
+        protected synchronized void updateLogic() {
+
+            if(goLeft) {
+                setPositionIj(getI() - 1, getJ());
+                goLeft=false;
+            }else if(goRight){
+                setPositionIj(getI()+1,getJ());
+                goRight=false;
+            }
+
         }
 
-        @Override
-        protected void updateRender() {
-            super.updateRender();
+        public void goLeft(){
+            goLeft=true;
+        }
+
+        public void goRight(){
+            goRight=true;
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static class MockTile extends Tile{
-
     }
-
-
-
 }

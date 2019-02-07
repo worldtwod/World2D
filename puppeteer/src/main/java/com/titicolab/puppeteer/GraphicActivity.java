@@ -19,15 +19,16 @@ package com.titicolab.puppeteer;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.titicolab.nanux.core.SceneLauncher;
 import com.titicolab.nanux.objects.base.Scene;
 import com.titicolab.puppeteer.util.LogHelper;
-import com.titicolab.puppeteer.view.GLGameView;
+import com.titicolab.puppeteer.view.GLGraphicView;
 import com.titicolab.nanux.test.Monitor;
-
 
 /**
  * This activity is the container of all game elements, scenes, layer, objects. Also it is the
@@ -35,35 +36,38 @@ import com.titicolab.nanux.test.Monitor;
  *
  * Created by campino on 10/11/2016.
  */
-public class GameActivity extends AppCompatActivity {
+public class GraphicActivity extends AppCompatActivity {
 
     /** Maximum size of sprite buffer  **/
-    public static int sMaximumSizeSprites = 1000;
+    protected static int sMaximumSizeSprites = 1000;
 
     /** Maximum size of geometries buffer  **/
-    public static int sMaximumSizeGeometries = 2500;
+    protected static int sMaximumSizeGeometries = 2500;
 
     /** This flag let that screen rote in horizontal axis  **/
-    public static boolean sFlagSensorLandscape = false;
+    protected static boolean sFlagSensorLandscape = false;
 
     /** This flag make that screen go full screen  **/
-    public boolean sFlagFullScreen = false;
+    protected boolean sFlagFullScreen = false;
 
-    /** AndroidGame */
-    private AndroidGame mAndroidGame;
+    /** This flat enable the visibility of FPS in the screen **/
+    protected static boolean sFlatDisplayFPS = false;
 
-    /** This flat is for test settings, do no touch **/
-    static Monitor.OnEngineCreated monitor=null;
+    /** AndroidGraphic */
+    private AndroidGraphic mAndroidGraphic;
 
     /** Flat to active logs **/
     public static boolean sFlatEnableLogs = false;
 
+    /** listener that will be called when the graphic context will be created **/
+    private Monitor.OnGraphicContextCreated mGraphicContextMonitor =null;
 
     /** flat to check if the on-create was executed **/
     private boolean mFlatOnCreate = false;
 
     /** logs ***/
     private LogHelper log;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,25 +83,53 @@ public class GameActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.
                     SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 
-        mAndroidGame = new AndroidGameBuilder(getApplicationContext())
-                .setSizeGeometries(sMaximumSizeGeometries)
-                .setSizeSprites(sMaximumSizeSprites)
-                .build();
-
+        mAndroidGraphic = onAttachGraphicsContext();
+        onGraphicContextCreated(mAndroidGraphic);
+        onStartGraphicRender(mAndroidGraphic);
         mFlatOnCreate = true;
     }
 
-    public void setSceneLauncher(SceneLauncher sceneLauncher) {
-        checkOnCreate("setSceneLauncher");
+    @VisibleForTesting
+    public void syncPlay(Scene scene){
+        mAndroidGraphic.syncPlay(scene);
+    }
+
+    @VisibleForTesting
+    public void setGraphicContextMonitor(Monitor.OnGraphicContextCreated monitor) {
+        this.mGraphicContextMonitor = monitor;
+    }
+
+    protected void setSceneLauncher(SceneLauncher sceneLauncher) {
+        checkOnCreate();
         Scene scene = sceneLauncher.onLaunchScene();
-        mAndroidGame.setStartScene(scene);
+        mAndroidGraphic.setStartScene(scene);
     }
 
-    public void setShowFPS(boolean showFPS) {
-        checkOnCreate("setShowFPS");
-        mAndroidGame.setShowFPS(showFPS);
+    protected void onStartGraphicRender(AndroidGraphic androidGraphic) {
+        mAndroidGraphic.start();
     }
 
+    /**
+     * Create the Android Graphics context. use the builder to it
+     * @return  AndroidGraphic
+     */
+    protected AndroidGraphic onAttachGraphicsContext(){
+        return new AndroidGraphicBuilder(getApplicationContext())
+                .setSizeGeometries(sMaximumSizeGeometries)
+                .setSizeSprites(sMaximumSizeSprites)
+                .setDisplayFPS(sFlatDisplayFPS)
+                .build();
+    }
+
+    /**
+     * Notify that Graphic context have been created, send it to the observer
+     * it is typically used in a TestRule
+     * @param androidGraphic listener
+     */
+    protected void onGraphicContextCreated(AndroidGraphic androidGraphic) {
+        if(mGraphicContextMonitor !=null)
+            mGraphicContextMonitor.onGraphicContextCreated(androidGraphic);
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -128,52 +160,54 @@ public class GameActivity extends AppCompatActivity {
      * Return the GLSurfaceView when the action will live
      * @return  GLGameView
      */
-    public GLGameView getGLGameView() {
-        return mAndroidGame.getGLGameView();
-    }
-
-    private void checkOnCreate(String method) {
-        if(!mFlatOnCreate)
-          throw new RuntimeException("The method "+ method +"needs be called after super.onCreate()");
+    public GLGraphicView getGLGameView() {
+        return mAndroidGraphic.getGLGameView();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         log.debug("onStart()");
-        mAndroidGame.onStart();
+        mAndroidGraphic.onStart();
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
         log.debug("onRestart()");
-        mAndroidGame.onRestart();
+        mAndroidGraphic.onRestart();
     }
     @Override
     public void onResume() {
         super.onResume();
         log.debug("onResume()");
-        mAndroidGame.onResume();
+        mAndroidGraphic.onResume();
     }
     @Override
     public void onPause() {
         log.debug("onPause() ");
-        mAndroidGame.onPause();
+        mAndroidGraphic.onPause();
         super.onPause();
     }
 
     @Override
     public void onStop() {
         log.debug("onStop()");
-        mAndroidGame.onStop();
+        mAndroidGraphic.onStop();
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
         log.debug("onDestroy()");
-        mAndroidGame.onDestroy();
+        mAndroidGraphic.onDestroy();
         super.onDestroy();
     }
+
+    private void checkOnCreate() {
+        if(!mFlatOnCreate)
+            throw new RuntimeException("The method setSceneLauncher needs be called after " +
+                    "super.onCreate()");
+    }
+
 }

@@ -17,7 +17,6 @@
 package com.titicolab.mock.nanux.scene;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.AnimationTestCase;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.objects.base.Animated;
 import com.titicolab.nanux.objects.base.Scene;
@@ -35,17 +34,18 @@ import org.junit.Test;
  *
  */
 
-public class SceneTest extends AnimationTestCase {
+@Deprecated
+public class SceneTest {
 
 
     @Test
     public void test_factoryObjects(){
-        MockScene scene = new MockScene();
+        /*MockScene scene = new MockScene();
         SceneManager manager = new SceneManager(getRunnerTask(),getTextureManager(),getDisplayInfo());
         manager.startScene(scene);
         Assert.assertNotNull(scene.layer);
         Assert.assertNotNull(scene.layer.button);
-        Assert.assertNotNull(scene.layer.digit);
+        Assert.assertNotNull(scene.layer.digit);*/
     }
 
     public static class MockScene extends Scene{

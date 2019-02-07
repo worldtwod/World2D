@@ -19,6 +19,7 @@ package com.titicolab.puppet.objects;
 
 import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.graphics.draw.Rectangle;
+import com.titicolab.nanux.graphics.math.ProjectionUi;
 import com.titicolab.nanux.util.DisplayInfo;
 import com.titicolab.nanux.objects.base.CameraUi;
 import com.titicolab.nanux.objects.base.Scene;
@@ -46,7 +47,13 @@ public abstract class World2D extends Scene {
 
     @Override
     protected void onDefineCameras(DisplayInfo displayInfo) {
-        setCameraUi(new CameraUi(displayInfo));
+        CameraUi cameraUi = new CameraUi(displayInfo);
+        cameraUi.setViewport(
+                (int)displayInfo.getReferenceWidth(),
+                (int)displayInfo.getReferenceHeight(),
+                ProjectionUi.SCALE_HEIGHT);
+        setCameraUi(cameraUi);
+
         CameraWorld2D cameraWorld = new CameraWorld2D(displayInfo);
         cameraWorld.setViewport(getMapWorld());
         setCamera2D(cameraWorld);
@@ -62,15 +69,17 @@ public abstract class World2D extends Scene {
         return (CameraWorld2D) super.getCamera2D();
     }
 
+    @SuppressWarnings("WeakerAccess")
+    public MapWorld getMapWorld(){
+        return (MapWorld) getMapGroupLayers();
+    }
+
     @Override
     protected void onDraw(DrawTools drawer) {
         super.onDraw(drawer);
         onDrawBoundary(drawer);
     }
 
-    public MapWorld getMapWorld(){
-        return (MapWorld) getMapGroupLayers();
-    }
 
     /** This option will draw the limit of world
      *  as rectangle
@@ -86,7 +95,7 @@ public abstract class World2D extends Scene {
             mWorldBoundary=null;
     }
 
-    synchronized protected void onDrawBoundary(DrawTools drawTools) {
+    private void onDrawBoundary(DrawTools drawTools) {
         if(mWorldBoundary!=null) {
             mWorldBoundary.updateRender();
             drawTools.geometry.setBrushSize(SIZE_BOUNDARY);

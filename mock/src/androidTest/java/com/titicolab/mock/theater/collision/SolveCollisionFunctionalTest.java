@@ -16,9 +16,7 @@
 
 package com.titicolab.mock.theater.collision;
 
-import androidx.test.runner.AndroidJUnit4;
-
-import com.titicolab.mock.cases.world.World2DTestCase;
+import com.titicolab.mock.rule.SceneTestRule;
 import com.titicolab.mock.tools.MockActor;
 import com.titicolab.mock.tools.MockGround;
 import com.titicolab.nanux.util.ObjectSync;
@@ -29,26 +27,24 @@ import com.titicolab.puppet.objects.World2D;
 import com.titicolab.puppet.objects.WorldLayer;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * Created by campino on 24/01/2017.
  *
  */
 
+public class SolveCollisionFunctionalTest  {
 
-@RunWith(AndroidJUnit4.class)
-public class SolveCollisionFunctionalTest extends World2DTestCase {
-
-
-
+    @Rule
+    public SceneTestRule sceneTestRule = new SceneTestRule();
 
     @Test
     public void collisionTop(){
         World world = new World();
-        syncPlay(world);
-        setWorldBoundary(true);
+        sceneTestRule.syncPlay(world);
+        world.setDrawBoundary(true);
         // TOP
         final MockGround tile = world.layer.findTile(1000);
         final TestActor actor = (TestActor) world.layer.findById(2000);
@@ -72,7 +68,8 @@ public class SolveCollisionFunctionalTest extends World2DTestCase {
     @Test
     public void collisionLeft(){
         World world = new World();
-        syncPlay(world);
+        sceneTestRule.syncPlay(world);
+        world.setDrawBoundary(true);
 
         // TOP
         final MockGround tile = world.layer.findTile(1001);
@@ -94,8 +91,8 @@ public class SolveCollisionFunctionalTest extends World2DTestCase {
     @Test
     public void collisionRight(){
         World world = new World();
-        syncPlay(world);
-        setWorldBoundary(true);
+        sceneTestRule.syncPlay(world);
+        world.setDrawBoundary(true);
         // TOP
         MockGround tile = world.layer.findTile(1002);
         TestActor actor = (TestActor) world.layer.findById(2000);
@@ -109,8 +106,6 @@ public class SolveCollisionFunctionalTest extends World2DTestCase {
         Assert.assertEquals(CollisionEngine.COLLISION_AREA_RIGHT,
                 actor.maskCollision.getResults().intValue());
     }
-
-
 
     public static class  World extends World2D{
         GroundTiledLayer layer;
@@ -142,12 +137,10 @@ public class SolveCollisionFunctionalTest extends World2DTestCase {
                     .setGridSize(16, 5)
                     .setTileSize(180, 180);
 
-
             builder.item(TestActor.class,2000,4,2,"Boxelbot", MockActor.ROBOT_STOP);
             builder.item(MockGround.class,1000,4,1,"tile",0);
             builder.item(MockGround.class,1001,2,1,"tile",1);
             builder.item(MockGround.class,1002,6,1,"tile",3);
-
             return builder.build();
         }
 

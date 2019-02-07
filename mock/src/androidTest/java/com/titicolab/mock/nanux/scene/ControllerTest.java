@@ -17,15 +17,13 @@
 package com.titicolab.mock.nanux.scene;
 
 import android.content.Context;
-import androidx.test.InstrumentationRegistry;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.core.GameContext;
-import com.titicolab.nanux.touch.ObservableInput;
-import com.titicolab.nanux.util.GPUInfo;
-import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
+import com.titicolab.mock.rule.GraphicTestRule;
 import com.titicolab.nanux.animation.AnimationSheet;
+import com.titicolab.nanux.core.Controller;
+import com.titicolab.nanux.core.GraphicContext;
+import com.titicolab.nanux.core.ObservableRenderer;
 import com.titicolab.nanux.core.Puppeteer;
 import com.titicolab.nanux.objects.base.Animated;
 import com.titicolab.nanux.objects.base.Scene;
@@ -33,45 +31,56 @@ import com.titicolab.nanux.objects.base.SceneLayer;
 import com.titicolab.nanux.objects.map.MapGroupLayers;
 import com.titicolab.nanux.objects.map.MapItem;
 import com.titicolab.nanux.objects.map.MapObjects;
+import com.titicolab.nanux.touch.ObservableInput;
+import com.titicolab.nanux.util.GPUInfo;
+import com.titicolab.opengl.shader.AndroidDrawToolsBuilder;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+
+import androidx.test.InstrumentationRegistry;
 
 /**
  * Created by campino on 04/12/2017.
  *
  */
 
-public class PuppeteerTest extends GraphicsTestCase{
+public class ControllerTest implements ObservableRenderer.Renderer, ObservableInput.InputListener {
 
-    Puppeteer mController;
+    @Rule
+    public GraphicTestRule rule = new GraphicTestRule.Builder()
+            .setObserverRender(this)
+            .setObserverInput(this)
+            .build();
+
+    private Controller mController;
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
-        super.onSurfaceCreated(game, eglConfig);
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
         Context appContext = InstrumentationRegistry.getTargetContext();
-
         mController  = new Puppeteer(new AndroidDrawToolsBuilder(appContext));
         mController.onSurfaceCreated(game,eglConfig);
     }
 
     @Override
     public void onSurfaceChanged(int width, int height) {
-        super.onSurfaceChanged(width, height);
         mController.onSurfaceChanged(width,height);
     }
 
     @Override
     public void onDrawFrame() {
-        super.onDrawFrame();
         mController.onDrawFrame();
     }
 
     @Override
     public boolean onTouch(ObservableInput.Event event) {
-        super.onTouch(event);
         return  mController.onTouch(event);
+    }
+
+    @Override
+    public boolean onKey(int keyEvent) {
+        return false;
     }
 
     @Test
@@ -80,7 +89,7 @@ public class PuppeteerTest extends GraphicsTestCase{
         MockScene scene = new MockScene();
         mController.setStartScene(scene);
         mController.showFPS(true);
-        waitTouchSeconds(5);
+        rule.waitTouchSeconds(5);
 
         Assert.assertNotNull(scene.layer);
         Assert.assertNotNull(scene.layer.button);
@@ -88,11 +97,8 @@ public class PuppeteerTest extends GraphicsTestCase{
     }
 
 
-
-
     public static class MockScene extends Scene{
         MockLayer layer;
-
         @Override
         public MapGroupLayers onDefineMapGroupLayers() {
             return new MapGroupLayers.Builder()
@@ -100,20 +106,15 @@ public class PuppeteerTest extends GraphicsTestCase{
                     .layer(MockLayer.class,1,null)
                     .build();
         }
-
-
         @Override
         public void onGroupLayersCreated() {
             layer = (MockLayer) findLayer(1);
         }
     }
 
-
     public static class MockLayer extends SceneLayer {
-
         Button button;
         Digit digit;
-
         @Override
         public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
             return builder
@@ -128,8 +129,6 @@ public class PuppeteerTest extends GraphicsTestCase{
                     .grid(4,2)
                     .build();
         }
-
-
         @Override
         protected MapObjects onDefineMapObjects() {
             return new MapObjects.Builder()
@@ -142,8 +141,6 @@ public class PuppeteerTest extends GraphicsTestCase{
                             new Animated.ParamsAnimation("button", 1)))
                     .build();
         }
-
-
         @Override
         public void onGroupObjectsCreated() {
             button = findById(Button.class,100);
@@ -151,16 +148,10 @@ public class PuppeteerTest extends GraphicsTestCase{
         }
     }
 
-
-
     public static class Digit extends Animated {
 
     }
-
     public static class Button extends Animated {
     }
-
-
-
 
 }

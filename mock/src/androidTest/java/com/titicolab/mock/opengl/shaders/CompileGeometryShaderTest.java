@@ -17,18 +17,20 @@
 package com.titicolab.mock.opengl.shaders;
 
 import android.content.Context;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
 
-import com.titicolab.mock.cases.GraphicsTestCase;
-import com.titicolab.nanux.core.GameContext;
+import com.titicolab.mock.rule.GraphicTestRule;
+import com.titicolab.mock.rule.ObserverGraphicContext;
+import com.titicolab.nanux.core.GraphicContext;
 import com.titicolab.nanux.util.GPUInfo;
 import com.titicolab.opengl.R;
 import com.titicolab.opengl.shader.GeometryShaderProgram;
 import com.titicolab.opengl.util.TextResourceReader;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
+
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -37,15 +39,19 @@ import static org.junit.Assert.assertNotNull;
  * Created by campino on 11/11/2016.
  *
  */
-@RunWith(AndroidJUnit4.class)
-public class CompileGeometryShaderTest extends GraphicsTestCase{
+public class CompileGeometryShaderTest implements ObserverGraphicContext.SurfaceCreated {
 
+
+    @Rule
+    public GraphicTestRule rule = new GraphicTestRule.Builder()
+            .setObserverSurfaceCreated(this)
+            .build();
 
     private GeometryShaderProgram shader;
 
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
-        Context appContext = InstrumentationRegistry.getTargetContext();
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         String vertexSh =  TextResourceReader.readTextFileFromResource(
                 appContext, R.raw.geometry_vertex_shader);
         String fragmentSh = TextResourceReader.readTextFileFromResource(
@@ -57,13 +63,8 @@ public class CompileGeometryShaderTest extends GraphicsTestCase{
 
     @Test
     public void testRunAndWait(){
-
         assertNotNull(shader);
         assertNotEquals(0,shader.getProgramId());
-
     }
-
-
-
 
 }

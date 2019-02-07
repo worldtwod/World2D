@@ -34,7 +34,7 @@ import com.titicolab.nanux.util.GPUInfo;
 public class Puppeteer extends Controller {
 
 
-    private GameContext           mGameContext;
+    private GraphicContext        mGraphicContext;
     private DisplayInfo           mDisplayInfo;
     private GamePerformance       mPerformance;
     private RunnerTask            mRunnerTask;
@@ -54,37 +54,32 @@ public class Puppeteer extends Controller {
 
     private ProjectionUi mProjectionUi;
 
+
     public Puppeteer(DrawTools.Builder drawToolsBuilder) {
         mDrawToolsBuilder = drawToolsBuilder;
     }
 
-
-
-
     /************************* Render    *******************************************************/
     @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
+    public void onSurfaceCreated(GraphicContext game, GPUInfo eglConfig) {
 
         /*if(mTextureManager!=null) { //TODO
             onRecoveryContext();
             return;
         }*/
 
-        mGameContext =     game;
-        mDisplayInfo =     mGameContext.getDisplayInfo();
+        mGraphicContext =     game;
+        mDisplayInfo =     mGraphicContext.getDisplayInfo();
         mPerformance =     new GamePerformance();
-        mRunnerTask =      mGameContext.getTextureManager().getRunnerTask();
-        mTextureManager =  mGameContext.getTextureManager();
+        mRunnerTask =      mGraphicContext.getTextureManager().getRunnerTask();
+        mTextureManager =  mGraphicContext.getTextureManager();
 
         mRunnerTask.setRunnerThread(Thread.currentThread());
         mGPUInfo =eglConfig;
 
-        mSceneManager = new SceneManager(mRunnerTask,
-                mTextureManager,
-               mDisplayInfo);
+        mSceneManager = new SceneManager(mRunnerTask, mTextureManager, mDisplayInfo);
         mSceneManager.setAsyncLaunch(true);
         mSceneManager.setTransitionsEnable(false);
-        //mSceneManager.setTransition(new Transition());
 
         mDrawTools = mDrawToolsBuilder.build(mTextureManager);
         DrawTools.setScalePixel(mDisplayInfo.getScalePixel());
@@ -94,10 +89,8 @@ public class Puppeteer extends Controller {
         }
 
         mFlatStart=true;
-
         mProjectionUi= new ProjectionUi(game.getDisplayInfo());
     }
-
 
     @Override
     public void onSurfaceChanged(int width, int height) {
@@ -119,12 +112,12 @@ public class Puppeteer extends Controller {
         mSceneManager.onDrawScene(mDrawTools);
 
         if(mShowFPS) {
+            float left = mProjectionUi.getViewPortWidth()-200;
             mDrawTools.text.setMatrix(mProjectionUi.getMatrix());
-            mDrawTools.text.print(mPerformance.getAverageFPS() + " FPS",
-                    200, 700, 20);
+            mDrawTools.text.print("FPS:" + mPerformance.getAverageFPS(),
+                    left, 700, 20);
         }
     }
-
 
     /************************   Scene play ********************************************************/
 
@@ -167,7 +160,6 @@ public class Puppeteer extends Controller {
     public DrawTools getDrawTools() {
         return mDrawTools;
     }
-
 
     /**********************    Helper  ************************************************************/
 

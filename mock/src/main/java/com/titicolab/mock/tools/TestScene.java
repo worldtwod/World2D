@@ -16,7 +16,7 @@
 
 package com.titicolab.mock.tools;
 
-import com.titicolab.puppeteer.GameActivity;
+import com.titicolab.puppeteer.GraphicActivity;
 import com.titicolab.nanux.animation.AnimationSheet;
 import com.titicolab.nanux.list.GameObjectList;
 import com.titicolab.nanux.objects.base.Scene;
@@ -56,7 +56,7 @@ public class TestScene  extends Scene {
         onDefineMapGroupLayers = new ObjectSync<>();
         onDefineCameras = new ObjectSync<>();
         onGroupLayersCreated = new ObjectSync<>();
-        log = new LogHelper(this,GameActivity.class.getSimpleName());
+        log = new LogHelper(this,GraphicActivity.class.getSimpleName());
     }
 
     @Override

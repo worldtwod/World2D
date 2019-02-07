@@ -15,8 +15,6 @@
  */
 
 package com.titicolab.puppet.objects;
-
-
 import com.titicolab.nanux.animation.Animation;
 import com.titicolab.nanux.objects.base.Animated;
 
@@ -30,27 +28,35 @@ import com.titicolab.nanux.objects.base.Animated;
 
 public class LayerObject extends Animated {
 
+    /** The discrete position i in the TiledLayer **/
     private int i;
+    /** The discrete position j in the TiledLayer **/
     private int j;
-
+    /** The parent TiledLayer **/
     private TiledLayer mLayer;
 
 
+    /**
+     * There are a animation ok for this object, the animator will be initialized here
+     * @param animation Animation for this object
+     */
     @Override
     protected void onAttachAnimation(Animation animation) {
         super.onAttachAnimation(animation);
     }
 
-
+    /** Called when the TileLayer is set
+     * * @param layer parent layer
+     */
+    @SuppressWarnings("WeakerAccess")
     protected void onAttachLayer(TiledLayer layer){
         mLayer = layer;
         setPositionIj(getParameters().i,getParameters().j);
     }
 
-
+    /** The object is created  **/
     @Override
     protected void onCreated() {
-
 
     }
 
@@ -59,11 +65,11 @@ public class LayerObject extends Animated {
      * @param i coordinate i  left as zero reference
      * @param j coordinate j  bottom as zero reference
      */
+    @SuppressWarnings("WeakerAccess")
     public void setPositionIj(int i, int j){
         setIj(i,j);
         updateXYFromIj();
     }
-
 
     /**
      * Update the position from i, j coordinates and tile size, it is:
@@ -76,6 +82,7 @@ public class LayerObject extends Animated {
         setPosition(x,y);
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected void updateIjFromPosition(int x,int y){
         int tileWidth = mLayer.getTileWidth();
         i = x/tileWidth;
@@ -93,15 +100,13 @@ public class LayerObject extends Animated {
         this.j = j;
     }
 
-    protected int getI() {
+    public int getI() {
         return i;
     }
 
-    protected int getJ() {
+    public int getJ() {
         return j;
     }
-
-
 
     /******** Parameters **********************************************************************/
 
@@ -119,6 +124,5 @@ public class LayerObject extends Animated {
     protected Params getParameters() {
         return (Params) super.getParameters();
     }
-
 
 }

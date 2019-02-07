@@ -14,27 +14,16 @@
  * limitations under the License.
  */
 
-package com.titicolab.nanux.core;
-
-import com.titicolab.nanux.graphics.texture.TextureManager;
-import com.titicolab.nanux.touch.ObservableInput;
-import com.titicolab.nanux.util.DisplayInfo;
+package com.titicolab.nanux.screen;
 
 /**
  * Created by campino on 20/11/2017.
  *
  */
 
-public interface GameContext {
-
-    ObservableRenderer  getObservableRenderer();
-
-    ObservableInput     getObservableInput();
-
-    ObservableLifeCycle getObservableLifeCycle();
-
-    DisplayInfo         getDisplayInfo();
-
-    TextureManager      getTextureManager();
-
+public interface GraphicView {
+    void onPause();
+    void onResume();
+    void setUpConfiguration();
+    void setDebug(boolean flagDebug);
 }

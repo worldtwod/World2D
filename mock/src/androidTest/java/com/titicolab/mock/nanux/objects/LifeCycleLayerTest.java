@@ -17,7 +17,7 @@
 package com.titicolab.mock.nanux.objects;
 
 import com.titicolab.mock.R;
-import com.titicolab.mock.cases.puppet.SceneTestCase;
+import com.titicolab.mock.rule.SceneTestRule;
 import com.titicolab.mock.tools.TestButton;
 import com.titicolab.mock.tools.TestDigit;
 import com.titicolab.mock.tools.TestLayer;
@@ -31,6 +31,7 @@ import com.titicolab.nanux.objects.map.MapItem;
 import com.titicolab.nanux.objects.map.MapObjects;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -38,12 +39,16 @@ import org.junit.Test;
  *
  */
 
-public class LifeCycleLayerTest extends SceneTestCase{
+public class LifeCycleLayerTest {
+
+
+    @Rule
+    public SceneTestRule rule = new SceneTestRule();
 
     @Test
     public void sceneTest(){
         MockScene scene = new MockScene();
-        syncPlay(scene);
+        rule.syncPlay(scene);
         Assert.assertEquals(1,scene.onAttachParams.getResults().intValue());
         Assert.assertEquals(2,scene.onDefineMapGroupLayers.getResults().intValue());
         Assert.assertEquals(3,scene.onDefineCameras.getResults().intValue());

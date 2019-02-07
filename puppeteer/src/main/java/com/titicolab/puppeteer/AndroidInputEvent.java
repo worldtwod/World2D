@@ -23,7 +23,7 @@ import com.titicolab.nanux.touch.ObservableInput;
 
 /**
  * Created by campino on 27/06/2016.
- *
+ * campino  30/01/2019
  */
 public class AndroidInputEvent implements ObservableInput.Event {
     //private final AndroidDisplayMetrics mScreen;
@@ -93,10 +93,10 @@ public class AndroidInputEvent implements ObservableInput.Event {
 
     private static String actionToString(int action){
         switch (action){
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_POINTER_DOWN: return "ACTION_DOWN";
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_POINTER_UP: return "ACTION_UP";
+            case MotionEvent.ACTION_DOWN:return "ACTION_DOWN";
+            case MotionEvent.ACTION_POINTER_DOWN: return "ACTION_DOWN_P";
+            case MotionEvent.ACTION_UP:return "ACTION_UP";
+            case MotionEvent.ACTION_POINTER_UP: return "ACTION_UP_P";
             case MotionEvent.ACTION_MOVE: return "ACTION_MOVE";
         }
         return "ACTION_UNKNOWN";
@@ -126,6 +126,11 @@ public class AndroidInputEvent implements ObservableInput.Event {
     @Override
     public int getPointerId() {
         return mPointerId;
+    }
+
+    @Override
+    public String getActionName() {
+        return actionToString(getAction());
     }
 
 

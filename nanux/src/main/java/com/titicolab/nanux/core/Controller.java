@@ -17,9 +17,10 @@
 package com.titicolab.nanux.core;
 
 
+import com.titicolab.nanux.graphics.draw.DrawTools;
 import com.titicolab.nanux.objects.base.Scene;
+import com.titicolab.nanux.objects.base.SceneManager;
 import com.titicolab.nanux.touch.ObservableInput;
-import com.titicolab.nanux.util.GPUInfo;
 
 /**
  * Created by campino on 11/12/2017.
@@ -31,10 +32,17 @@ public abstract class Controller implements ObservableLifeCycle.LifeCycle,
         ObservableRenderer.Renderer {
 
 
-    public synchronized void setStartScene(Scene startScene) {
+    public abstract void setStartScene(Scene startScene);
 
-    }
+    public abstract void showFPS(boolean showFPS);
 
+    public abstract SceneManager getSceneManager();
+
+    public abstract RunnerTask getRunnerTask();
+
+    public abstract DrawTools getDrawTools();
+
+    /** ObservableLifeCycle.LifeCycle **/
 
     @Override
     public void onStart() {
@@ -65,33 +73,4 @@ public abstract class Controller implements ObservableLifeCycle.LifeCycle,
     public void onDestroy() {
 
     }
-
-    @Override
-    public boolean onTouch(ObservableInput.Event event) {
-        return false;
-    }
-
-    @Override
-    public boolean onKey(int keyEvent) {
-        return false;
-    }
-
-    @Override
-    public void onSurfaceCreated(GameContext game, GPUInfo eglConfig) {
-
-    }
-
-    @Override
-    public void onSurfaceChanged(int width, int height) {
-
-    }
-
-    @Override
-    public void onDrawFrame() {
-
-    }
-
-
-    abstract void showFPS(boolean showFPS);
-
 }

@@ -16,16 +16,22 @@
 
 package com.titicolab.nanux.objects.base;
 
+import com.titicolab.nanux.touch.ObservableInput;
+import com.titicolab.nanux.touch.TouchManager;
+
 /**
  * Created by campino on 21/06/2016.
  *
  */
 public abstract class UiObject extends Animated  {
 
+    private TouchManager mTouchManager;
 
+    public UiObject(){
+        super();
+    }
 
     public abstract void onCreated();
-
 
     @Override
     public void onStart() {
@@ -42,5 +48,34 @@ public abstract class UiObject extends Animated  {
 
     }
 
+    @Override
+    protected boolean onTouch(ObservableInput.Event input) {
+          if(mTouchManager !=null)
+            return mTouchManager.onTouch(input);
+          return false;
+    }
 
+    @Override
+    public boolean checkIsTouching(ObservableInput.Event input){
+        boolean isTouchingInX = false;
+        boolean isTouchingInY = false;
+
+        float xLeft = getX() - getWidth()/2;
+        float yBottom = getY() - getHeight()/2;
+
+        float xi = input.getUiX();
+        float yi = input.getUiY();
+
+        if(xLeft< xi && xi<= (xLeft+getWidth())){
+            isTouchingInX = true;
+        }
+        if(yBottom < yi && yi<= (yBottom+getHeight())){
+            isTouchingInY = true;
+        }
+        return isTouchingInX && isTouchingInY;
+    }
+
+    protected void setTouchManager(TouchManager mTouchManager) {
+        this.mTouchManager = mTouchManager;
+    }
 }

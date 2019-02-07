@@ -44,7 +44,6 @@ public class AndroidDisplayMetrics implements DisplayInfo {
 
     private float mNavigationBarCorrection;
 
-
     private float mSpFactor = 1f;
     private float mDensity;
     private int   mDensityDpi;
@@ -65,12 +64,13 @@ public class AndroidDisplayMetrics implements DisplayInfo {
     private void setUpScreenSize(Context context) {
         WindowManager windowsManager =  (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
-        android.util.DisplayMetrics displaymetrics = new android.util.DisplayMetrics();
-        windowsManager.getDefaultDisplay().getMetrics(displaymetrics);
-        int w = displaymetrics.widthPixels;
-        int h = displaymetrics.heightPixels;
-        mDensity = displaymetrics.density;
-        mDensityDpi = displaymetrics.densityDpi;
+        android.util.DisplayMetrics displayMetrics = new android.util.DisplayMetrics();
+        assert windowsManager != null;
+        windowsManager.getDefaultDisplay().getMetrics(displayMetrics);
+        int w = displayMetrics.widthPixels;
+        int h = displayMetrics.heightPixels;
+        mDensity = displayMetrics.density;
+        mDensityDpi = displayMetrics.densityDpi;
         mNavigationBarCorrection=0;
 
         /**
@@ -107,17 +107,17 @@ public class AndroidDisplayMetrics implements DisplayInfo {
     public String toString() {
         StringBuffer buffer  = new StringBuffer();
         buffer.append("\n--- Android Screen Metrics ---------");
-        buffer.append("\nScreen Width:  "  + mScreenWidth +"px\t"+ px2dp(mScreenWidth) + "dp");
-        buffer.append("\nScreen Height: " + mScreenHeight+"px\t" + px2dp(mScreenHeight) + "dp");
-        buffer.append("\nRatio:         " +   mAspectRatio);
-        buffer.append("\nDensity:       " + mDensity);
-        buffer.append("\nDpi:           " +     mDensityDpi);
-        buffer.append("\nNavBar:        " +  mNavigationBarCorrection);
+        buffer.append("\nScreen Width:  ").append(mScreenWidth).append("px\t").append(px2dp(mScreenWidth)).append("dp");
+        buffer.append("\nScreen Height: ").append(mScreenHeight).append("px\t").append(px2dp(mScreenHeight)).append("dp");
+        buffer.append("\nRatio:         ").append(mAspectRatio);
+        buffer.append("\nDensity:       ").append(mDensity);
+        buffer.append("\nDpi:           ").append(mDensityDpi);
+        buffer.append("\nNavBar:        ").append(mNavigationBarCorrection);
 
-        buffer.append("\n\n--- BaseGame Screen Metrics -------------");
-        buffer.append("\nFix Width:       " + getFixWidth());
-        buffer.append("\nFix Height:      " + getFixHeight());
-        buffer.append("\nReferenceWidth:  " + getReferenceWidth());
+        buffer.append("\n\n--- BaseGraphic Screen Metrics -------------");
+        buffer.append("\nFix Width:       ").append(getFixWidth());
+        buffer.append("\nFix Height:      ").append(getFixHeight());
+        buffer.append("\nReferenceWidth:  ").append(getReferenceWidth());
         buffer.append("\nReferenceHeight: " + getReferenceHeight());
         buffer.append("\nFactor Density:  " + getScalePixel()+ "\n");
         return buffer.toString();
