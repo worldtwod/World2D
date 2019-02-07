@@ -73,36 +73,32 @@ public class MapTiledLayerTest {
 
         @Override
         public void onLeft() {
-            int i = getCamera2D().getI();
+            /* int i = getCamera2D().getI();
             int j = getCamera2D().getJ();
-            getCamera2D().setPositionIj(--i,j);
-            int spriteI = layer.sprite.getI();
-            int spriteJ = layer.sprite.getJ();
-            layer.sprite.setPositionIj(--spriteI,spriteJ);
+            getCamera2D().setPositionIj(--i,j); */
+            layer.sprite.goLeft();
         }
 
         @Override
         public void onRight() {
-            int i = getCamera2D().getI();
+            /*int i = getCamera2D().getI();
             int j = getCamera2D().getJ();
-            getCamera2D().setPositionIj(++i,j);
-            int spriteI = layer.sprite.getI();
-            int spriteJ = layer.sprite.getJ();
-            layer.sprite.setPositionIj(++spriteI,spriteJ);
+            getCamera2D().setPositionIj(++i,j); */
+            layer.sprite.goRight();
         }
 
         @Override
         public void onTop() {
              int i = getCamera2D().getI();
              int j = getCamera2D().getJ();
-             getCamera2D().setPositionIj(i,++j);
+             getCamera2D().setPositionIj(i-1,j);
         }
 
         @Override
         public void onBottom(){
             int i = getCamera2D().getI();
             int j = getCamera2D().getJ();
-            getCamera2D().setPositionIj(i,--j);
+            getCamera2D().setPositionIj(i+1,j);
         }
     }
 
@@ -187,6 +183,28 @@ public class MapTiledLayerTest {
 
     @SuppressWarnings("WeakerAccess")
     public static class MockSprite extends Actor {
+        private boolean goLeft;
+        private boolean goRight;
+        @Override
+        protected synchronized void updateLogic() {
+
+            if(goLeft) {
+                setPositionIj(getI() - 1, getJ());
+                goLeft=false;
+            }else if(goRight){
+                setPositionIj(getI()+1,getJ());
+                goRight=false;
+            }
+
+        }
+
+        public void goLeft(){
+            goLeft=true;
+        }
+
+        public void goRight(){
+            goRight=true;
+        }
     }
 
     @SuppressWarnings("WeakerAccess")

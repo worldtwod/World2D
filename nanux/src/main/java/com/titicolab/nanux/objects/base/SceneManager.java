@@ -348,7 +348,6 @@ public class SceneManager  implements ObservableInput.InputListener{
         stopCurrentScene(mCurrentScene);
     }
 
-
     private void notifyStartScene(final Scene next) {
         mRunnerTask.queueTask(new RunnableTask() {
             @Override
@@ -357,7 +356,6 @@ public class SceneManager  implements ObservableInput.InputListener{
             }
         });
     }
-
 
     public RunnerTask getRunnerTask() {
         return mRunnerTask;

@@ -107,8 +107,6 @@ public class SolveCollisionFunctionalTest  {
                 actor.maskCollision.getResults().intValue());
     }
 
-
-
     public static class  World extends World2D{
         GroundTiledLayer layer;
         @Override
@@ -139,12 +137,10 @@ public class SolveCollisionFunctionalTest  {
                     .setGridSize(16, 5)
                     .setTileSize(180, 180);
 
-
             builder.item(TestActor.class,2000,4,2,"Boxelbot", MockActor.ROBOT_STOP);
             builder.item(MockGround.class,1000,4,1,"tile",0);
             builder.item(MockGround.class,1001,2,1,"tile",1);
             builder.item(MockGround.class,1002,6,1,"tile",3);
-
             return builder.build();
         }
 

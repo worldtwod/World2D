@@ -30,10 +30,11 @@ World-2D should be easy to use and its applications are expected to be easy to m
 
 # Changelog
  
-  `compile 'com.titicolab.world-2d:core:0.2.4-beta'`
+  `compile 'com.titicolab.world-2d:core:0.2.5-beta'`
    The new test Rules were add.
    TouchableObject and JoystickLayer add
    Clean case test and deprecation old test. 
+   By default the scaleType is height for all scenes  
    
  `compile 'com.titicolab.world-2d:core:0.1.7-beta'`
   The bug about status bar was solved
@@ -51,8 +52,3 @@ World-2D should be easy to use and its applications are expected to be easy to m
  `compile 'com.titicolab.world-2d:core:0.1.0-beta'`
     Migrated to androidX
       
- 
-   
- 
-    
-  

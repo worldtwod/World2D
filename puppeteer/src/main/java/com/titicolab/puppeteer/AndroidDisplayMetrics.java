@@ -44,7 +44,6 @@ public class AndroidDisplayMetrics implements DisplayInfo {
 
     private float mNavigationBarCorrection;
 
-
     private float mSpFactor = 1f;
     private float mDensity;
     private int   mDensityDpi;
@@ -65,12 +64,13 @@ public class AndroidDisplayMetrics implements DisplayInfo {
     private void setUpScreenSize(Context context) {
         WindowManager windowsManager =  (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
-        android.util.DisplayMetrics displaymetrics = new android.util.DisplayMetrics();
-        windowsManager.getDefaultDisplay().getMetrics(displaymetrics);
-        int w = displaymetrics.widthPixels;
-        int h = displaymetrics.heightPixels;
-        mDensity = displaymetrics.density;
-        mDensityDpi = displaymetrics.densityDpi;
+        android.util.DisplayMetrics displayMetrics = new android.util.DisplayMetrics();
+        assert windowsManager != null;
+        windowsManager.getDefaultDisplay().getMetrics(displayMetrics);
+        int w = displayMetrics.widthPixels;
+        int h = displayMetrics.heightPixels;
+        mDensity = displayMetrics.density;
+        mDensityDpi = displayMetrics.densityDpi;
         mNavigationBarCorrection=0;
 
         /**

@@ -43,7 +43,8 @@ public class TouchManagerTest implements ObservableInput.InputListener,
 
     @Before
     public void before(){
-        touchManagerTest = new AndroidTouchManager(new MockTouchableTrue());
+        touchManagerTest
+                = new AndroidTouchManager(new MockTouchableTrue());
     }
 
     @Override

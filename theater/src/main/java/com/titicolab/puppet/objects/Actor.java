@@ -32,17 +32,14 @@ public class Actor extends LayerObject implements CollisionObject {
     private final Physics body;
     private CollisionManager mCollision;
 
-
     public Actor() {
         body = new Physics();
     }
-
 
     @Override
     public AnimationSheet onDefineAnimations(AnimationSheet.Builder builder) {
         return super.onDefineAnimations(builder);
     }
-
 
     @Override
     protected void onCreated() {
@@ -54,7 +51,9 @@ public class Actor extends LayerObject implements CollisionObject {
         return  mCollision!=null && mCollision.getCollisionArea()!=null;
     }
 
-
+    @Override
+    protected void updateLogic() {
+    }
     @Override
     protected void updateRender() {
         updateIjFromPosition((int)body.position.x,(int)body.position.y);
@@ -62,14 +61,11 @@ public class Actor extends LayerObject implements CollisionObject {
         super.updateRender();
     }
 
-
     @Override
     public void setPosition(float x, float y) {
         body.setPosition(x,y);
         super.setPosition(x,y);
     }
-
-
 
     @Override
     public CollisionArea[] getCollisionAreas() {
@@ -79,7 +75,6 @@ public class Actor extends LayerObject implements CollisionObject {
     public CollisionArea getCollisionArea() {
         return mCollision.getCollisionArea();
     }
-
 
     public Physics getBody() {
         return body;

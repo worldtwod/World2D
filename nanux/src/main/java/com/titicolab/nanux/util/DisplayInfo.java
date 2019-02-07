@@ -30,12 +30,9 @@ public interface DisplayInfo {
 
     int getScreenHeight();
 
-
     float getReferenceHeight();
 
     float getReferenceWidth();
-
-
 
     int getFixWidth();
 
